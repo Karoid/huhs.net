@@ -44,6 +44,10 @@ gem "rock_scissors_paper", :git => 'https://github.com/Karoid/rock_scissors_pape
 
 #제거할 때 rails d irwi_wiki, rails d irwi_wiki_views
 gem 'irwi', :git => 'git://github.com/alno/irwi.git'
+#markdown for writing
+gem 'redcarpet'
+
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

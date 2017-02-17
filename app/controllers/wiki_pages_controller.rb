@@ -3,3 +3,4 @@ class WikiPagesController < ApplicationController
   acts_as_wiki_pages_controller
 end
 Irwi.config.user_class_name = "Member"
+Irwi.config.formatter = Irwi::Formatters::RedCarpet.new

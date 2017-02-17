@@ -22,7 +22,7 @@
       with UTF8 linefeeds (same way HAML solves this problem), which are
       ignored by Erubis and should be correctly displayed as linebreaks by
       modern browsers. %>
-  <p><%=wt "Content: #{link_to('(Textile Markup', 'http://redcloth.org/hobix.com/textile/', target: '_blank')}".html_safe %> allowed)<br /><%= f.text_area(:content) %> </p>
+  <p><%=wt "Content: #{link_to('(Markdown 문법', 'https://gist.github.com/ihoneymon/652be052a0727ad59601', target: '_blank')}".html_safe %> 으로 작성 가능)<br /><%= f.text_area :content, rows: 20%> </p>
   <%#<p><%#=wt 'Content:' %><br /><%#= f.text_area(:content, :value => f.object.content.gsub("\n", '&#x000A;').gsub("\r",'')).html_safe %#></p>%>
   <p><%=wt 'Comment on this change (optional):' %><br /><%= f.text_field :comment %></p>
   <input type="submit" name="save" value="<%=wt 'Save page' %>" class="submit" />
@@ -31,4 +31,3 @@
 <% end %>
 
 <%= wiki_page_attachments(@page) %>
-
