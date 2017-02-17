@@ -1,0 +1,40 @@
+<div class="container box button-list">
+  <% #게시글 내용, shared/_article_content.erb 참고 %>
+  <%post = @page%>
+  <div class="article fr-view ">
+    <!--제목 시작-->
+    <h3 style="display:inline-block"><%=post.title%></h3>
+    <span> - <%=Member.find(post.updator_id).username%></span>
+    <!--수정 버튼-->
+    <% if can? :read, post %>
+    <%= wiki_page_actions %>
+    <% end %>
+    <div style="float:right; margin-top:15px">
+      조회수: <%=Statistic.where(name: "read_article", target_id: params[:id]).length%>  /
+      <span class='hidden-xs' style="display:inline-block!important"><%=post.created_at.strftime("%Y.")%></span>
+      <%=post.created_at.strftime("%m.%d")%>
+    </div>
+    <hr>
+    <!--본문 시작-->
+    <%=post.content.html_safe%>
+    <hr>
+  </div>
+  <!--게시글 목록 시작-->
+  <% if (can? :read, post)%>
+  <div style="width: 100%;">
+  <a href="/wiki/new/제목을 입력하세요" style="width: 100px; padding: 7px; margin: 0px auto; display: block; text-align: center; font-size: 18px; border: 1px solid #dddddd;">새글 쓰기</a>
+  </div>
+  <%end%>
+</div>
+<!--
+<%= wiki_page_style %>
+
+<h1><%=h @page.title %></h1>
+
+<%= wiki_page_info %>
+<%= wiki_page_actions %>
+
+<div class="wiki_content">
+  <%=wiki_content @page.content %>
+</div>
+-->

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  wiki_root '/wiki'
   root 'home#index'
   devise_for :members
   post '/comment/c/:id' => 'board#write_comment'

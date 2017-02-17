@@ -52,7 +52,9 @@ class BoardController < ApplicationController
       end
       #페이지네이션 끝
       if @board.show_last && @article.last
-        params[:id] = @article.last.id
+        if !params[:id]
+          params[:id] = @article.last.id
+        end
         if current_member
           Statistic.create(name:"read_article", member_id: current_member.id, target_model: Article, target_id: params[:id])
         end

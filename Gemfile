@@ -41,6 +41,9 @@ gem 'rails_db'
 #:path => "../rock_scissors_paper"
 #제거할 때 rails d rock_scissors_paper point
 gem "rock_scissors_paper", :git => 'https://github.com/Karoid/rock_scissors_paper'
+
+#제거할 때 rails d irwi_wiki, rails d irwi_wiki_views
+gem 'irwi', :git => 'git://github.com/alno/irwi.git'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

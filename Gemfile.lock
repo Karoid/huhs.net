@@ -1,6 +1,17 @@
 GIT
+  remote: git://github.com/alno/irwi.git
+  revision: 2abd0f2b034c8137c829775f270106429be1d252
+  specs:
+    irwi (0.5.0)
+      actionpack (>= 4.0)
+      activerecord (>= 4.0)
+      activesupport (>= 4.0)
+      diff-lcs (>= 1.1.2)
+      rails_autolink (>= 1.0)
+
+GIT
   remote: https://github.com/Karoid/rock_scissors_paper
-  revision: e51f9c219f4d9d2622eef5571d09d42c63c21d73
+  revision: 58e00f1e85bd38e8b407a4a0a8c2e3d82686d0dc
   specs:
     rock_scissors_paper (0.1.4)
 
@@ -92,6 +103,7 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
+    diff-lcs (1.3)
     domain_name (0.5.20161129)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
@@ -170,6 +182,8 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
+    rails_autolink (1.1.6)
+      rails (> 3.1)
     rails_db (1.3.4)
       codemirror-rails
       jquery-rails
@@ -265,6 +279,7 @@ DEPENDENCIES
   cloudinary
   coffee-rails (~> 4.1.0)
   devise
+  irwi!
   jbuilder (~> 2.0)
   jquery-rails
   loofah!
