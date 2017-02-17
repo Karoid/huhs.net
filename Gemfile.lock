@@ -1,15 +1,16 @@
 GIT
+  remote: https://github.com/Karoid/rock_scissors_paper
+  revision: e51f9c219f4d9d2622eef5571d09d42c63c21d73
+  specs:
+    rock_scissors_paper (0.1.4)
+
+GIT
   remote: https://github.com/flavorjones/loofah.git
   revision: 2b2b5aa184d6127ac666931112faa6370f01a389
   specs:
     loofah (2.1.0.rc1.20150817193255)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-
-PATH
-  remote: ../rock_scissors_paper
-  specs:
-    rock_scissors_paper (0.1.3)
 
 GEM
   remote: https://rubygems.org/
