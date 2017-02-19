@@ -47,7 +47,7 @@ class HomeController < ApplicationController
       @route = Proc.new{ |x| "/board/#{x.commentable.board.category.route}/#{x.commentable.board.route}/#{x.commentable.id}"}
       @title = Proc.new{ |x| x.body}
     elsif params[:usage] == "attendence"
-      @article = Statistic.where(name: "sign_in").paginate(:page => params[:page], :per_page => perpage).order('id DESC')
+      @article = Statistic.where(member_id: current_member.id, name: "sign_in").paginate(:page => params[:page], :per_page => perpage).order('id DESC')
       @route = Proc.new{ |x| "#"}
       @title = Proc.new{ |x| "#{x.created_at} 출석!"}
     else

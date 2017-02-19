@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="/css/board.css">
+<!--게시글 목록 시작-->
+<table class="table table-hover article_list" style="max-width: 950px; margin: 0 auto;">
+  <thead>
+    <tr style="font-size: 20px;">
+      <td class="th" style="text-align: left;">#</td>
+      <td class="th" style="font-weight: bolder;text-align: left;">제목</td>
+      <td class="th">바꾼이</td>
+      <td class="th">최근 수정</td>
+      <td style="font-size:15px;line-height:35px;border-bottom: 1px solid #000000;text-align:center"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></td>
+    </tr>
+  </thead>
+  <tbody>
+    <%@pages.order('updated_at DESC').each do |article|%>
+    <tr>
+      <td class="td_number" scope="row"><%=article.id%></th>
+      <td class="td_title"><%= link_to article.title, wiki_page_path( article ) %></td>
+      <td class="td_name"><%=Member.find(article.updator_id).username%></td>
+      <td class="td_date"><span class='hidden-xs'><%=article.updated_at.strftime("%Y.")%></span><%=article.updated_at.strftime("%m.%d")%></td>
+      <td class="td_page_view"><%=Statistic.where(name: "read_article",target_model:WikiPage, target_id: article.id).length%></td>
+    </tr>
+    <%end%>
+  </tbody>
+</table>

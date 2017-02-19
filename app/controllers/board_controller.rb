@@ -43,7 +43,7 @@ class BoardController < ApplicationController
       else
         page=1
       end
-      @article_page = @article.paginate(:page => page, :per_page => perpage).order('id DESC')
+      @article_page = @article.where("title LIKE ?", "%#{params[:search]}%").paginate(:page => page, :per_page => perpage).order('id DESC')
       #Json 요청으로 목록 받아올때
       if params[:json]
         respond_to do |format|

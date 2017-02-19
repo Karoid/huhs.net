@@ -22,156 +22,19 @@
       <td class="td_title"><a href="/board/<%=article.board.category.route%>/<%=article.board.route%>/<%=article.id%>"><%=article.title%></a></td>
       <td class="td_name"><%=article.member_name%></td>
       <td class="td_date"><span class='hidden-xs'><%=article.created_at.strftime("%Y.")%></span><%=article.created_at.strftime("%m.%d")%></td>
-      <td class="td_page_view"><%=Statistic.where(name: "read_article", target_id: article.id).length%></td>
+      <td class="td_page_view"><%=Statistic.where(name: "read_article",target_model:Article, target_id: article.id).count%></td>
     </tr>
     <%end%>
   </tbody>
 </table>
 <!--게시글 목록 끝-->
 <nav aria-label="Page navigation" style="text-align: center;">
-  <%= will_paginate @article_page, previous_label: "◀", next_label: "▶" %>
+  <%= will_paginate @article_page , previous_label: "◀", next_label: "▶" %>
 </nav>
+<!--검색-->
+<form class="search" method="get">
+<input type="text" name="search" value="">
+<input type="submit" value="검색">
+</form>
 
-<style type="text/css">
-  #loading{
-    width: 100px;
-    height: 100px;
-    position: fixed;
-    margin-left: 50%;
-    transform: translateX(-50%);
-    bottom: 0;
-  }
-  @media only screen and (max-width: 700px) {
-    #title {
-      font-size: 40px;
-    }
-
-    table {
-      margin-top: 20px !important;
-    }
-    thead {
-      display: none;
-    }
-    tbody {
-      overflow: none;
-    }
-    tr {
-      width: 100%;
-      display: inline-block;
-      border-bottom: 1px solid #dddddd !important;
-      position: relative;
-    }
-    tr:hover {
-      background-color: #f5f5f5;
-    }
-    tr:first-child {
-      border-top: 1px solid #dddddd !important;
-    }
-    td {
-      display: block;
-      padding: 0px !important;
-      border: none !important;
-    }
-    .td_number {
-      display: none;
-    }
-    .td_title {
-      width: 75%;
-      margin: 50px 0 25px 25px;
-      float: left;
-      font-size: 18px;
-    }
-    .td_name {
-      width: auto !important;
-      position: absolute !important;
-      top: 22px !important;
-      right: 25px !important;
-    }
-    .td_date {
-      width: auto !important;
-      position: absolute !important;
-      top: 22px !important;
-      left: 25px !important;
-    }
-    .td_page_view {
-      display: none;
-    }
-
-    nav {
-      display: none;
-    }
-  }
-</style>
-<script>
-/* ajax 페이지네이션 개발 중ㅠ
-$('.pagination a').click(function(event) {
-var loading;
-event.preventDefault();
-loading = $('<div id="loading" style="display: none;"><span><img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif" alt="cargando..."/></span></div>');
-$('table.article_list tbody').html("");
-$('table.article_list').after(loading);
-loading.fadeIn();
-$.ajax({
-  type: 'GET',
-  url: $(this).attr('href'),
-  dataType: 'json',
-  data: {json:true},
-  success: (function(data) {
-    return loading.fadeOut(function() {
-      var html = ""
-      $.each(data,function(index, article) {
-        var datetime = new Date(article.created_at)
-        console.log(datetime,datetime.getYear())
-        html += '<tr>'+
-        '<td class="td_number" scope="row">'+article.id+'</th>'+
-        '<td class="td_title"><a href="/board/'+window.location.pathname.split("/")[2]+'/'+window.location.pathname.split("/")[3]+'/'+article.id+'">'+article.title+'</a></td>'+
-        '<td class="td_name">'+article.member_name+'</td>'+
-        '<td class="td_date"><span class="hidden-xs">'+datetime.getFullYear()+'.</span>'+datetime.getMonth()+"."+datetime.getDate()+'</td>'+
-        '<td class="td_page_view">'+article.view+'</td>'+
-        '</tr>'
-      });
-      $('table.article_list tbody').html(html);
-      return loading.remove();
-    });
-  })
-});
-false;
-});
-*/
-/* 모바일 무한 스크롤 */
-var page = parseInt($("nav div em").html())
-$("#board").scroll(function() {
-  console.log($("#board").scrollTop(),Math.round($("#board").scrollTop()), $("#article").height()- $(window).height()+100);
-    if (Math.round($("#board").scrollTop()) >= $("#article").height() - $(window).height()+99) {
-      console.log(++page);
-loading = $('<div id="loading" class="load" style="display: none;"><span><img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif" alt="cargando..."/></span></div>');
-$('table.article_list').after(loading);
-loading.fadeIn();
-$.ajax({
-  type: 'GET',
-  url: window.location.href + "?page="+page,
-  dataType: 'json',
-  data: {json:true},
-  success: (function(data) {
-    return loading.fadeOut(function() {
-      var html = ""
-      $.each(data,function(index, article) {
-        var datetime = new Date(article.created_at)
-        console.log(datetime,datetime.getYear())
-        html += '<tr>'+
-        '<td class="td_number" scope="row">'+article.id+'</th>'+
-        '<td class="td_title"><a href="/board/'+window.location.pathname.split("/")[2]+'/'+window.location.pathname.split("/")[3]+'/'+article.id+'">'+article.title+'</a></td>'+
-        '<td class="td_name">'+article.member_name+'</td>'+
-        '<td class="td_date"><span class="hidden-xs">'+datetime.getFullYear()+'.</span>'+datetime.getMonth()+"."+datetime.getDate()+'</td>'+
-        '<td class="td_page_view">'+article.view+'</td>'+
-        '</tr>'
-      });
-      $('table.article_list tbody').append(html);
-      $('.load').remove()
-      return loading.remove();
-    });
-  })
-});
-}
-});
-</script>
+<script src="/js/article_list.js"></script>

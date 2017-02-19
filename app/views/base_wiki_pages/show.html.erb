@@ -1,3 +1,4 @@
+<%Statistic.create(name:"read_article", member_id: current_member.id, target_model: WikiPage, target_id: @page.id)%>
 <div class="container box button-list">
   <% #게시글 내용, shared/_article_content.erb 참고 %>
   <%post = @page%>
@@ -10,7 +11,7 @@
     <%= wiki_page_actions %>
     <% end %>
     <div style="float:right; margin-top:15px">
-      조회수: <%=Statistic.where(name: "read_article", target_id: params[:id]).length%>  /
+      조회수: <%=Statistic.where(name:"read_article",target_id: @page.id, target_model: WikiPage).count%>  /
       <span class='hidden-xs' style="display:inline-block!important"><%=post.created_at.strftime("%Y.")%></span>
       <%=post.created_at.strftime("%m.%d")%>
     </div>
@@ -25,6 +26,9 @@
   <a href="/wiki/new/제목을 입력하세요" style="width: 100px; padding: 7px; margin: 0px auto; display: block; text-align: center; font-size: 18px; border: 1px solid #dddddd;">새글 쓰기</a>
   </div>
   <%end%>
+  <%@pages = WikiPage.limit(5)%>
+  <h3 style="display:inline-block">최근 변경</h3>
+  <%=render partial: 'base_wiki_pages/wiki_page_list'%>
 </div>
 <!--
 <%= wiki_page_style %>
