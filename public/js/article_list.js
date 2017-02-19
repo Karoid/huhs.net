@@ -40,8 +40,8 @@ false;
 /* 모바일 무한 스크롤 */
 var page = parseInt($("nav div em").html())
 $("#board").scroll(function() {
-  console.log($("#board").scrollTop(),Math.round($("#board").scrollTop()), $("#article").height()- $(window).height()+100);
-    if (Math.round($("#board").scrollTop()) >= $("#article").height() - $(window).height()+99) {
+  console.log($("#board").scrollTop(),Math.round($("#board").scrollTop()), $("#article").height()- $(window).height()+89);
+    if (Math.round($("#board").scrollTop()) >= $("#article").height() - $(window).height()+89) {
       console.log(++page);
 loading = $('<div id="loading" class="load" style="display: none;"><span><img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif" alt="cargando..."/></span></div>');
 $('table.article_list').after(loading);
