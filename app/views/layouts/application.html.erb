@@ -8,10 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/font-awesome.min.css" rel="stylesheet">
-  <link href="/css/prettyPhoto.css" rel="stylesheet">
-  <link href="/css/main.css" rel="stylesheet">
+  <%= stylesheet_link_tag    "application", :media => "all" , 'data-turbolinks-track' => true %>
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
   <!--[if lt IE 9]>
   <script src="/js/html5shiv.js"></script>
@@ -93,17 +90,10 @@
       <%= yield %>
     </div>
   </div>
-  <script src="/js/custom.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
-  <script src="/js/jquery.isotope.min.js"></script>
-  <script src="/js/jquery.prettyPhoto.js"></script>
-  <script src="/js/main.js"></script>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </body>
 </html>
 
-<style type="text/css">
-
-</style>
 <script type="text/javascript">
 $(".menu-toggle").on('click', function() {
   $(this).toggleClass("on");

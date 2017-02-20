@@ -1,3 +1,5 @@
+<%pages = @pages.where("title LIKE ?", "%#{params[:search]}%").order('updated_at DESC')%>
+<%if pages.length == 1%><script>window.location = '<%=wiki_page_path(pages[0])%>'</script><%end%>
 <link rel="stylesheet" href="/css/board.css">
 <!--게시글 목록 시작-->
 <table class="table table-hover article_list" style="max-width: 950px; margin: 0 auto;">
@@ -11,7 +13,7 @@
     </tr>
   </thead>
   <tbody>
-    <%@pages.order('updated_at DESC').each do |article|%>
+    <%pages.each do |article|%>
     <tr>
       <td class="td_number" scope="row"><%=article.id%></th>
       <td class="td_title"><%= link_to article.title, wiki_page_path( article ) %></td>

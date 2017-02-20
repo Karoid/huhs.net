@@ -12,3 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require turbolinks
+//= require custom.js
+//= require bootstrap.min.js
+//= require jquery.isotope.min.js
+//= require jquery.prettyPhoto.js
+//= require main.js
