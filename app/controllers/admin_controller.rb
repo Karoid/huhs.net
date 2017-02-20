@@ -19,7 +19,7 @@ class AdminController < ApplicationController
   def show_member
     @nonMember = Member.where(role: 0)
     @member = Member.where('role>0')
-    @staff = Member.where(staff: true, admin:false) + Member.where(staff: false, admin:true) + Member.where(staff: true, admin:true) 
+    @staff = Member.where(staff: true, admin:false) + Member.where(staff: false, admin:true) + Member.where(staff: true, admin:true)
     @major = Major.all
     authorize! :read, Category.where(route: "admin").take
   end
@@ -63,13 +63,28 @@ class AdminController < ApplicationController
     authorize! :read, Category.where(route: "admin").take
   end
 
+  def member_statistic
+
+  end
+
   def getStatistic
     result = []
     hash = Statistic.where(name: params[:name], created_at: 1.week.ago..Date.today).group(:created_at).count
     hash = hash.sort_by { |key,value| key }
     hash.map { |key,value| result.push({day: key, "value": value}) }
     respond_to do |format|
-      format.json { render json: value }
+      format.json { render json: result }
+    end
+    authorize! :read, Category.where(route: "admin").take
+  end
+
+  def getStatisticOfMember
+    result = []
+    hash = Member.all.group(:role).count
+    hash = hash.sort_by { |key,value| key }
+    hash.map { |key,value| result.push({role: key, "value": value}) }
+    respond_to do |format|
+      format.json { render json: result }
     end
     authorize! :read, Category.where(route: "admin").take
   end
