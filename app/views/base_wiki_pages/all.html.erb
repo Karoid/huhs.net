@@ -3,6 +3,8 @@
 <input type="text" name="search" value="">
 <input type="submit" value="검색">
 </form>
+<%@pages = @pages.where("title LIKE ?", "%#{params[:search]}%").order('updated_at DESC')%>
+<%if @pages.length == 1%><script>window.location = '<%=wiki_page_path(@pages[0])%>'</script><%end%>
   <%=render partial: 'base_wiki_pages/wiki_page_list'%>
 
 <!--
