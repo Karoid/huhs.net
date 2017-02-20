@@ -1,7 +1,7 @@
 <div class="container">
 <!-- include summernote css/js-->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+<script src="/js/summernote.js"></script>
 <%= render partial: "shared/board_header"%>
   <%if params[:post_id]%><!-- UPDATE POST-->
   <form name="update_article" action="/board/<%=params[:category]%>/<%=params[:board]%>/<%=params[:post_id]%>/write" method="post">
@@ -29,7 +29,7 @@
 }
 </style>
 <script>
-    $(function() {
+    $(document).ready(function() {
       var FileButton = function (context) {
         var ui = $.summernote.ui;
         //create dialog

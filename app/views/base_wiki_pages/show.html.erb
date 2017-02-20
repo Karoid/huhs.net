@@ -26,7 +26,7 @@
   <a href="/wiki/new/제목을 입력하세요" style="width: 100px; padding: 7px; margin: 0px auto; display: block; text-align: center; font-size: 18px; border: 1px solid #dddddd;">새글 쓰기</a>
   </div>
   <%end%>
-  <%@pages = WikiPage.limit(5)%>
+  <%@pages = WikiPage.limit(5).order('updated_at DESC')%>
   <h3 style="display:inline-block">최근 변경</h3>
   <%=render partial: 'base_wiki_pages/wiki_page_list'%>
 </div>
