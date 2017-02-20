@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <meta name="description" content="">
   <meta name="author" content="">
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag    "application", :media => "all" , 'data-turbolinks-track' => true %>
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
   <!--[if lt IE 9]>
@@ -90,10 +91,9 @@
       <%= yield %>
     </div>
   </div>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </body>
 </html>
-
+<script type="text/javascript" src="/js/custom.js"></script>
 <script type="text/javascript">
 $(".menu-toggle").on('click', function() {
   $(this).toggleClass("on");

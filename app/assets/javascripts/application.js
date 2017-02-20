@@ -10,9 +10,7 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery_ujs
 //= require turbolinks
-//= require custom.js
 //= require bootstrap.min.js
 //= require jquery.isotope.min.js
 //= require jquery.prettyPhoto.js
