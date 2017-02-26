@@ -11,7 +11,7 @@
     </tr>
   </thead>
   <tbody>
-    <%@pages.each do |article|%>
+    <% @pages.each do |article|%>
     <tr>
       <td class="td_number" scope="row"><%=article.id%></th>
       <td class="td_title"><%= link_to article.title, wiki_page_path( article ) %></td>

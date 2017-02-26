@@ -37,6 +37,25 @@ function Admin_table(element, dbname){
 	this.tableElement = element
 	this.dbname = dbname
 	this.selectedArray = [];
+	this.edit_ajax = function(send_data,success_cb){
+		$.ajax({
+			statusCode: {
+	      500: function() {
+	        alert("오타 때문에 수정 실패");
+				},
+				404: function(){
+					alert("서버와의 통신 실패")
+				}
+	    },
+			url: '/admin/edit_data',
+			type: 'POST',
+			dataType: 'json',
+			data: send_data,
+			success: function(data){
+				success_cb(data)
+			}
+		})
+	}
 }
 Admin_table.prototype.destroy = function(element,ajaxUrl) {
 	var table = this.tableElement
@@ -128,39 +147,25 @@ Admin_table.prototype.edit = function(editButton, thisClass){
 				selectedObject['data'][el.getAttribute("name")] = $(el).find("input").attr("id")
 			}
 		});
-		$.ajax({
-			statusCode: {
-	      500: function() {
-	        alert("오타 때문에 수정 실패");
-				},
-				404: function(){
-					alert("서버와의 통신 실패")
-				}
-	    },
-			url: '/admin/edit_data',
-			type: 'POST',
-			dataType: 'json',
-			data: selectedObject,
-			success: function(data){
-				if (data.notice = "success") {
-					thisElement.parents("tr").find("input[type=checkbox]").attr("id",data.id)
-					console.log(thisElement.parents("tr"));
-					thisElement.parents("tr").children().each(function(index, el) {
-						if (!el.classList.length && el.getAttribute("name")) {
-							el.innerHTML = selectedObject['data'][el.getAttribute("name")]
-						}else if($(el).hasClass('last')){
-							var id = ""
-							if (table[0] == "#") {
-								id = table;
-							}
-							editButton = typeof editButton == "object" ? "."+editButton.className : editButton
-							el.innerHTML = "<a href='"+id+"' class='"+editButton.split(".")[1]+"'>Edit</a>";
-							$(el).find(editButton).click(edit_event);
+		thisClass.edit_ajax(selectedObject,function(data){
+			if (data.notice = "success") {
+				thisElement.parents("tr").find("input[type=checkbox]").attr("id",data.id)
+				console.log(thisElement.parents("tr"));
+				thisElement.parents("tr").children().each(function(index, el) {
+					if (!el.classList.length && el.getAttribute("name")) {
+						el.innerHTML = selectedObject['data'][el.getAttribute("name")]
+					}else if($(el).hasClass('last')){
+						var id = ""
+						if (table[0] == "#") {
+							id = table;
 						}
-					});
-				}else {
-					alert("수정 실패")
-				}
+						editButton = typeof editButton == "object" ? "."+editButton.className : editButton
+						el.innerHTML = "<a href='"+id+"' class='"+editButton.split(".")[1]+"'>Edit</a>";
+						$(el).find(editButton).click(edit_event);
+					}
+				});
+			}else {
+				alert("수정 실패")
 			}
 		})
 

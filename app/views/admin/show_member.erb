@@ -62,6 +62,9 @@
           </tbody>
         </table>
       </div>
+      <button id="make_nonmember_as_submember" class="btn btn-success">준회원</button>
+      <button class="btn btn-success make_as_member">정회원</button>
+      <button class="btn btn-success make_as_graduate">졸업생</button>
       <button id="delete_nonmember" class="btn btn-danger">탈퇴</button>
     </div>
   </div>
@@ -129,8 +132,11 @@
           </tbody>
         </table>
       </div>
-      <button id="delete_member" class="btn btn-danger">탈퇴</button>
       <button id="make_member_as_staff" class="btn btn-primary">스태프 임명</button>
+      <button class="btn btn-success make_as_member">정회원</button>
+      <button class="btn btn-success make_as_graduate">졸업생</button>
+      <button id="reset_password" class="btn btn-warning">비번 초기화</button>
+      <button id="delete_member" class="btn btn-danger">탈퇴</button>
     </div>
   </div>
 
@@ -309,12 +315,27 @@
         }
       }
     });
-
+    function change_member_state(role_num,thisButton){
+      if($(thisButton).parent().children("div.x_content").children("div#datatable_nonmember_wrapper")[0]){
+        var thisClass = nonMemberTable
+      }else{
+        var thisClass = memberTable
+      }
+      $(thisClass.tableElement).find(".flat").each(function(index, el) {
+    		if (el.checked) {
+          thisClass.edit_ajax({data: {id: el.id, role: role_num}, db: thisClass.dbname},function(data){})
+    		}
+    	});
+      return window.location.reload()
+    }
     var nonMemberTable = new Admin_table('#datatable_nonmember',"Member")
     $("#delete_nonmember").click(function(event) {
       /* Act on the event */
       nonMemberTable.delete(".flat");
     });
+    $("#make_nonmember_as_submember").click(function(){change_member_state(1,this)});
+    $(".make_as_member").click(function(){change_member_state(2,this)});
+    $(".make_as_graduate").click(function(){change_member_state(3,this)});
     nonMemberTable.edit(".edit_nonmember")
     var memberTable = new Admin_table('#datatable_member',"Member")
     $("#delete_member").click(function(event) {
@@ -324,6 +345,15 @@
     memberTable.edit(".edit_member")
     $("#make_member_as_staff").click(function(event) {
       memberTable.destroy(".flat",'/admin/active_staff')
+    });
+    $("#reset_password").click(function(){
+      var thisClass = memberTable
+      $(thisClass.tableElement).find(".flat").each(function(index, el) {
+    		if (el.checked) {
+          thisClass.edit_ajax({data: {id: el.id, encrypted_password: "$2a$11$RuiZ90W7n3LqR4uytQ2eLOJ7nKgsFCAXaej9WyEi3qSyFa.dBJehu"}, db: thisClass.dbname},function(data){alert("성공")})
+    		}
+    	});
+      return window.location.reload()
     });
     var staffTable = new Admin_table('#datatable_staff',"Member")
     staffTable.edit(".edit_staff")

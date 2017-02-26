@@ -4,9 +4,14 @@
 <input type="submit" value="검색">
 </form>
 <%@pages = @pages.where("title LIKE ?", "%#{params[:search]}%").order('updated_at DESC')%>
+<center>
+<%= wiki_paginate(@pages) do -%>
+</center>
 <%if @pages.length == 1%><script>window.location = '<%=wiki_page_path(@pages[0])%>'</script><%end%>
   <%=render partial: 'base_wiki_pages/wiki_page_list'%>
-
+<center>
+<%end%>
+</center>
 <!--
 <%= wiki_page_style -%>
 
