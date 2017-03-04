@@ -11,7 +11,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-gem 'turbolinks'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -42,6 +41,7 @@ gem 'rails_db'
 #제거할 때 rails d rock_scissors_paper point
 gem "rock_scissors_paper", :git => 'https://github.com/Karoid/rock_scissors_paper'
 
+gem "check_attendence", :path => "../check_attendence"
 #제거할 때 rails d irwi_wiki, rails d irwi_wiki_views
 gem 'irwi', :git => 'git://github.com/alno/irwi.git'
 #markdown for writing
