@@ -43,6 +43,8 @@ gem "rock_scissors_paper", :git => 'https://github.com/Karoid/rock_scissors_pape
 
 if File.exist?("../check_attendence")
   gem "check_attendence", :path => "../check_attendence"
+else
+  gem "check_attendence", :git => "https://github.com/Karoid/check_attendence.git"
 end
 #제거할 때 rails d irwi_wiki, rails d irwi_wiki_views
 gem 'irwi', :git => 'git://github.com/alno/irwi.git'
