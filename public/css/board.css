@@ -247,3 +247,28 @@ nav .previous_page, nav .next_page {
 nav div em {
   color: rgb(90, 210, 210) !important;
 }
+input[type=text]{
+  border-radius: 2px;
+background-color: none;
+border: 1px rgba(38, 41, 51, 0.52) solid;
+color: black;
+padding: 3px;
+}
+input[type=submit]{
+  padding: 4px 6px;
+  text-align: center;
+  border: 0px solid #dddddd;
+  color: white;
+  background-color: rgba(0,0,0,.3);
+  border-radius: 2px;
+}
+.searched_tag{
+  background-color: rgba(38, 41, 51, 0.52);
+  border: 0px solid;
+  border-radius: 2px;
+  display: inline-block;
+  padding:3px;
+  color:white;
+  margin:0 auto;
+  cursor: pointer;
+}

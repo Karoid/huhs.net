@@ -73,3 +73,11 @@ $.ajax({
 });
 }
 });
+
+//검색 상태 표시
+if (window.location.search) {
+  $("form.search").empty().append('<div class="searched_tag">'+decodeURIComponent(window.location.search.split("=")[1])+' 검색됨  <i class="icon icon-remove" aria-hidden="true"></i></div>')
+  .click(function(event) {
+    window.location = window.location.pathname
+  });
+}

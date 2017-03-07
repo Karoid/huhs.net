@@ -8,7 +8,10 @@ CheckAttendence.setup do |config|
   #config.automatic_routes_mount = false
 
   #if you want to use /app/veiws/layouts/application.html.erb, then set this value as true
-  #config.use_layout = true
+  config.use_layout = true
+
+  #if you want to use admin page other layout, then set this value like below
+  config.admin_layout = "admin_application"
 
   #default model used by CheckAttendence
   config.default_model = Attendence
