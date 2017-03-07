@@ -41,7 +41,9 @@ gem 'rails_db'
 #제거할 때 rails d rock_scissors_paper point
 gem "rock_scissors_paper", :git => 'https://github.com/Karoid/rock_scissors_paper'
 
-gem "check_attendence", :path => "../check_attendence"
+if File.exist?("../check_attendence")
+  gem "check_attendence", :path => "../check_attendence"
+end
 #제거할 때 rails d irwi_wiki, rails d irwi_wiki_views
 gem 'irwi', :git => 'git://github.com/alno/irwi.git'
 #markdown for writing
