@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/css/board.css">
 <!--게시글 목록 시작-->
-<% if (can? :create, @article.last)%>
+<% if (can? :create, @article.new)%>
 <div style="width: 100%;">
 <a href="/board/<%=@category.route%>/<%=@board.route%>/create" style="width: 100px; padding: 7px; margin: 0px auto; display: block; text-align: center; font-size: 18px; border: 1px solid #dddddd;">새글 쓰기</a>
 </div>

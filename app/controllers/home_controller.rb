@@ -29,10 +29,10 @@ class HomeController < ApplicationController
     if !params[:post_id]
       board = params[:board]
       model = Board.where(route: params[:board]).first.articles
-      authorize! :create, model.last
+      authorize! :create, model.new
       article = model.new
-      article.member_name = "#{current_member.senior_number}기 #{current_member.username}"
-      article.member_id = current_member.id
+      article.member_id = current_member ? current_member.id : 0
+      article.member_name = current_member ? "#{current_member.senior_number}기 #{current_member.username}" : "비회원"
       article.board_id = Board.where(route: params[:board]).first.id
       article.active = false
       article.save

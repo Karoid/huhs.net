@@ -14,7 +14,7 @@ class BoardController < ApplicationController
       else                                     #Create Post & Update Post
         @article = model.find(params[:post_id].to_i)
         number = model.find(params[:post_id]).id
-        if @article.member_name == nil && @article.active == false
+        if @article.member_name == "비회원" && @article.active == false
           authorize! :create, @article
         else
           authorize! :update, @article
@@ -22,8 +22,8 @@ class BoardController < ApplicationController
       end
       @article.title = params[:title]
       @article.content = Loofah.scrub_fragment(params[:content], :escape)
-      @article.member_id = current_member.id
-      @article.member_name = "#{current_member.senior_number}기 #{current_member.username}"
+      @article.member_id = current_member ? current_member.id : 0
+      @article.member_name = current_member ? "#{current_member.senior_number}기 #{current_member.username}" : "비회원"
       @article.active = true
       @article.save
       redirect_to "/board/#{category}/#{board}/#{number}"
@@ -33,7 +33,7 @@ class BoardController < ApplicationController
       @category = Category.where(route: params[:category]).take
       @board = @category.boards.where(route: params[:board]).take
       @article = @board.articles.where(active: true)
-      authorize! :read, @article.last
+      authorize! :read, @article.new
       #페이지네이션
       perpage = 10
       if params[:page]
@@ -69,7 +69,7 @@ class BoardController < ApplicationController
     end
     def showArticle
       showBoard
-      Statistic.create(name:"read_article", member_id: current_member.id, target_model: Article, target_id: params[:id])
+      current_member ? Statistic.create(name:"read_article", member_id: current_member.id, target_model: Article, target_id: params[:id]) : nil
       @thisArticle = @article.find(params[:id])
     end
 

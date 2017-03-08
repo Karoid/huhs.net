@@ -30,7 +30,7 @@
   <hr>
   <!-- 댓글 시작 -->
   <div class="comments">
-    <%if post.board.show_comment%>
+    <%if post.board.show_comment && post.board.write_level!=0%>
   		<div class="comment-wrap">
   				<div class="photo">
   						<div class="avatar" style="background-image: url('<%=current_member.image_url%>')"></div>
