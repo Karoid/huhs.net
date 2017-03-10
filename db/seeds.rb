@@ -165,6 +165,7 @@ Category.where(route: 'addon').take.boards.create(route: 'rsp', name: '가위바
 end
 if WikiPage
   Category.where(route: 'addon').take.boards.create(route: 'wiki', name: '휴즈위키', show_last: true, template: "/wiki", read_level:1, write_level:100)
+  WikiPage.create(creator_id:1,updator_id:1,path:'',title:'위키 운영 원칙', content:'본 위키는 회원 여러분들의 개개인을 정의내리고, 추억, 역사를 기록할 수 있는 공간입니다. \r\n\r\n### 위키의 목적\r\n휴즈 위키는 다음의 사항을 주로 담습니다\r\n\r\n* 본 동아리의 현, 전회원\r\n* 본 동아리내에 주로 사용되는 용어\r\n* 본 동아리내에서 일어난 사건\r\n\r\n다음 사항에 해당하지 않는 문서는 **회원명/문서명**으로 특정 회원과 연관지어서 문서를 작성해주시기 바랍니다.\r\n\r\n* 특정인의 별명\r\n* 특정인과 관련된 어떠한 행위\r\n\r\n### 금지사항\r\n다음과 같은 사항은 휴즈위키에서 금하고 있습니다\r\n\r\n* 의도적으로 문서를 훼손하는 **반달리즘**\r\n* 근거 없는 **비난 및 비방**\r\n\r\n위 사항으로 적발시 휴즈위키 일시 사용 금지 및 영구 사용금지될 수 있음을 숙지해주십시오.\r\n\r\n### 글 작성시 유의사항\r\n####본 위키는 실명위키입니다!\r\n따라서 누군가가 불쾌하거나 문제가 될 부분이 있는 경우 주석으로 자신의 증언이라고 적어주셔야 합니다.  \r\n만일 논의를 통해 삭제 결정이 난 이후에도 지속적으로 이전 문서를 복원하는 회원의 경우 **반달리즘으로 규정**하고 위키를 작성할 권한을 일시/영구적으로 박탈당하게 됩미다.\r\n####마크다운 문법으로 작성하셔야 합니다\r\n글은 **html** 과 **[마크다운 문법](https://nolboo.kim/blog/2014/04/15/how-to-use-markdown/)**으로 쉽게 작성될 수 있습니다. 마크다운은 매우 널리 쓰이는 문서 작성법이니 익히시는 것을 추천드립니다^^ \r\n#### 본 위키의 목적에 맞는 문서를 작성하셔야 합니다\r\n앞서 설명한 위키의 목적에 부합하지 않는 문서는 관리자에 의해 수정 및 삭제된 후 복원 금지될 수 있습니다.')
 end
 #Article
 Board.where(route: 'history').take.articles.create(
