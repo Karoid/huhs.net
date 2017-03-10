@@ -27,12 +27,6 @@
     <%= f.telephone_field :tel, autofocus: true %>
   </div>
 
-  <div class="field form-group">
-    <label for="tel">학부생일때 제1전공</label><br />
-    <%= f.select :major_id, Major.all.collect {|p| [ p.name, p.id ] } %>
-    <%#f.text_field :major, autofocus: true%>
-  </div>
-
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
