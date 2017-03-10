@@ -27,10 +27,10 @@ var ready = function(){
         //Navigation
         menu: '#menu',
         lockAnchors: false,
-        anchors:['About Us', 'Our Mission', 'Our Team', 'Contact Us'],
+        anchors:['About Us', 'Our Mission', 'Our Plan', 'Contact Us'],
         navigation: true,
         navigationPosition: 'right',
-        navigationTooltips: ['About Us', 'Our Mission', 'Our Team', 'Contact Us'],
+        navigationTooltips: ['About Us', 'Our Mission', 'Our Plan', 'Contact Us'],
         showActiveTooltip: false,
         slidesNavigation: false,
         slidesNavPosition: 'bottom',
@@ -104,7 +104,7 @@ $(document).on('turbolinks:load', function(){
       $.fn.fullpage.destroy('#fullpage');
     }
     if (document.getElementById('fullpage')) {
-      if (k++ > 2) {
+      if (k++ > 1) {
         window.location.reload()
       }
     }
