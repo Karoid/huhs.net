@@ -8,45 +8,7 @@
 
 # 반드시 Member password를 바꾸어야 한다
 # config/initializers/rails_db 의 password, 여기 admin의 password를 바꿔줘라!
-def writeolddata(model,doc)
-  @article = model.new
-  @article.member_id = 1234567
-  @article.member_name = doc.at('nick_name').text
-  @article.created_at = doc.at('regdate').text.to_time
-  @article.updated_at = doc.at('last_update').text.to_time
-  @article.title = doc.at('title').text #제목
-  @article.content = ""
-  @article.content += "글쓴이: "+doc.at('nick_name').text+"<br>" #글쓴이
-  if doc.at('uploaded_count').text != '0'
-    @article.content += "첨부 갯수: "+doc.at('uploaded_count').text+"<br>" #첨부갯수
-    @attach.each do |att|
-      if att.at('upload_target_srl').text == doc.at('document_srl').text
-        @article.content += '<a href="'+att.at("uploaded_filename").text[1..-1]+'" class="attach">'+att.at("source_filename").text+'</a><br>'
-      end
-    end
-  end
-  @article.content += doc.at('content').text.gsub('src="files/', 'src="/files/').gsub('src="./files/', 'src="/files/').html_safe #내용물
-  @article.save
-  return @article.id
-end
-def writegallery(doc,article_id)
-  if !(@article.content.include? "img") && doc.at('uploaded_count').text != '0'
-    @attach.each do |att|
-      fileName = att.at("uploaded_filename").text[1..-1].gsub('src="files/', 'src="/files/').gsub('src="./files/', 'src="/files/')
-      if File.exist?(Dir.pwd+ "/public"+fileName) && att.at('upload_target_srl').text == doc.at('document_srl').text
-        Uploadfile.create(
-          article_id: article_id,
-          public_id: nil,
-          format: "file",
-          url: fileName,
-          resource_type: nil
-        )
-        @article.content += '<img src="'+fileName+'">'
-      end
-    end
-    @article.save
-  end
-end
+
 #Major
 Major.create(department: "미등록", name:"미등록", id: 0);
 Major.create(department: "공과대학", name:"건축학부");
