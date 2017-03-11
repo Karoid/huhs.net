@@ -50,7 +50,7 @@
               </td>
               <td class=" "><%=member.senior_number%></td>
               <td class=" "><%=member.username%></td>
-              <td class=" "><%=member.major.name%></td>
+              <td class=" "><%=member.major ? member.major.name : nil%></td>
               <td class=" "><%=member.email%></td>
               <td class=" "><%=member.tel%></td>
               <td class=" " name="role"><%=member.role%></td>
@@ -120,7 +120,7 @@
               </td>
               <td class=" "><%=member.senior_number%></td>
               <td class=" "><%=member.username%></td>
-              <td class=" "><%=member.major.name%></td>
+              <td class=" "><%=member.major ? member.major.name : nil%></td>
               <td class=" "><%=member.email%></td>
               <td class=" "><%=member.tel%></td>
               <td class=" " name="role"><%=member.role%></td>
@@ -222,43 +222,7 @@
         <div class="clearfix"></div>
       </div>
 
-      <div class="x_content">
-
-        <table id="datatable_major" class="table table-striped responsive-utilities jambo_table dt-responsive nowrap" width="100%">
-          <thead>
-            <tr class="headings">
-              <th>
-                <input type="checkbox" id="check-all" class="flat" disabled>
-              </th>
-              <th class="column-title">번호 </th>
-              <th class="column-title">학과명 </th>
-              <th class="column-title">대학명 </th>
-              <th class="column-title no-link last"><span class="nobr">Action</span>
-              </th>
-              <th class="bulk-actions" colspan="7">
-                <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-              </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <% @major.each do |major|%>
-            <tr class="even pointer">
-              <td class="a-center " name="id">
-                <input type="checkbox" class="flat" name="table_records" id="<%=major.id%>">
-              </td>
-              <td class=" "><%=major.id%></td>
-              <td class=" " name="name"><%=major.name%></td>
-              <td class=" " name="department"><%=major.department%></td>
-              <td class=" last"><a href="#datatable_major" class="edit_major">Edit</a>
-              </td>
-            </tr>
-            <%end%>
-          </tbody>
-        </table>
-        <button id="delete_major" class="btn btn-danger">삭제</button>
-        <button id="create_major" class="btn btn-success">추가</button>
-      </div>
+      
     </div>
   </div>
 
