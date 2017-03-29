@@ -4,15 +4,21 @@ class ApplicationController < ActionController::Base
   #protect_from_forgery with: :exception
   rescue_from CanCan::AccessDenied do |exception|
     if current_member
-      redirect_to :back, :alert => exception.message
+      begin
+        redirect_to :back, :alert => exception.message
+      rescue
+        redirect_to "/"
+      end
     else
-      redirect_to new_member_session_path, :alert => "로그인이 필요합니다"
+      authenticate_member!
     end
   end
 
   #devise
   def after_sign_in_path_for(resource)
-    Statistic.create(name:"sign_in",member_id: current_member.id)
+    begin
+      Statistic.create(name:"sign_in",member_id: current_member.id)
+    rescue;end
     super
   end
 

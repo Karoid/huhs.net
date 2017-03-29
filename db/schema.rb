@@ -36,7 +36,8 @@ ActiveRecord::Schema.define(version: 20170303084360) do
 
   create_table "attendences", force: :cascade do |t|
     t.integer  "attendence_list_id"
-    t.integer  "user_id",            null: false
+    t.integer  "user_id"
+    t.string   "user_name",          null: false
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
   end

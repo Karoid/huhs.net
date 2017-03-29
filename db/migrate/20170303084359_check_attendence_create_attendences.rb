@@ -3,11 +3,8 @@ class CheckAttendenceCreateAttendences < ActiveRecord::Migration
     create_table :attendences do |t|
       t.integer :attendence_list_id
       ## Database authenticatable
-      t.integer :user_id,              null: false
-
-
-
-
+      t.integer :user_id
+      t.string :user_name,              null: false
 
       t.timestamps null: false
     end
