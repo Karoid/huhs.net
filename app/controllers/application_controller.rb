@@ -3,12 +3,22 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   #protect_from_forgery with: :exception
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to :back, :alert => exception.message
+    if current_member
+      begin
+        redirect_to :back, :alert => exception.message
+      rescue
+        redirect_to "/"
+      end
+    else
+      authenticate_member!
+    end
   end
 
   #devise
   def after_sign_in_path_for(resource)
-    Statistic.create(name:"sign_in",member_id: current_member.id)
+    begin
+      Statistic.create(name:"sign_in",member_id: current_member.id)
+    rescue;end
     super
   end
 
