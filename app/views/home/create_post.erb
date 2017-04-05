@@ -29,7 +29,13 @@
 }
 </style>
 <script>
-    $(document).ready(function() {
+var fileInterval = setInterval(function(){
+    if ($('#edit').summernote){
+        custom()
+        clearInterval(fileInterval); // clear interval
+    }
+},100);
+    function custom() {
       var FileButton = function (context) {
         var ui = $.summernote.ui;
         //create dialog
@@ -87,7 +93,7 @@
           }
       });
 
-    });
+    }
   function sendIMG($summernote, file) {
       var formData = new FormData();
       formData.append("file", file);
