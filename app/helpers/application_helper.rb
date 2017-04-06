@@ -12,5 +12,10 @@ module ApplicationHelper
       else
         flash_type.to_s
     end
+
+    def low_quality(url)
+      iscloudinary = /((http)|(https))\:\/\/res\.cloudinary\.com\//.match(url)
+      return url.split("/").insert(-2,"media_lib_thumb").join("/")
+    end
   end
 end
