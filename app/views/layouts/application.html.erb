@@ -41,7 +41,7 @@
       <% if member_signed_in? %>
         <div style="text-align:center;padding:10px 14px" class="logged_on">
           <div id="profile_wrapper">
-            <div id="profile_left" style="background:url(<%=current_member.image_url%>);background-size: auto 100%;"></div>
+            <div id="profile_left" style="background:url(<%=cloudinary_quality(current_member.image_url,"sqare_220")%>);background-size: auto 100%;"></div>
             <div id="profile_right">
               <a href="/profile"><%= current_member.senior_number %>기 <%= current_member.username %></a>
               <div><%= link_to "로그아웃", '/members/sign_out', method: :get, data: { confirm: "Are you sure?" } %></div>
