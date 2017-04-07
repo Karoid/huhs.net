@@ -159,7 +159,7 @@
                             <%if !staff.admin%>
                               <div class="col-sm-4 col-xs-12">
                                   <div class="member">
-                                      <p><img class="img-responsive img-thumbnail img-circle" src="<%=staff.image_url%>" alt="" ></p>
+                                      <p><img class="img-responsive img-thumbnail img-circle" src="<%=cloudinary_quality(staff.image_url,"w_220,h_220")%>" alt="" ></p>
                                       <h3><%=staff.username%><small class="designation">CEO &amp; Founder</small></h3>
                                   </div>
                               </div>

@@ -9,7 +9,7 @@
 				<div class="container1">
 					<div class="photo">
 						<%if article.uploadfiles.take%>
-							<img src="<%=article.uploadfiles.take.url%>" align="center">
+							<img src="<%=cloudinary_quality(article.uploadfiles.take.url,"w_220,h_220")%>" align="center">
 						<%end%>
 					</div>
 					<div class="text">
