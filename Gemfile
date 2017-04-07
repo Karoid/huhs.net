@@ -63,6 +63,8 @@ gem 'redcarpet'
 group :production do
   #gem 'pg',      :group => :production
   gem 'pg'
+  #compress asset in heroku
+  gem 'heroku-deflater'
 end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
