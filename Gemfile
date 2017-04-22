@@ -50,7 +50,8 @@ end
 gem 'irwi', :git => 'git://github.com/alno/irwi.git'
 #markdown for writing
 gem 'redcarpet'
-
+# Service worker for speed, and webapp
+gem 'serviceworker-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

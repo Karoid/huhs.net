@@ -16,3 +16,4 @@
 //= require jquery.isotope.min.js
 //= require jquery.prettyPhoto.js
 //= require main.js
+//= require serviceworker-companion
