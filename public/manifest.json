@@ -7,8 +7,34 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "256x256"
+      "src": "/icon/favicon-5.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon/favicon-4.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon/favicon-3.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon/favicon-2.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon/favicon-1.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon/favicon-0.png",
+      "sizes": "16x16",
+      "type": "image/png"
     }
   ]
 }
