@@ -1,0 +1,14 @@
+{
+  "name": "huhs.net",
+  "short_name": "huhs.net",
+  "lang": "ko",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "256x256"
+    }
+  ]
+}
