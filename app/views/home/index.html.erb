@@ -6,7 +6,7 @@
 
  <div class="frame oneperframe" id="oneperframe">
    <ul class="clearfix">
-     <li>
+     <li style="background:rgb(90, 210, 210);">
          <div class="carousel-inner" id="main-slider">
              <div class="item active">
                <hr style="float: right; margin-bottom: 18px;">
@@ -18,9 +18,15 @@
                <hr>
              </div>
          </div>
-         <div class="" style="text-align:center">
-             다음 페이지로 이동
+         <div id="drag_to_next">
+           <span>
+             <div>
+               한양대학교 컴퓨터 클럽<BR>HUHS에 오신것을 환영합니다
+             </div>
+
+           </span>
          </div>
+
      </li>
      <li>1</li>
      <li>2</li>
@@ -31,6 +37,8 @@
      <div class="handle">
        <div class="mousearea"></div>
      </div>
+     <div class="arrow arrow-1"></div>
+     <div class="arrow arrow-2"></div>
    </div>
 
 
@@ -116,13 +124,106 @@
   	background: #666;
   }
 </style>
+<style media="screen">
+  .frame #drag_to_next{
+    text-align:center;
+  }
+  .frame #drag_to_next div{
+    height:calc(100vh - 550px);
+    display: table-cell;
+    vertical-align: middle;
+    color:rgb(38,41,51);
+  }
+  /*arrow css*/
+  .arrow {
+    opacity: 0;
+    position: absolute;
+    bottom: 30px;
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    -webkit-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+    -webkit-animation: arrow-movement 2s ease-in-out infinite;
+            animation: arrow-movement 2s ease-in-out infinite;
+  }
+
+  .arrow-2 {
+    -webkit-transform: translateX(20px) rotate(-90deg);
+            transform: translateX(20px) rotate(-90deg);
+  }
+
+  .arrow:before,
+  .arrow:after {
+    background: #fff;
+    content: '';
+    display: block;
+    height: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+  }
+
+  .arrow:before {
+    -webkit-transform: rotate(45deg) translateX(-23%);
+            transform: rotate(45deg) translateX(-23%);
+    -webkit-transform-origin: top left;
+            transform-origin: top left;
+  }
+
+  .arrow:after {
+    -webkit-transform: rotate(-45deg) translateX(23%);
+            transform: rotate(-45deg) translateX(23%);
+    -webkit-transform-origin: top right;
+            transform-origin: top right;
+  }
+
+  @-webkit-keyframes arrow-movement {
+    0% {
+      opacity: .7;
+      right: 50px;
+    }
+    50% {
+      opacity: 1;
+      right: 100px;
+    }
+    100% {
+      opacity: .7;
+      right: 50px;
+    }
+  }
+
+  @keyframes arrow-movement {
+    0% {
+      opacity: .7;
+      right: 50px;
+    }
+    50% {
+      opacity: 1;
+      right: 100px;
+    }
+    100% {
+      opacity: .7;
+      right: 50px;
+    }
+  }
+  @media screen and (max-width: 768px){
+    .frame #drag_to_next div{
+      height:calc(100vh - 290px);
+      font-size: 30px;
+    }
+  }
+</style>
 <script type="text/javascript">
 var d_width
 var d_size = {}
+var $frame = $('#oneperframe');
+var $wrap  = $frame;
 init()
 function init(){
   /* Act on the event */
   d_width = $('#board').width();
+  $frame.sly('reload');
   $('#board').css('overflow', 'hidden');
   if(screen.width/screen.height > 1){
     d_size = {'width': d_width, 'height': $('#board').height()}
@@ -133,35 +234,31 @@ function init(){
   $('#oneperframe').children('ul').children('li').css(d_size);
 }
 $(window).on('resize',init);
-(function () {
-  var $frame = $('#oneperframe');
-  var $wrap  = $frame;
 
-  // Call Sly on frame
-  $frame.sly({
-    horizontal: 1,
-    itemNav: 'forceCentered',
-    smart: 1,
-    activateMiddle: 1,
-    mouseDragging: 1,
-    touchDragging: 1,
-    releaseSwing: 0,
-    startAt: 0,
-    scrollBar: $wrap.find('.scrollbar'),
-    scrollBy: 1,
-    scrollTrap: true,
-    speed: 300,
-    elasticBounds: 1,
-    easing: 'easeOutExpo',
-    dragHandle: 1,
-    dynamicHandle: 1,
-    clickBar: 1,
+// Call Sly on frame
+$frame.sly({
+  horizontal: 1,
+  itemNav: 'forceCentered',
+  smart: 1,
+  activateMiddle: 1,
+  mouseDragging: 1,
+  touchDragging: 1,
+  releaseSwing: 0,
+  startAt: 0,
+  scrollBar: $wrap.find('.scrollbar'),
+  scrollBy: 1,
+  scrollTrap: true,
+  speed: 300,
+  elasticBounds: 1,
+  easing: 'easeOutExpo',
+  dragHandle: 1,
+  dynamicHandle: 1,
+  clickBar: 1,
 
-    // Buttons
-    prev: $wrap.find('.prev'),
-    next: $wrap.find('.next')
-  });
-}());
+  // Buttons
+  prev: $wrap.find('.prev'),
+  next: $wrap.find('.next')
+});
 </script>
 
 </body>

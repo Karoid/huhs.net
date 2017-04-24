@@ -2,7 +2,7 @@
 #main-slider{
   background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ) ,url(../images/slider-bg.jpg);
   background-size: 100% auto;
-  background-position: center -70px;
+  background-position: center 0px;
   background-repeat: no-repeat;
   padding: 150px 0;
   color: #fff;
