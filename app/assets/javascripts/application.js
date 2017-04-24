@@ -12,7 +12,6 @@
 //
 //= require jquery.js
 //= require turbolinks
-//= require bootstrap.min.js
 //= require jquery.isotope.min.js
 //= require jquery.prettyPhoto.js
 //= require main.js
