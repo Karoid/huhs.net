@@ -1,5 +1,5 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Sly/1.6.0/sly.js"></script>
-<script type="text/javascript" src="http://darsa.in/sly/examples/js/vendor/plugins.js"></script>
+<script type="text/javascript" src="/js/sly.plugins.js"></script>
 
  <link rel="stylesheet" href="/css/index.css">
  <div class="wrap">
@@ -117,16 +117,22 @@
   }
 </style>
 <script type="text/javascript">
-var d_width = $('#board').width();
+var d_width
 var d_size = {}
-$('#board').css('overflow', 'hidden');
-if(screen.width/screen.height > 1){
-  d_size = {'width': d_width, 'height': $('#board').height()}
-}else {
-  d_size = {'width': d_width, 'height': $('#board').height() - 90}
+init()
+function init(){
+  /* Act on the event */
+  d_width = $('#board').width();
+  $('#board').css('overflow', 'hidden');
+  if(screen.width/screen.height > 1){
+    d_size = {'width': d_width, 'height': $('#board').height()}
+  }else {
+    d_size = {'width': d_width, 'height': $('#board').height() - 90}
+  }
+  $('#oneperframe').css(d_size);
+  $('#oneperframe').children('ul').children('li').css(d_size);
 }
-$('#oneperframe').css(d_size);
-$('#oneperframe').children('ul').children('li').css(d_size);
+$(window).on('resize',init);
 (function () {
   var $frame = $('#oneperframe');
   var $wrap  = $frame;
