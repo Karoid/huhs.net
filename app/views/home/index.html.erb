@@ -6,39 +6,144 @@
 
  <div class="frame oneperframe" id="oneperframe">
    <ul class="clearfix">
-     <li style="background:rgb(90, 210, 210);">
-         <div class="carousel-inner" id="main-slider">
-             <div class="item active">
-               <hr style="float: right; margin-bottom: 18px;">
-                 <div class="container">
-                     <div class="carousel-content">
-                         <h1><span>H</span>anyang <span>U</span>niversity<br><span>H</span>ardware and <span>S</span>oftware</h1>
-                     </div>
-                 </div>
-               <hr>
-             </div>
-         </div>
-         <div id="drag_to_next">
-           <span>
-             <div>
-               한양대학교 컴퓨터 클럽<BR>HUHS에 오신것을 환영합니다
-             </div>
+     <li style="background:#edfafd;">
+        <div class="carousel-inner" id="main-slider">
+           <div class="item active">
+             <hr style="float: right; margin-bottom: 18px;">
+               <div class="container">
+                   <div class="carousel-content">
+                       <h1><span>H</span>anyang <span>U</span>niversity<br><span>H</span>ardware and <span>S</span>oftware</h1>
+                   </div>
+               </div>
+             <hr>
+           </div>
+        </div>
+        <div id="drag_to_next">
+         <span>
+           <div>
+             한양대학교 컴퓨터 클럽<BR>HUHS에 오신것을 환영합니다
+           </div>
 
-           </span>
-         </div>
-
+         </span>
+        </div>
+        <div class="arrow-box">
+          <div class="arrow arrow-1"></div>
+          <div class="arrow arrow-2"></div>
+        </div>
      </li>
-     <li>1</li>
-     <li>2</li>
-     <li>3</li>
-     <li>4</li>
+     <li style="overflow-y:scroll;">
+       <section id="study">
+           <div class="container">
+               <div class="box">
+                 <div class="center">
+                   <h2>스터디 활동</h3>
+                     <p class="lead">본회는 스터디를 통해 학술적 목표를 이룩합니다</p>
+                 </div><!--/.center-->
+                 <div class="row">
+                     <div class="col-md-4 col-sm-6">
+                         <div class="center">
+                             <i class="icon-apple icon-md icon-color1"></i>
+                             <h4>iOS development</h4>
+                         </div>
+                     </div><!--/.col-md-4-->
+                     <div class="col-md-4 col-sm-6">
+                         <div class="center">
+                             <i class="icon-android icon-md icon-color2"></i>
+                             <h4>Android development</h4>
+                         </div>
+                     </div><!--/.col-md-4-->
+                     <div class="col-md-4 col-sm-6">
+                         <div class="center">
+                             <i class="icon-camera icon-md icon-color3"></i>
+                             <h4>Vegas Study</h4>
+                         </div>
+                     </div><!--/.col-md-4-->
+                     <div class="col-md-4 col-sm-6">
+                         <div class="center">
+                             <i class="icon-html5 icon-md icon-color4"></i>
+                             <h4>Ruby on Rails development</h4>
+                         </div>
+                     </div><!--/.col-md-4-->
+                     <div class="col-md-4 col-sm-6">
+                         <div class="center">
+                             <i class="icon-book icon-md icon-color5"></i>
+                             <h4>Powerpoint study</h4>
+                         </div>
+                     </div><!--/.col-md-4-->
+                     <div class="col-md-4 col-sm-6">
+                         <div class="center">
+                             <i class="icon-thumbs-up icon-md icon-color6"></i>
+                             <h4>Website build project</h4>
+                         </div>
+                     </div><!--/.col-md-4-->
+                 </div><!--/.row-->
+               </div><!--/.box-->
+           </div><!--/.container-->
+       </section><!--/#portfolio-->
+       <div class="arrow-box" style="transform: rotate(90deg) translateY(-20vw);top: 50vh;">
+         <div class="arrow arrow-1"></div>
+         <div class="arrow arrow-2"></div>
+       </div>
+     </li>
+     <li style="overflow-y:scroll;">
+       <section id="photo">
+           <div class="container">
+               <div class="box">
+                 <div class="center gap">
+                     <h2>동아리 활동</h2>
+                     <p class="lead">저희 동아리는 가족같은 분위기, IT Social 활동을 지향합니다</p>
+                 </div><!--/.center-->
+                 <ul class="portfolio-items col-4" style="margin-bottom:50px;">
+                   <%k = 0%>
+                   <%@last_3_image.each do |key, value|%>
+                     <%value.each do |url|%>
+                     <li class="portfolio-item <%=k%>">
+                         <div class="item-inner">
+                             <div class="portfolio-image">
+                                 <img src="<%=cloudinary_quality(url,"c_limit,h_200,w_300")%>" alt="<%=key%>">
+                                 <div class="overlay">
+                                     <a class="preview btn btn-danger" title="<%=key%>" href="<%=url%>"><i class="icon-eye-open"></i></a>
+                                 </div>
+                             </div>
+                             <h5><%=key%></h5>
+                         </div>
+                     </li>
+                     <%end%>
+                     <%k += 1%>
+                   <%end%>
+                 </ul>
+                 <ul class="portfolio-filter">
+                     <li><a class="btn btn-primary active" href="#" data-filter="*">All</a></li>
+                     <%@last_3_image.keys.each_with_index do |title, index|%>
+                     <li><a class="btn btn-primary" href="#" data-filter=".<%=index%>"><%=title%></a></li>
+                     <%end%>
+                 </ul><!--/#portfolio-filter-->
+               </div><!--/.box-->
+           </div><!--/.container-->
+       </section><!--/#services-->
+     </li>
+     <li style="background-color:#edfafd;">
+       <section id="about-us">
+         <div class="container">
+           <div class="box" style="background:0;border:0">
+             <div class="center">
+               <h2>더 알아보고 싶으신가요?</h2>
+               <a href='/board/introduce/staff' class="btn">현재 임원진 보기</a>
+               <p class="lead" style="color:#2a93d5">매 학기 공정한 투표를 통해 임원이 선출됩니다.</p>
+               <a href='/board/introduce/history' class="btn">연혁 보기</a>
+               <p class="lead" style="color:#2a93d5">36년의 전통을 자랑하는 휴즈의 연혁을 살펴보세요</p>
+               <a href='/board/introduce/rules' class="btn">회칙 보기</a>
+               <p class="lead" style="color:#2a93d5">휴즈의 활동은 회칙을 근거해 이루어집니다.</p>
+             </div>
+           </div>
+          </div>
+        </section>
+     </li>
    </ul>
    <div class="scrollbar">
      <div class="handle">
        <div class="mousearea"></div>
      </div>
-     <div class="arrow arrow-1"></div>
-     <div class="arrow arrow-2"></div>
    </div>
 
 
@@ -64,7 +169,7 @@
   	height: 100%;
   	font-size: 50px;
   }
-  .frame ul li {
+  .frame>ul>li {
   	float: left;
   	width: 80vw;
   	height: 100%;
@@ -134,6 +239,11 @@
     vertical-align: middle;
     color:rgb(38,41,51);
   }
+  .frame #about-us a.btn {
+    font-size: 25px;
+    color: #135589;
+    display: block;
+  }
   /*arrow css*/
   .arrow {
     opacity: 0;
@@ -146,15 +256,17 @@
     -webkit-animation: arrow-movement 2s ease-in-out infinite;
             animation: arrow-movement 2s ease-in-out infinite;
   }
-
+  .arrow-box {
+    position:absolute;width:100vw;
+  }
   .arrow-2 {
     -webkit-transform: translateX(20px) rotate(-90deg);
             transform: translateX(20px) rotate(-90deg);
   }
 
-  .arrow:before,
-  .arrow:after {
-    background: #fff;
+  .active .arrow:before,
+  .active .arrow:after {
+    background: #135589;
     content: '';
     display: block;
     height: 3px;
@@ -210,8 +322,12 @@
   @media screen and (max-width: 768px){
     .frame #drag_to_next div{
       height:calc(100vh - 290px);
-      font-size: 30px;
+      font-size: 25px;
     }
+    .portfolio-filter{
+      display: none;
+    }
+    .portfolio-item .item-inner {margin:1px;}
   }
 </style>
 <script type="text/javascript">
@@ -219,7 +335,7 @@ var d_width
 var d_size = {}
 var $frame = $('#oneperframe');
 var $wrap  = $frame;
-init()
+
 function init(){
   /* Act on the event */
   d_width = $('#board').width();
@@ -232,18 +348,19 @@ function init(){
   }
   $('#oneperframe').css(d_size);
   $('#oneperframe').children('ul').children('li').css(d_size);
+  sly.reload()
 }
 $(window).on('resize',init);
 
 // Call Sly on frame
-$frame.sly({
+var sly = new Sly($frame,{
   horizontal: 1,
   itemNav: 'forceCentered',
   smart: 1,
   activateMiddle: 1,
   mouseDragging: 1,
   touchDragging: 1,
-  releaseSwing: 0,
+  releaseSwing: 1,
   startAt: 0,
   scrollBar: $wrap.find('.scrollbar'),
   scrollBy: 1,
@@ -258,6 +375,29 @@ $frame.sly({
   // Buttons
   prev: $wrap.find('.prev'),
   next: $wrap.find('.next')
+}).init();
+init()
+
+sly.on('moveEnd', function(eventName,itemIndex){
+  var active_item = $frame.find('li.active')
+  if(active_item.css('overflow-y') == 'scroll' && $(window).width() > 768){
+    if(active_item.children('section').innerHeight() > $(window).height()){
+      active_item.scrollTop(10)
+      var this_sly = this
+      var transform = -sly.pos.dest
+      var width = $frame.children('ul').width()
+      sly.destroy()
+      $frame.children('ul').css({transform: 'translateZ(0px) translateX('+transform+'px)', width: width})
+      active_item.scroll(function(event) {
+        if(active_item.children('section').offset().top + active_item.children('section').innerHeight() - $(window).height() == 0){
+          active_item.scrollTop(10)
+          try {sly.init().activate(active_item.next('li'))} catch (e) {}
+        }else if(active_item.children('section').offset().top == 0){
+          try {sly.init().activate(active_item.prev('li'))} catch (e) {}
+        }
+      });
+    }
+  }
 });
 </script>
 
