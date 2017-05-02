@@ -1,5 +1,11 @@
 <!--검색-->
-<form class="search" method="get" style="margin-top: 100px;">
+<% if (can? :read, @pages.take)%>
+<div style="width: 100%;margin-top: 50px;">
+  <a href="/wiki/new/제목을 입력하세요" style="width: 100px; padding: 7px; margin: 0px auto; display: block; text-align: center; font-size: 18px; border: 1px solid #dddddd;">새글 쓰기</a>
+</div>
+<%end%>
+
+<form class="search" method="get" style="margin-top: 50px;">
 <input type="text" name="search" value="">
 <input type="submit" value="검색">
 </form>

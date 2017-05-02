@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery.js
+//= require jquery_ujs
 //= require turbolinks
 //= require jquery.isotope.min.js
 //= require jquery.prettyPhoto.js
