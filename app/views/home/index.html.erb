@@ -352,6 +352,37 @@ function init(){
 }
 $(window).on('resize',init);
 
+if (typeof Sly == "undefined") {
+  $.getScript("https://cdnjs.cloudflare.com/ajax/libs/Sly/1.6.0/sly.js",function(){
+    // Call Sly on frame
+    var sly = new Sly($frame,{
+      horizontal: 1,
+      itemNav: 'forceCentered',
+      smart: 1,
+      activateMiddle: 1,
+      mouseDragging: 1,
+      touchDragging: 1,
+      releaseSwing: 1,
+      startAt: 0,
+      scrollBar: $wrap.find('.scrollbar'),
+      scrollBy: 1,
+      scrollTrap: true,
+      speed: 300,
+      elasticBounds: 1,
+      easing: 'easeOutExpo',
+      dragHandle: 1,
+      dynamicHandle: 1,
+      clickBar: 1,
+
+      // Buttons
+      prev: $wrap.find('.prev'),
+      next: $wrap.find('.next')
+    }).init();
+    init()
+    sly.on('moveEnd', sly_fix);
+  });
+  console.log("FIXED!")
+}
 // Call Sly on frame
 var sly = new Sly($frame,{
   horizontal: 1,
@@ -378,7 +409,9 @@ var sly = new Sly($frame,{
 }).init();
 init()
 
-sly.on('moveEnd', function(eventName,itemIndex){
+sly.on('moveEnd', sly_fix);
+
+function sly_fix(eventName,itemIndex){
   var active_item = $frame.find('li.active')
   if(active_item.css('overflow-y') == 'scroll' && $(window).width() > 768){
     if(active_item.children('section').innerHeight() > $(window).height()){
@@ -398,7 +431,7 @@ sly.on('moveEnd', function(eventName,itemIndex){
       });
     }
   }
-});
+}
 </script>
 
 </body>

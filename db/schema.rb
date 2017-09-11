@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20170303084360) do
 
   create_table "attendence_lists", force: :cascade do |t|
     t.integer  "user_id",    null: false
+    t.string   "user_name"
     t.integer  "code"
     t.string   "name",       null: false
     t.datetime "start",      null: false

@@ -11,7 +11,7 @@ GIT
 
 GIT
   remote: https://github.com/Karoid/rock_scissors_paper
-  revision: 58e00f1e85bd38e8b407a4a0a8c2e3d82686d0dc
+  revision: c3abf79d57f80323b5a9a4896e4b8704f8748f14
   specs:
     rock_scissors_paper (0.1.4)
 
@@ -28,6 +28,12 @@ PATH
   specs:
     check_attendence (0.1.0)
       rails (~> 4.2.5.1)
+
+PATH
+  remote: ../enrollment
+  specs:
+    enrollment (0.0.1)
+      rails (>= 4.2)
 
 GEM
   remote: https://rubygems.org/
@@ -291,6 +297,7 @@ DEPENDENCIES
   cloudinary
   coffee-rails (~> 4.1.0)
   devise
+  enrollment!
   heroku-deflater
   irwi!
   jbuilder (~> 2.0)

@@ -136,8 +136,13 @@
     }
 	}
 
-	$('.text').on('focus', function() {
-	  document.body.scrollTop = $(this).offset().top;
-		console.log("top");
-	});
+	if(window.matchMedia('(max-width: 767px)').matches){
+		$('.text').on('focus', function() {
+			$('#login_logo').hide()
+		  document.body.scrollTop = $(this).offset().top;
+		});
+		$('.text').on('focusout', function() {
+			$('#login_logo').show()
+		});
+	}
 </script>
