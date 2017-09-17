@@ -97,4 +97,9 @@ class HomeController < ApplicationController
      url: sended_msg['url'],
      resource_type: sended_msg['resource_type'])
   end
+
+  def index1
+    #2017/09/17 방탈출용 페이지
+    render layout: false
+  end
 end
