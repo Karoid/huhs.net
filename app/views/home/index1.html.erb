@@ -1,33 +1,42 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
   </head>
   <body>
   <div class="music">
-    &#127900;
+  <img src="http://iconshow.me/media/images/ui/ios7-icons/png/512/musical-notes.png" alt="">
   </div>
     <div class ="center">
          <h1>Hello world!</h1>
          <div>Date: 2010-10-23</div>
          <pre>
-|---------------------| 
-| 휴즈넷 생성기에 오  |
-| 신걸 환영합니다.    | 
-| 휴즈넷을 생성하기   | 
+|----------------| 
+| 휴즈넷 생성기에 오   |
+| 신걸 환영합니다.      | 
+| 휴즈넷을 생성하기    | 
 | 위해선 관리자 비번이| 
-| 필요합니다.         | 
-----------------------
-         </pre>
-         <input type="number">
-         <input type="submit">
+| 필요합니다.             | 
+-----------------
+</pre>
+         <input type="number" placeholder="태양, 바람, 젊음" id="ans_num">
+         <input type="submit" class="answer" value="제출">
+       </div>
+       <song></song>
   </body>
 
   <script>
+    document.getElementsByClassName('answer')[0].addEventListener("click",function(){
+      var input = document.getElementById('ans_num').value
+      if (input == '213') {alert('정답! 진행자에게 갠톡으로 "아르세우스"라고 보내고 방을 탈출해요!')}
+    })
+
     document.getElementsByClassName('music')[0].addEventListener("click",function(){
-      document.getElementsByTagName("body")[0].innerHTML += "바람부는 날에도 눈내리는 날에도<br>우리들 함께 있다면 언제나 좋아라<br>태양이 져버려도 달빛이 없는 밤에도<br>우리들 함께 가는 길 어디나 밝아라<br>타오르는 젊음이 여기에 모두 모이면<br>반짝이는 저 별속엔 우리의 꿈이(랄랄랄라)<br>바람부는 날에도 눈내리는 날에도<br>우리들 함께 있다면 언제나 좋아라<br>(랄랄랄라 랄랄라 랄랄랄라 랄랄라)<br>(랄랄랄라라 랄라라 랄랄랄랄랄랄라~ 랄라~)"
+      document.getElementsByTagName("song")[0].innerHTML = "1. 바람부는 날에도 눈내리는 날에도<br>우리들 함께 있다면 언제나 좋아라<br><br>2. 태양이 져버려도 달빛이 없는 밤에도<br>우리들 함께 가는 길 어디나 밝아라<br><br>3. 타오르는 젊음이 여기에 모두 모이면<br>반짝이는 저 별속엔 우리의 꿈이(랄랄랄라)<br>바람부는 날에도 눈내리는 날에도<br>우리들 함께 있다면 언제나 좋아라<br>(랄랄랄라 랄랄라 랄랄랄라 랄랄라)<br>(랄랄랄라라 랄라라 랄랄랄랄랄랄라~ 랄라~)"
     })
   </script>
   <style>
+  @font-face{font-family:'Gulim'; src:url('/fonts/Gulim.ttf')}
   body{
     margin-top: 30px;
   }
@@ -39,7 +48,37 @@
       position: absolute;
       right:30px;
       top:30px;
-      font-size: 30px;
+      width: 30px;
+      height:30px;
+    }
+    .music img{width:100%;}
+    input[type=number]{
+      -webkit-appearance: textfield;
+      background-color: white;
+      -webkit-rtl-ordering: logical;
+      user-select: text;
+      cursor: auto;
+      padding: 1px;
+      border-width: 2px;
+      border-style: inset;
+      border-color: initial;
+      text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    margin: 0em;
+    font: 13.3333px Arial;
+        padding: 1px 0px;
+    }
+    song{
+      font-family: monospace;
+    }
+    pre, song, body{
+      font-family: Gulim;
     }
   </style>
 </html>
