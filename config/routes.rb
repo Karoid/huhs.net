@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   wiki_root '/wiki'
-  root 'home#index'
+  root 'home#index1'
   devise_for :members
   post '/comment/c/:id' => 'board#write_comment'
   post '/comment/d/:id' => 'board#delete_comment'
