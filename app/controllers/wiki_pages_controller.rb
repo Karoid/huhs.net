@@ -2,6 +2,18 @@ class WikiPagesController < ApplicationController
   before_action :authenticate_member!
   acts_as_wiki_pages_controller
 
+  def setup_page
+    @page = page_class.find_by_path_or_new(params[:path] || '')
+    if params[:page] && params[:page][:id]
+      begin
+        @page = page_class.find_by_id(params[:page][:id])
+        @page.path = params[:path]
+      rescue
+      end
+    end
+    
+  end
+
   def show_allowed?
     true # Show page to all users
   end

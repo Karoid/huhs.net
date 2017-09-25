@@ -10,10 +10,17 @@
 
 <%= wiki_page_form do |f| %>
   <%= f.hidden_field :previous_version_number, :value => f.object.last_version_number %>
-  <%= hidden_field_tag :path, @page.path %>
 
-  <p><%=wt 'Title:' %><br /><%= f.text_field :title %></p>
-
+  <p><%=wt 'Title:' %>
+  <%if destroy_allowed?%>
+    <%= f.text_field :title %></p>
+    <p><%=wt 'Path:' %><br /><input type="text" name="path" value="<%=@page.path %>" id="path" /></p>
+    <%= f.hidden_field :id %>
+  <%else%>
+    <%=@page.title%></p>
+    <%= f.hidden_field :title %>
+    <%= hidden_field_tag :path , @page.path %>
+  <%end%>
   <%# If our 'content' contains newlines, Erubis will indent them (to make the
       produced HTML look nicer). However those indenting spaces *will* appear
       in the textarea in the user's browser and will get POSTed by the browser

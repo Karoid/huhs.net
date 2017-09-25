@@ -3,4 +3,17 @@
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
     <%= message %>
   </div>
+
+  <script>
+  	document.getElementsByClassName("close")[0].addEventListener("click",function(){
+  		this.parentElement.parentElement.removeChild(this.parentElement)
+  	})
+
+  	setTimeout(function(){
+  		var x = document.getElementsByClassName("close")[0]
+  		if (x) {
+  			x.parentElement.parentElement.removeChild(x.parentElement)  			
+  		}
+  	},3000)
+  </script>
 <% end %>
