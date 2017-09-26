@@ -1233,6 +1233,8 @@ table tr .th {
   #board {
     width: 100%;
     margin: 0;
+    height: 100%;
+    overflow: unset;
   }
   .box {
     padding: 0 !important;
