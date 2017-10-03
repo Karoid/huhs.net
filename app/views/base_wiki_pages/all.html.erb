@@ -12,4 +12,3 @@
 <%@pages = @pages.where("title LIKE ?", "%#{params[:search]}%").order('updated_at DESC')%>
 <%if @pages.length == 1%><script>if(/search/.exec(window.location.search)){window.location = '<%=wiki_page_path(@pages[0])%>'}</script><%end%>
   <%=render partial: 'base_wiki_pages/wiki_page_list'%>
-<script>$('nav').show()</script>
