@@ -21,7 +21,7 @@ $(document).scroll(function(event) {
             console.log(article)
             html += '<tr>'+
             '<td class="td_number" scope="row">'+article.id+'</th>'+
-            '<td class="td_title"><a href="/wiki/'+article.title+'">'+article.title+'</a></td>'+
+            '<td class="td_title"><a href="/wiki/'+encodeURIComponent(article.path)+'">'+article.title+'</a></td>'+
             '<td class="td_name">'+article.member_name+'</td>'+
             '<td class="td_date"><span class="hidden-xs">'+datetime.getFullYear()+'.</span>'+("0" + (datetime.getMonth() + 1)).slice(-2)+"."+("0" + datetime.getDate()).slice(-2)+'</td>'+
             '<td class="td_page_view">'+article.view+'</td>'+
