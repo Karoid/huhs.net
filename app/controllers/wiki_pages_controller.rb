@@ -5,7 +5,7 @@ class WikiPagesController < ApplicationController
   def show
     return not_allowed unless show_allowed?
 
-    @pages = Irwi.config.paginator.paginate(page_class.order('updated_at DESC'), page: params[:page], per_page: 5)
+    @pages = Irwi.config.paginator.paginate(page_class.select(:id,:title,:path, :updated_at, :updator_id).order('updated_at DESC'), page: params[:page], per_page: 5)
 
     if params[:json]
        respond_to do |format|
@@ -72,7 +72,7 @@ class WikiPagesController < ApplicationController
         hash = {}
         hash = value.attributes
         hash[:view] = Statistic.where(name: "read_article",target_model:WikiPage, target_id: value.id).length
-        hash[:member_name] = Irwi.config.user_class.find(value.creator_id).username
+        hash[:member_name] = Irwi.config.user_class.find(value.updator_id).username
         @article_page_json.push(hash)
       end
       return @article_page_json

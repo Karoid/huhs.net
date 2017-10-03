@@ -20,7 +20,7 @@ $.ajax({
       '<td class="td_number" scope="row">'+article.id+'</th>'+
       '<td class="td_title"><a href="/board/'+window.location.pathname.split("/")[2]+'/'+window.location.pathname.split("/")[3]+'/'+article.id+'">'+article.title+'</a></td>'+
       '<td class="td_name">'+article.member_name+'</td>'+
-      '<td class="td_date"><span class="hidden-xs">'+datetime.getFullYear()+'.</span>'+datetime.getMonth()+"."+datetime.getDate()+'</td>'+
+      '<td class="td_date"><span class="hidden-xs">'+datetime.getFullYear()+'.</span>'+("0" + (datetime.getMonth() + 1)).slice(-2)+"."+("0" + datetime.getDate()).slice(-2)+'</td>'+
       '<td class="td_page_view">'+article.view+'</td>'+
       '</tr>'
     });
@@ -43,13 +43,12 @@ var page = parseInt($("nav div em").html())
 
 $(document).scroll(function() {
     if (Math.round($(document).scrollTop()) >= $("#article").height() - $(window).height()+89) {
-      page+=1
 loading = $('<div id="loading" class="load" style="display: none;"><span><img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif" alt="cargando..."/></span></div>');
 $('table.article_list').after(loading);
 loading.fadeIn();
 $.ajax({
   type: 'GET',
-  url: window.location.href + "?page="+page,
+  url: window.location.href + "?page="+(page+1),
   dataType: 'json',
   data: {json:true},
   success: (function(data) {
@@ -68,6 +67,7 @@ $.ajax({
       });
       $('table.article_list tbody').append(html);
       $('.load').remove()
+      page+=1
       return loading.remove();
     });
   }),
