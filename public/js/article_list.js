@@ -1,9 +1,10 @@
 $('.pagination a').click(pagination_click_desktop)
 function pagination_click_desktop(event) {
+event.preventDefault();
 var page = parseInt(this.innerHTML)
 var loading;
 var thisLink = $(this)
-event.preventDefault();
+
 $.ajax({
   type: 'GET',
   url: $(this).attr('href'),
@@ -39,10 +40,10 @@ false;
 }
 /* 모바일 무한 스크롤 */
 var page = parseInt($("nav div em").html())
+
 $(document).scroll(function() {
-  console.log($(document).scrollTop(),Math.round($(document).scrollTop()), $("#article").height()- $(window).height()+89);
     if (Math.round($(document).scrollTop()) >= $("#article").height() - $(window).height()+89) {
-      console.log(++page);
+      page+=1
 loading = $('<div id="loading" class="load" style="display: none;"><span><img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif" alt="cargando..."/></span></div>');
 $('table.article_list').after(loading);
 loading.fadeIn();
@@ -59,7 +60,7 @@ $.ajax({
         console.log(datetime,datetime.getYear())
         html += '<tr>'+
         '<td class="td_number" scope="row">'+article.id+'</th>'+
-        '<td class="td_title"><a href="/board/'+window.location.pathname.split("/")[2]+'/'+window.location.pathname.split("/")[3]+'/'+article.id+'">'+article.title+'</a></td>'+
+        '<td class="td_title"><a href="/wiki/'+window.location.pathname.split("/")[2]+'/'+window.location.pathname.split("/")[3]+'/'+article.id+'">'+article.title+'</a></td>'+
         '<td class="td_name">'+article.member_name+'</td>'+
         '<td class="td_date"><span class="hidden-xs">'+datetime.getFullYear()+'.</span>'+datetime.getMonth()+"."+datetime.getDate()+'</td>'+
         '<td class="td_page_view">'+article.view+'</td>'+
@@ -69,13 +70,17 @@ $.ajax({
       $('.load').remove()
       return loading.remove();
     });
-  })
+  }),
+  error: function(data){
+    $('nav').show()
+    return loading.remove();
+  }
 });
 }
 });
 
 //검색 상태 표시
-if (window.location.search) {
+if (/search/.exec(window.location.search)) {
   $("form.search").empty().append('<div class="searched_tag">'+decodeURIComponent(window.location.search.split("=")[1])+' 검색됨  <i class="icon icon-remove" aria-hidden="true"></i></div>')
   .click(function(event) {
     window.location = window.location.pathname
