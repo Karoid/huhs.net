@@ -46,4 +46,9 @@ $(window).load(function(){
 			return false;
 		});
 	});
+
+	$('.close').click(function(event) {
+		/* Act on the event */
+		$(this).parent().remove()
+	});
 });

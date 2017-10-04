@@ -1,6 +1,6 @@
 <span class="wiki_page_actions" style="margin-left:10px;">
   <%= content_tag('span', link_to( '', wiki_page_edit_path(@page) , class: "glyphicon glyphicon-edit")) if edit_allowed? %>
-  <%= content_tag('span', link_to( '', wiki_page_path(@page), class: "glyphicon glyphicon-remove", :method => :delete, :confirm => wt( "Destroyed page can't be restored. Are you sure?" ) )) if destroy_allowed? %>
+  <%= content_tag('span', link_to( '', wiki_page_path(@page), class: "glyphicon glyphicon-remove", :data => {:method => :delete, :confirm => wt( "Destroyed page can't be restored. Are you sure?" ) } )) if destroy_allowed? %>
   <%= content_tag('span', link_to( wt( ' List pages' ), wiki_all_path, class: "glyphicon glyphicon-list")) %>
   <%= content_tag('span', link_to( wt( ' History' ), wiki_page_history_path(@page) , class: "glyphicon glyphicon-book")) if history_allowed? %>
-</ul>
+</span>

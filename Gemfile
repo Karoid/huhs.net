@@ -46,6 +46,10 @@ if File.exist?("../check_attendence")
 else
   gem "check_attendence", :git => "https://github.com/Karoid/check_attendence.git"
 end
+
+if File.exist?("../enrollment")
+  gem "enrollment", :path => "../enrollment"
+end
 #제거할 때 rails d irwi_wiki, rails d irwi_wiki_views
 gem 'irwi', :git => 'git://github.com/alno/irwi.git'
 #markdown for writing

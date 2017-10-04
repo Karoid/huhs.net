@@ -1,1 +1,8 @@
-<%=(wt 'There is no such page', :default => 'There is no such page. Do you want to <a href="%{new_url}">create it</a>?', :new_url => wiki_page_new_path ).html_safe %>  
+<h3 style="margin:20px;">"<span id="create_name" style="font-weight:bold"><%=URI.unescape(URI.unescape(wiki_page_new_path))%></span>" 에 해당하는 페이지가 없습니다. <a id="create_page" href="<%=URI.unescape(URI.unescape(wiki_page_new_path)).gsub!('+', ' ')%>">페이지를 생성 하시겠습니까?</a></h3>
+<a href="javascript:history.back()">돌아가기</a>
+
+<script>
+	var name = window.location.pathname.split('/wiki/')[1]
+	var name_decode = decodeURIComponent(decodeURIComponent(name)).replace(/\+/g,' ');
+	document.getElementById('create_name').innerHTML = name_decode
+</script>

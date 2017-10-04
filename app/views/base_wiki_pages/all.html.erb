@@ -1,27 +1,14 @@
 <!--검색-->
-<form class="search" method="get" style="margin-top: 100px;">
+<% if (can? :read, @pages.take)%>
+<div style="width: 100%;margin-top: 50px;">
+  <a href="/wiki/new/제목을 입력하세요" style="width: 100px; padding: 7px; margin: 0px auto; display: block; text-align: center; font-size: 18px; border: 1px solid #dddddd;">새글 쓰기</a>
+</div>
+<%end%>
+
+<form class="search" method="get" style="margin-top: 50px;">
 <input type="text" name="search" value="">
 <input type="submit" value="검색">
 </form>
 <%@pages = @pages.where("title LIKE ?", "%#{params[:search]}%").order('updated_at DESC')%>
-<center>
-<%= wiki_paginate(@pages) do -%>
-</center>
-<%if @pages.length == 1%><script>window.location = '<%=wiki_page_path(@pages[0])%>'</script><%end%>
+<%if @pages.length == 1%><script>if(/search/.exec(window.location.search)){window.location = '<%=wiki_page_path(@pages[0])%>'}</script><%end%>
   <%=render partial: 'base_wiki_pages/wiki_page_list'%>
-<center>
-<%end%>
-</center>
-<!--
-<%= wiki_page_style -%>
-
-<h1><%=wt 'All pages' %></h1>
-
-<ul>
-  <%= wiki_paginate @pages do -%>
-    <% @pages.each do |page| -%>
-      <li><%= link_to page.title, wiki_page_path( page ) %></li>
-    <% end -%>
-  <% end -%>
-</ul>
--->

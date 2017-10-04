@@ -825,6 +825,9 @@ a, a:visited, a:focus, a:active, :visited, :focus, :active, .btn:focus, .btn:act
 }
 
 @media screen and (min-width: 768px){
+  html, body{
+    font-size:16px;
+  }
   #main-slider .navigation-bar{
     font-size: 20px;
   }
@@ -1097,7 +1100,7 @@ table tr .th {
     -o-transform: scale(1);
   }
 }
-/*mobile 대응*/
+/*3. mobile 대응*/
 @media only screen and (min-width: 781px) and (max-width: 1140px) {
   #logo {
     font-size: 13px;
@@ -1130,7 +1133,12 @@ table tr .th {
     overflow: visible;
   }
   .alert{
-    top:100px;
+    top:30px;
+    margin:0;
+    width:100vw;
+    padding: 8px 35px 8px 6px;
+    font-size: 13px;
+    vertical-align: middle;
   }
   #board #article {
     margin: 90px auto 0;
@@ -1225,6 +1233,8 @@ table tr .th {
   #board {
     width: 100%;
     margin: 0;
+    height: 100%;
+    overflow: unset;
   }
   .box {
     padding: 0 !important;
