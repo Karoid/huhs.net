@@ -10,6 +10,13 @@ GIT
       rails_autolink (>= 1.0)
 
 GIT
+  remote: https://github.com/Karoid/check_attendence.git
+  revision: f8d4748f9b079af403f7259ab6d386cebe668880
+  specs:
+    check_attendence (0.1.0)
+      rails (~> 4.2.5.1)
+
+GIT
   remote: https://github.com/Karoid/rock_scissors_paper
   revision: 58e00f1e85bd38e8b407a4a0a8c2e3d82686d0dc
   specs:
@@ -22,12 +29,6 @@ GIT
     loofah (2.1.0.rc1.20150817193255)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-
-PATH
-  remote: ../check_attendence
-  specs:
-    check_attendence (0.1.0)
-      rails (~> 4.2.5.1)
 
 GEM
   remote: https://rubygems.org/
