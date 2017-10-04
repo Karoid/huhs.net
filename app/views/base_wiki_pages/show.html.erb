@@ -5,7 +5,7 @@
   <div class="article fr-view ">
     <!--제목 시작-->
     <h3 style="display:inline-block"><%=post.title%></h3>
-    <span> - <%=Member.find(post.updator_id).username%></span>
+    <span> - <%=updator = Member.find(post.updator.id); updator.username if updator%></span>
     <!--수정 버튼-->
     <% if can? :read, post %>
     <%= wiki_page_actions %>
@@ -26,7 +26,7 @@
   <a href="/wiki/new/제목을 입력하세요" style="width: 100px; padding: 7px; margin: 0px auto; display: block; text-align: center; font-size: 18px; border: 1px solid #dddddd;">새글 쓰기</a>
   </div>
   <%end%>
-  
+
   <h3 style="display:inline-block">최근 변경</h3>
   <%=render partial: 'base_wiki_pages/wiki_page_list'%>
 </div>
