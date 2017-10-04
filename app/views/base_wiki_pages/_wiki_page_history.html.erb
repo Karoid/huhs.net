@@ -20,7 +20,7 @@
         <% end %>
       </td>
       <td><%=l( v.updated_at, :format => :long ) %></td>
-      <td><%= updator = Member.find(v.updator.id); updator.username if updator %></td>
+      <td><%= v.updator.username if v.updator %></td>
       <td><%= v.comment %></td>
     </tr>
   <% end %>

@@ -5,7 +5,7 @@
   <div class="article fr-view ">
     <!--제목 시작-->
     <h3 style="display:inline-block"><%=post.title%></h3>
-    <span> - <%=updator = Member.find(post.updator.id); updator.username if updator%></span>
+    <span> - <%=post.updator.username if post.updator%></span>
     <!--수정 버튼-->
     <% if can? :read, post %>
     <%= wiki_page_actions %>

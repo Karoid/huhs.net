@@ -15,7 +15,7 @@
     <tr>
       <td class="td_number" scope="row"><%=article.id%></th>
       <td class="td_title"><%= link_to article.title, wiki_page_path( article ) %></td>
-      <td class="td_name"><%=updator = Member.find(article.updator.id); updator.username if updator%></td>
+      <td class="td_name"><%=article.updator.username if article.updator%></td>
       <td class="td_date"><span class='hidden-xs'><%=article.updated_at.strftime("%Y.")%></span><%=article.updated_at.strftime("%m.%d")%></td>
       <td class="td_page_view"><%=Statistic.where(name: "read_article",target_model:WikiPage, target_id: article.id).length%></td>
     </tr>
