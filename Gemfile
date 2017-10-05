@@ -39,7 +39,11 @@ gem 'rails_db'
 #:git => 'https://github.com/Karoid/rock_scissors_paper'
 #:path => "../rock_scissors_paper"
 #제거할 때 rails d rock_scissors_paper point
-gem "rock_scissors_paper", :git => 'https://github.com/Karoid/rock_scissors_paper'
+if File.exist?("../rock_scissors_paper")
+  gem "rock_scissors_paper", :path => "../rock_scissors_paper"
+else
+  gem "rock_scissors_paper", :git => 'https://github.com/Karoid/rock_scissors_paper'
+end
 
 if File.exist?("../check_attendence")
   gem "check_attendence", :path => "../check_attendence"
