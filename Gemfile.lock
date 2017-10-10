@@ -17,23 +17,18 @@ GIT
       rails (~> 4.2.5.1)
 
 GIT
+  remote: https://github.com/Karoid/rock_scissors_paper
+  revision: 43a989697ff071dfb528403d9373ddab0ec18f34
+  specs:
+    rock_scissors_paper (0.1.4)
+
+GIT
   remote: https://github.com/flavorjones/loofah.git
   revision: 9e154aa1380f3a8c5696ae572f04aedb49486cf3
   specs:
     loofah (2.1.1.20170924234214)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-
-PATH
-  remote: ../enrollment
-  specs:
-    enrollment (0.0.1)
-      rails (>= 4.2)
-
-PATH
-  remote: ../rock_scissors_paper
-  specs:
-    rock_scissors_paper (0.1.4)
 
 GEM
   remote: https://rubygems.org/
@@ -303,7 +298,6 @@ DEPENDENCIES
   cloudinary
   coffee-rails (~> 4.1.0)
   devise
-  enrollment!
   heroku-deflater
   irwi!
   jbuilder (~> 2.0)
@@ -327,4 +321,4 @@ DEPENDENCIES
   will_paginate (~> 3.1.0)
 
 BUNDLED WITH
-   1.14.3
+   1.15.4

@@ -1,7 +1,8 @@
 class Member < ActiveRecord::Base
   has_many :articles, dependent: :destroy
-  has_many :statistics
-  has_many :comments
+  has_many :statistics, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :kakao_chat_logins, dependent: :destroy
   belongs_to :major
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

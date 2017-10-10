@@ -1,0 +1,140 @@
+<div id="bodywrap">
+<div class="row">
+<div class="large-10 columns">
+  <div class="scroll-window-wrapper">
+  <h2>
+    API 할당 내역<br>
+  </h2>
+	<div class="scroll-window">
+	<table class="table table-striped table-hover user-list fixed-header">
+		<thead>
+			<th><div>ID</div></th>
+			<th><div>Status</div></th>
+			<th><div></div></th>
+		</thead>
+		<tbody>
+		    <%@kakao_chat_login.each do |value|%>
+			<tr>
+				<td><%=value.user_key%></td>
+				<td><%=value.active%></td>
+				<td class="text-right">
+					<button class="button tiny" id="accept" value="<%=value.user_key%>">수락</button>
+					<button class="button tiny" id="refuse" value="<%=value.user_key%>">거절</button>			
+				</td>
+			</tr>
+			<%end%>
+ 		</tbody>
+	</table>
+	</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+	$('#accept').click(function(){
+		$.ajax({
+			statusCode: {
+				404: function(){
+					alert("서버와의 통신 실패")
+				}
+	    },
+			url: '/accept_api',
+			type: 'GET',
+			dataType: 'json',
+			data: {json: true, user_key: $(this).val(), active:true},
+			success: function(data){
+				alert("승인완료")
+			}
+		})
+	})
+	
+	$('#refuse').click(function(){
+		$.ajax({
+			statusCode: {
+				404: function(){
+					alert("서버와의 통신 실패")
+				}
+	    },
+			url: '/accept_api',
+			type: 'GET',
+			dataType: 'json',
+			data: {json: true, user_key: $(this).val(), active:false},
+			success: function(data){
+				alert("삭제완료")
+			}
+		})
+	})
+</script>
+
+<style>
+    /*wrapper element so column padding doesn't affect fixed header background*/
+.scroll-window-wrapper{
+  position:relative;
+}
+/* element containing the table */
+.scroll-window{
+	height: 20rem;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+.scroll-window table{
+  margin-bottom:0;
+}
+	/*fixed header background*/
+.scroll-window:before{
+	content:"";
+	position: absolute;
+	width:100%;
+	height:2.5rem;
+	display: table;
+	z-index: 10;
+	background:rgba(170,170,170,0.8);
+}
+
+
+/*the actual fixed header*/
+table.fixed-header th div{
+  position: absolute;
+  margin-top: -.5rem;
+  z-index: 11;
+  color:#333;
+}
+table.fixed-header  thead tr{
+  height:2.5rem;
+}
+
+.user-list{
+	width:100%;
+}
+
+.user-list	td.text-right{
+	width:16rem;
+}
+#bodywrap .row{
+    margin: auto auto;
+    max-width: 500px;
+}
+/*-----experimental scrollbar styles-----*/
+/* line 199, ../scss/main.scss */
+#bodywrap ::-webkit-scrollbar {
+  width: 1rem;
+}
+/* line 202, ../scss/main.scss */
+#bodywrap ::-webkit-scrollbar-button {
+  /* width:1rem;*/
+}
+/* line 205, ../scss/main.scss */
+#bodywrap ::-webkit-scrollbar-track {
+  background-color: #eaeaea;
+  border-left: 1px solid #ccc;
+}
+/* line 212, ../scss/main.scss */
+#bodywrap ::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+}
+/* line 215, ../scss/main.scss */
+#bodywrap ::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+</style>

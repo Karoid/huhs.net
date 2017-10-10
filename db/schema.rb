@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170303084360) do
+ActiveRecord::Schema.define(version: 20171010065613) do
 
   create_table "articles", force: :cascade do |t|
     t.string   "title"
@@ -81,6 +81,14 @@ ActiveRecord::Schema.define(version: 20170303084360) do
 
   add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type"
   add_index "comments", ["member_id"], name: "index_comments_on_member_id"
+
+  create_table "kakao_chat_logins", force: :cascade do |t|
+    t.string   "user_key"
+    t.integer  "member_id"
+    t.boolean  "active",     default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
 
   create_table "majors", force: :cascade do |t|
     t.string "name",       null: false
