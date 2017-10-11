@@ -18,8 +18,8 @@
 				<td><%=value.user_key%></td>
 				<td><%=value.active%></td>
 				<td class="text-right">
-					<button class="button tiny" id="accept" value="<%=value.user_key%>">수락</button>
-					<button class="button tiny" id="refuse" value="<%=value.user_key%>">거절</button>			
+					<button class="button tiny accept" value="<%=value.user_key%>">수락</button>
+					<button class="button tiny refuse" value="<%=value.user_key%>">거절</button>			
 				</td>
 			</tr>
 			<%end%>
@@ -32,7 +32,7 @@
 </div>
 
 <script>
-	$('#accept').click(function(){
+	$('.accept').click(function(){
 		$.ajax({
 			statusCode: {
 				404: function(){
@@ -49,7 +49,7 @@
 		})
 	})
 	
-	$('#refuse').click(function(){
+	$('.refuse').click(function(){
 		$.ajax({
 			statusCode: {
 				404: function(){
