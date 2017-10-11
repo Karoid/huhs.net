@@ -79,9 +79,13 @@ class KakaoChatController < ApplicationController
     private
     
     def before_active_message
-        @data[:message][:text] = "휴즈넷에 로그인 하여 기기 #{params[:user_key]}를 허용해주세요\nhttp://huhs.net/accept_api"
+        @data[:message][:text] = "휴즈넷에 로그인 하여 기기 #{params[:user_key]}를 허용해주세요"
         @data[:keyboard][:type] = "buttons"
         @data[:keyboard][:buttons] = ["인증 확인하기"]
+        @data[:message_button] = {
+            label: "휴즈넷 접속",
+            url: "http://huhs.net/accept_api"
+        }
     end
     
     def login_success
@@ -90,9 +94,13 @@ class KakaoChatController < ApplicationController
             #휴즈 위키 읽기
             @data = {
                 message: {text: "읽고싶은 휴즈 위키의 글을 골라주세요!"},
+                message_button: {
+                    label: "휴즈위키 접속",
+                    url: "http://huhs.net/wiki"
+                },
                 keyboard: {
                     type: 'buttons',
-                    buttons: WikiPage.limit(3).offset(0).map{|x| "|위키|"+x.title} + ['다음#1','처음으로']
+                    buttons: WikiPage.limit(6).offset(0).map{|x| "|위키|"+x.title} + ['다음#1','처음으로']
                 }
             }
         when @@presets[1]
@@ -127,7 +135,7 @@ class KakaoChatController < ApplicationController
                     message: {text: "위키 페이지: #{page}"},
                     keyboard: {
                         type: 'buttons',
-                        buttons: WikiPage.limit(3).offset(3*page).map{|x| "|위키|"+x.title} + ['다음#'+(page+1).to_s,'처음으로']
+                        buttons: WikiPage.limit(6).offset(6*page).map{|x| "|위키|"+x.title} + ['다음#'+(page+1).to_s,'처음으로']
                     }
                 }
             else
