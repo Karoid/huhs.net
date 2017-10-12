@@ -279,7 +279,7 @@ class KakaoChatController < ApplicationController
             
             keyboard: {
                 type: 'buttons',
-                buttons: @@admin_presets
+                buttons: @@admin_presets + ["휴즈넷 봇 홈으로 돌아가기"]
             }
         }
     end
