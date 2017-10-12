@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 20171010065613) do
   create_table "kakao_chat_logins", force: :cascade do |t|
     t.string   "user_key"
     t.integer  "member_id"
+    t.string   "state",      default: ""
     t.boolean  "active",     default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false

@@ -24,8 +24,8 @@ class KakaoChatController < ApplicationController
         if @login_data.nil?
             @data[:message][:text] = "로그인이 필요합니다. 휴즈넷 이메일을 입력해주세요!"
             if message =~ valid_email_regex 
-                if mem = Member.where(email: message)[0]
-                    KakaoChatLogin.find_or_create_by(user_key: user_key, member_id: mem.id)
+                if mem = Member.where(email: message).take
+                    KakaoChatLogin.find_or_create_by(user_key: user_key, member_id: mem.id, state: "home")
                     before_active_message
                 else
                     @data[:message][:text] = "휴즈넷에 존재하지 않는 이메일입니다."
@@ -89,23 +89,23 @@ class KakaoChatController < ApplicationController
     end
     
     def login_success
+        case @login_data.state
+        when "home"
+            home
+        when "wiki"
+            wiki
+        when "image_upload"
+            image_upload
+        end
+        
+    end
+    
+    def home
         case params[:content]
         when @@presets[0]
             #휴즈 위키 읽기
-            @data = {
-                message: {
-                    text: "읽고싶은 휴즈 위키의 글을 골라주세요!",
-                    message_button: {
-                        label: "휴즈위키 접속",
-                        url: "http://huhs.net/wiki"
-                    }
-                },
-                
-                keyboard: {
-                    type: 'buttons',
-                    buttons: WikiPage.limit(9).offset(0).map{|x| "|위키|"+x.title} + ['다음#1','처음으로']
-                }
-            }
+            @login_data.update(state:"wiki")
+            wiki_state_message
         when @@presets[1]
             #이미지 업로드하기
             @data = {
@@ -125,30 +125,45 @@ class KakaoChatController < ApplicationController
                 }
             }
         else
-            if params[:content] =~ /\|위키\|/
-                title = params[:content].split("|위키|")[1]
-                @data[:message][:text] = WikiPage.where(title: title)[0].content
-                @data[:keyboard] = {
-                    type: "buttons",
-                    buttons: @@presets
-                }
-            elsif params[:content] =~ /다음#/
-                page = params[:content].split("다음#")[1].to_i
-                @data = {
-                    message: {text: "위키 페이지: #{page}"},
-                    keyboard: {
-                        type: 'buttons',
-                        buttons: WikiPage.limit(9).offset(9*page).map{|x| "|위키|"+x.title} + ['다음#'+(page+1).to_s,'처음으로']
-                    }
-                }
-            else
-                login_state_message
-            end
+            home_state_message
         end
-        
     end
     
-    def login_state_message
+    def wiki
+        if params[:content] =~ /\|위키\|/
+            title = params[:content].split("|위키|")[1]
+            wiki_state_message
+            @data[:message][:text] = WikiPage.where(title: title)[0].content
+        elsif params[:content] =~ /다음#/
+            page = params[:content].split("다음#")[1].to_i
+            wiki_state_message(page)
+        elsif params[:content] == "처음으로"
+            @login_data.update(state:"home")
+            home_state_message
+        elsif params[:content] == "위키 검색하기"
+            @data[:message] = {text: "원하는 검색어를 입력해주세요"}
+            @data[:keyboard] = {type: "text"}
+        elsif params[:content] == @@presets[0]
+            wiki_state_message
+        else
+            @data = {
+                message: {
+                    text: "읽고싶은 휴즈 위키의 글을 골라주세요!",
+                    message_button: {
+                        label: "휴즈위키 접속",
+                        url: "http://huhs.net/wiki"
+                    }
+                },
+                
+                keyboard: {
+                    type: 'buttons',
+                    buttons: WikiPage.where("title LIKE ?", "%#{params[:content]}%").map{|x| "|위키|"+x.title} + ["위키 검색하기",'휴즈 위키 읽기','처음으로']
+                }
+            }
+        end
+    end
+    
+    def home_state_message
         img = @login_data.member.image_url
         @data[:message][:text] = "[[로그인 상태]]\nEmail: #{@login_data.member.email}\nName: #{@login_data.member.username}"
         @data[:keyboard] = {
@@ -162,5 +177,22 @@ class KakaoChatController < ApplicationController
                 height: 100
             }
         end
+    end
+    
+    def wiki_state_message(page=0)
+        @data = {
+            message: {
+                text: "읽고싶은 휴즈 위키의 글을 골라주세요!",
+                message_button: {
+                    label: "휴즈위키 접속",
+                    url: "http://huhs.net/wiki"
+                }
+            },
+            
+            keyboard: {
+                type: 'buttons',
+                buttons: WikiPage.limit(9).offset(9*page).map{|x| "|위키|"+x.title} + ['다음#'+(page+1).to_s,"위키 검색하기",'처음으로']
+            }
+        }
     end
 end
