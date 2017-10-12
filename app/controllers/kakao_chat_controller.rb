@@ -1,10 +1,11 @@
 class KakaoChatController < ApplicationController
-    @@presets = ["휴즈 위키 읽기","이미지 업로드하기", "공지 올리기"]
+    @@home_presets = ["휴즈 위키 홈","이미지 업로드", "관리자 홈"]
+    @@admin_presets = ["공지 작성하기", "회원 등업" ,"출석 체크"]
     
     def keyboard
         render :json => {
             :type => "buttons",
-            :buttons => ["로그인 하기"]
+            :buttons => ["휴즈넷 봇 홈으로 돌아가기"]
         }
     end
     
@@ -16,7 +17,7 @@ class KakaoChatController < ApplicationController
         @login_data = KakaoChatLogin.where(user_key: user_key).take
         @data = {
             :message => {
-                :text => ""
+                :text => "[ERROR] \n서버의 @data 내용이 없습니다. \nSTATE:#{@login_data.state if @login_data} \nMSG:#{params[:content]}"
             },
             :keyboard => {type: "text"}
         }
@@ -24,7 +25,7 @@ class KakaoChatController < ApplicationController
         if @login_data.nil?
             @data[:message][:text] = "로그인이 필요합니다. 휴즈넷 이메일을 입력해주세요!"
             if message =~ valid_email_regex 
-                if mem = Member.where(email: message).take
+                if mem = Member.select(:id).where(email: message).take
                     KakaoChatLogin.find_or_create_by(user_key: user_key, member_id: mem.id, state: "home")
                     before_active_message
                 else
@@ -89,6 +90,8 @@ class KakaoChatController < ApplicationController
     end
     
     def login_success
+        @login_data.update(state:"home") if params[:content] == "휴즈넷 봇 홈으로 돌아가기"
+
         case @login_data.state
         when "home"
             home
@@ -96,46 +99,44 @@ class KakaoChatController < ApplicationController
             wiki
         when "image_upload"
             image_upload
+        when "admin"
+            admin
         end
         
     end
     
     def home
         case params[:content]
-        when @@presets[0]
+        when @@home_presets[0]
             #휴즈 위키 읽기
             @login_data.update(state:"wiki")
             wiki_state_message
-        when @@presets[1]
+        when @@home_presets[1]
             #이미지 업로드하기
             @data = {
                 message: {text: "준비중입니다"},
                 keyboard: {
                     type: 'buttons',
-                    buttons: ['홈으로 돌아가기']
+                    buttons: ['휴즈넷 봇 홈으로 돌아가기']
                 }
             }
-        when @@presets[2]
-            #공지 업로드하기
-            @data = {
-                message: {text: "준비중입니다"},
-                keyboard: {
-                    type: 'buttons',
-                    buttons: ['홈으로 돌아가기']
-                }
-            }
+        when @@home_presets[2]
+            #관리자 설정
+            @login_data.update(state:"admin")
+            admin_state_message
+            admin_authenticate
         else
             home_state_message
         end
     end
     
     def wiki
-        if (params[:content] =~ /\|위키\|/) || params[:content] == @@presets[0]
+        if (params[:content] =~ /\|제목\|/) || params[:content] =~ Regexp.new(@@home_presets[0])
             wiki_state_message
         elsif params[:content] =~ /#!/
             page = params[:content].split("#!")[1].to_i
             wiki_state_message(page)
-        elsif params[:content] == "홈으로 돌아가기"
+        elsif params[:content] == "휴즈넷 봇 홈으로 돌아가기"
             @login_data.update(state:"home")
             home_state_message
         elsif params[:content] == "위키 검색하기"
@@ -145,8 +146,8 @@ class KakaoChatController < ApplicationController
             search_result = WikiPage.where("title LIKE ?", "%#{params[:content]}%")
             if search_result.length > 1
                 wiki_state_message
-                @data[:message][:text] = search_result.take.content
-                @data[:buttons] = search_result.map{|x| "|위키|"+x.title} + ["위키 검색하기",'휴즈 위키 읽기','홈으로 돌아가기']
+                @data[:message][:text] = params[:content]+" 에 대한 검색 결과입니다"
+                @data[:keyboard][:buttons] = search_result.select(:title).map{|x| "|제목|"+x.title} + ["위키 검색하기",@@home_presets[0]+'으로 돌아가기','휴즈넷 봇 홈으로 돌아가기']
             elsif search_result.length == 1
                 wiki_state_message(0,search_result.take.title)
                 @data[:message][:text] = search_result.take.content
@@ -158,12 +159,80 @@ class KakaoChatController < ApplicationController
         end
     end
     
+    def admin
+        if params[:content] == @@admin_presets[0]
+            # 공지 등록하기
+            @data = {
+                message: {text: "[[공지 등록하는 법]]\n이 글과 같이 [[제목]]을 작성한 후에 줄바꿈을 하고 내용을 적어주시면 됩니다."},
+                keyboard: {
+                    type: 'text'
+                }
+            }
+        elsif params[:content] == @@admin_presets[1]
+            # 회원 등업
+            admin_role_upgrade_message
+        elsif params[:content] == @@admin_presets[2]
+            # 출석 체크
+            @data = {
+                message: {text: "준비중입니다"},
+                keyboard: {
+                    type: 'buttons',
+                    buttons: [@@home_presets[2]+'으로 돌아가기']
+                }
+            }
+        elsif params[:content] =~ Regexp.new(@@home_presets[2])
+            admin_state_message
+        else
+            if params[:content] =~ /\[\[.*\]\]/
+                # 공지 등록하기
+                title = params[:content].match(/\[\[.*\]\]/)[0][2..-3]
+                content = params[:content].split(/\[\[.*\]\]/).join().gsub("\n","</br>")
+                Board.where(route: 'notice').take.articles.create(content: content,title: title,member_id: @login_data.member.id, member_name: @login_data.member.username)
+                admin_state_message
+                @data[:message][:text] = "등록이 완료되었습니다!\n 관리자 홈으로 돌아갑니다."
+            elsif params[:content] =~ /^\|회원\|\d#/
+                #회원 등업
+                member_id = params[:content].split(/\||#/)[2].to_i
+                member_data = Member.select(:id,:email,:username,:senior_number,:tel).find(member_id).attributes.map{|k,v| k+":"+v.to_s+"\n"}.join()
+                @data = {
+                message: {text: member_data},
+                    keyboard: {
+                        type: 'buttons',
+                        buttons: ['!준회원 등업#'+member_id.to_s,'!정회원 등업#'+member_id.to_s,'!탈퇴시키기#'+member_id.to_s,'!졸업회원 등업#'+member_id.to_s,@@home_presets[2]+'으로 돌아가기','휴즈넷 봇 홈으로 돌아가기']
+                    }
+                }
+            elsif params[:content] =~ /^!준회원 등업#/
+                member_id = params[:content].split("#")[1]
+                Member.find(member_id).update(role:1)
+                admin_role_upgrade_message
+            elsif params[:content] =~ /^!정회원 등업#/
+                member_id = params[:content].split("#")[1]
+                Member.find(member_id).update(role:2)
+                admin_role_upgrade_message
+            elsif params[:content] =~ /^!졸업회원 등업#/
+                member_id = params[:content].split("#")[1]
+                Member.find(member_id).update(role:3)
+                admin_role_upgrade_message
+            elsif params[:content] =~ /^!탈퇴시키기#/
+                member_id = params[:content].split("#")[1]
+                Member.find(member_id).destroy
+                admin_role_upgrade_message
+            end
+        end
+        
+        return admin_authenticate
+    end
+    
+    def image_upload
+        
+    end
+    
     def home_state_message
         img = @login_data.member.image_url
         @data[:message][:text] = "[[로그인 상태]]\nEmail: #{@login_data.member.email}\nName: #{@login_data.member.username}"
         @data[:keyboard] = {
             type: "buttons",
-            buttons: @@presets
+            buttons: @@home_presets
         }
         if img[0] != '/'
             @data[:message][:photo] = {
@@ -177,8 +246,8 @@ class KakaoChatController < ApplicationController
     def wiki_state_message(page=0,title='')
         content = "읽고싶은 휴즈 위키의 글을 골라주세요!"
         first_button = page > 0 ? ["이전#!"+(page-1).to_s] : ["위키 검색하기"]
-        if params[:content] =~ /\|위키\|/
-            title = params[:content].split("|위키|")[1]
+        if params[:content] =~ /\|제목\|/
+            title = params[:content].split("|제목|")[1]
             content = WikiPage.where(title: title).take.content
         end
         @data = {
@@ -193,8 +262,45 @@ class KakaoChatController < ApplicationController
             keyboard: {
                 type: 'buttons',
                 buttons: first_button + 
-                WikiPage.limit(9).offset(9*page).map{|x| "|위키|"+x.title} + ['다음#!'+(page+1).to_s,'홈으로 돌아가기']
+                WikiPage.select(:title).limit(9).offset(9*page).map{|x| "|제목|"+x.title} + ['다음#!'+(page+1).to_s,'휴즈넷 봇 홈으로 돌아가기']
             }
         }
+    end
+    
+    def admin_state_message
+        @data = {
+            message: {
+                text: "관리자 홈 접속완료\nEmail: #{@login_data.member.email}\nName: #{@login_data.member.username}",
+                message_button: {
+                    label: "관리자 페이지 접속",
+                    url: "http://huhs.net/admin"
+                }
+            },
+            
+            keyboard: {
+                type: 'buttons',
+                buttons: @@admin_presets
+            }
+        }
+    end
+    
+    def admin_role_upgrade_message
+        # 회원 등업
+        non_members = Member.where(role: 0)
+        @data = {
+            message: {text: "현재 #{non_members.length}명의 회원이 가입 대기중입니다."},
+            keyboard: {
+                type: 'buttons',
+                buttons: non_members.map{|x| '|회원|'+x.id.to_s+'#'+x.username} + [@@home_presets[2]+'으로 돌아가기']
+            }
+        }
+    end
+    
+    def admin_authenticate
+        unless @login_data.member.admin || @login_data.member.staff
+            @login_data.update(state:"home")
+            home_state_message
+            @data[:message][:text] = "당신은 관리자가 아닙니다.\n 홈으로 돌아갑니다"
+        end
     end
 end
