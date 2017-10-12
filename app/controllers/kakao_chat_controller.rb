@@ -112,7 +112,7 @@ class KakaoChatController < ApplicationController
                 message: {text: "준비중입니다"},
                 keyboard: {
                     type: 'buttons',
-                    buttons: ['처음으로']
+                    buttons: ['홈으로 돌아가기']
                 }
             }
         when @@presets[2]
@@ -121,7 +121,7 @@ class KakaoChatController < ApplicationController
                 message: {text: "준비중입니다"},
                 keyboard: {
                     type: 'buttons',
-                    buttons: ['처음으로']
+                    buttons: ['홈으로 돌아가기']
                 }
             }
         else
@@ -130,36 +130,31 @@ class KakaoChatController < ApplicationController
     end
     
     def wiki
-        if params[:content] =~ /\|위키\|/
-            title = params[:content].split("|위키|")[1]
+        if (params[:content] =~ /\|위키\|/) || params[:content] == @@presets[0]
             wiki_state_message
-            @data[:message][:text] = WikiPage.where(title: title)[0].content
-        elsif params[:content] =~ /다음#/
-            page = params[:content].split("다음#")[1].to_i
+        elsif params[:content] =~ /#!/
+            page = params[:content].split("#!")[1].to_i
             wiki_state_message(page)
-        elsif params[:content] == "처음으로"
+        elsif params[:content] == "홈으로 돌아가기"
             @login_data.update(state:"home")
             home_state_message
         elsif params[:content] == "위키 검색하기"
             @data[:message] = {text: "원하는 검색어를 입력해주세요"}
             @data[:keyboard] = {type: "text"}
-        elsif params[:content] == @@presets[0]
-            wiki_state_message
         else
-            @data = {
-                message: {
-                    text: "읽고싶은 휴즈 위키의 글을 골라주세요!",
-                    message_button: {
-                        label: "휴즈위키 접속",
-                        url: "http://huhs.net/wiki"
-                    }
-                },
-                
-                keyboard: {
-                    type: 'buttons',
-                    buttons: WikiPage.where("title LIKE ?", "%#{params[:content]}%").map{|x| "|위키|"+x.title} + ["위키 검색하기",'휴즈 위키 읽기','처음으로']
-                }
-            }
+            search_result = WikiPage.where("title LIKE ?", "%#{params[:content]}%")
+            if search_result.length > 1
+                wiki_state_message
+                @data[:message][:text] = search_result.take.content
+                @data[:buttons] = search_result.map{|x| "|위키|"+x.title} + ["위키 검색하기",'휴즈 위키 읽기','홈으로 돌아가기']
+            elsif search_result.length == 1
+                wiki_state_message(0,search_result.take.title)
+                @data[:message][:text] = search_result.take.content
+            else
+                wiki_state_message
+                @data[:message][:text] = "검색결과가 없습니다."
+            end
+            
         end
     end
     
@@ -179,19 +174,26 @@ class KakaoChatController < ApplicationController
         end
     end
     
-    def wiki_state_message(page=0)
+    def wiki_state_message(page=0,title='')
+        content = "읽고싶은 휴즈 위키의 글을 골라주세요!"
+        first_button = page > 0 ? ["이전#!"+(page-1).to_s] : ["위키 검색하기"]
+        if params[:content] =~ /\|위키\|/
+            title = params[:content].split("|위키|")[1]
+            content = WikiPage.where(title: title).take.content
+        end
         @data = {
             message: {
-                text: "읽고싶은 휴즈 위키의 글을 골라주세요!",
+                text: content,
                 message_button: {
                     label: "휴즈위키 접속",
-                    url: "http://huhs.net/wiki"
+                    url: "http://huhs.net/wiki/" + URI.escape(title)
                 }
             },
             
             keyboard: {
                 type: 'buttons',
-                buttons: WikiPage.limit(9).offset(9*page).map{|x| "|위키|"+x.title} + ['다음#'+(page+1).to_s,"위키 검색하기",'처음으로']
+                buttons: first_button + 
+                WikiPage.limit(9).offset(9*page).map{|x| "|위키|"+x.title} + ['다음#!'+(page+1).to_s,'홈으로 돌아가기']
             }
         }
     end
