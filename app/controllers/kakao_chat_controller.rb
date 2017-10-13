@@ -1,6 +1,6 @@
 class KakaoChatController < ApplicationController
-    @@home_presets = ["휴즈 위키 홈","이미지 업로드", "관리자 홈"]
-    @@admin_presets = ["공지 작성하기", "회원 등업" ,"출석 체크"]
+    @@home_presets = ["휴즈 위키 홈","이미지 업로드","오프라인 출석 체크", "관리자 홈"]
+    @@admin_presets = ["공지 작성하기", "회원 등업" ,"오프라인 출석 체크"]
     
     def keyboard
         render :json => {
@@ -97,8 +97,10 @@ class KakaoChatController < ApplicationController
             home
         when "wiki"
             wiki
-        when "image_upload"
+        when Regexp.new("^image_upload")
             image_upload
+        when "check_attendence"
+            check_attendence
         when "admin"
             admin
         end
@@ -111,16 +113,15 @@ class KakaoChatController < ApplicationController
             #휴즈 위키 읽기
             @login_data.update(state:"wiki")
             wiki_state_message
-        when @@home_presets[1]
+        when Regexp.new("^"+@@home_presets[1])
             #이미지 업로드하기
-            @data = {
-                message: {text: "준비중입니다"},
-                keyboard: {
-                    type: 'buttons',
-                    buttons: ['휴즈넷 봇 홈으로 돌아가기']
-                }
-            }
+            @login_data.update(state:"image_upload")
+            image_upload_state_message
         when @@home_presets[2]
+            #오프라인 출석하기
+            @login_data.update(state:"check_attendence")
+            check_attendence_state_message
+        when @@home_presets[3]
             #관리자 설정
             @login_data.update(state:"admin")
             admin_state_message
@@ -163,7 +164,7 @@ class KakaoChatController < ApplicationController
         if params[:content] == @@admin_presets[0]
             # 공지 등록하기
             @data = {
-                message: {text: "[[공지 등록하는 법]]\n이 글과 같이 [[제목]]을 작성한 후에 줄바꿈을 하고 내용을 적어주시면 됩니다."},
+                message: {text: "[[공지 등록하는 법]]\n이 글과 같이 [[제목]]을 작성한 후에 줄바꿈을 하고 내용을 적어주시면 됩니다.\n홈으로 돌아가려면 '#{@@home_presets[2]}'이라고 쳐주세요!"},
                 keyboard: {
                     type: 'text'
                 }
@@ -177,7 +178,7 @@ class KakaoChatController < ApplicationController
                 message: {text: "준비중입니다"},
                 keyboard: {
                     type: 'buttons',
-                    buttons: [@@home_presets[2]+'으로 돌아가기']
+                    buttons: [@@home_presets[3]+'으로 돌아가기']
                 }
             }
         elsif params[:content] =~ Regexp.new(@@home_presets[2])
@@ -224,7 +225,33 @@ class KakaoChatController < ApplicationController
     end
     
     def image_upload
-        
+        if params[:content] == @@home_presets[2]
+            image_upload_state_message
+        elsif params[:type] == "photo" && @login_data.state.split("#")[1]
+            @login_data.update(state: @login_data.state + "#"+ params[:content])
+            image_upload_state_message
+        elsif params[:content] == "사진 업로드 종료" && @login_data.state.split("#")[1]
+            # 게시글 작성
+            @login_data.update(state: "home")
+            home_state_message
+            title = @login_data.state.split("#")[1]
+            before_img_urls = @login_data.state.split("#")[2..-1]
+            if !before_img_urls.empty?
+                img_urls = []
+                article = Board.where(route: 'gallery').take.articles.create(content: "",title: title,member_id: @login_data.member.id, member_name: @login_data.member.username)
+                before_img_urls.each do |url|
+                    sended_msg = Cloudinary::Uploader.upload(url,{use_filename: true,folder: article.id.to_s})
+                    img_urls.push(sended_msg['url'])
+                    image_upload_write_model(sended_msg,article.id)
+                end
+                content = "<img src='" + img_urls.join("'/></br><img src='") + "'/>"
+                article.update(content: content)
+            end
+        else
+            # 제목 입력
+            @login_data.update(state: @login_data.state + "#"+ params[:content])
+            image_upload_state_message
+        end
     end
     
     def home_state_message
@@ -265,6 +292,41 @@ class KakaoChatController < ApplicationController
                 WikiPage.select(:title).limit(9).offset(9*page).map{|x| "|제목|"+x.title} + ['다음#!'+(page+1).to_s,'휴즈넷 봇 홈으로 돌아가기']
             }
         }
+    end
+    
+    def image_upload_state_message
+        if params[:content] == @@home_presets[1]
+            @data = {
+                message: {
+                    text: "사진을 업로드하려면 우선 게시글 제목을 알려주세요!"
+                },
+                
+                keyboard: {
+                    type: 'text'
+                }
+            }
+        else
+            url = @login_data.state.split("#")
+            @data = {
+                message: {
+                    text: "[[업로드 예정 사진]]\n제목:"+url[1] + "\n URL:" + url[2..-1].join("\nURL: ")
+                },
+                keyboard: {
+                    type: 'buttons',
+                    buttons: ["사진 업로드 종료"]
+                }
+            }
+        end
+        
+    end
+    
+    def image_upload_write_model(sended_msg,article_id)
+        Uploadfile.create(
+            article_id: article_id,
+            public_id: sended_msg['public_id'],
+            format: sended_msg['format'],
+            url: sended_msg['url'],
+            resource_type: sended_msg['resource_type'])
     end
     
     def admin_state_message
