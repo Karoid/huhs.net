@@ -164,7 +164,7 @@ class KakaoChatController < ApplicationController
         if params[:content] == @@admin_presets[0]
             # 공지 등록하기
             @data = {
-                message: {text: "[[공지 등록하는 법]]\n이 글과 같이 [[제목]]을 작성한 후에 줄바꿈을 하고 내용을 적어주시면 됩니다.\n홈으로 돌아가려면 '#{@@home_presets[2]}'이라고 쳐주세요!"},
+                message: {text: "[[공지 등록하는 법]]\n이 글과 같이 [[제목]]을 작성한 후에 줄바꿈을 하고 내용을 적어주시면 됩니다.\n홈으로 돌아가려면 '#{@@home_presets[3]}'이라고 쳐주세요!"},
                 keyboard: {
                     type: 'text'
                 }
@@ -181,7 +181,7 @@ class KakaoChatController < ApplicationController
                     buttons: [@@home_presets[3]+'으로 돌아가기']
                 }
             }
-        elsif params[:content] =~ Regexp.new(@@home_presets[2])
+        elsif params[:content] =~ Regexp.new(@@home_presets[3])
             admin_state_message
         else
             if params[:content] =~ /\[\[.*\]\]/
@@ -199,7 +199,7 @@ class KakaoChatController < ApplicationController
                 message: {text: member_data},
                     keyboard: {
                         type: 'buttons',
-                        buttons: ['!준회원 등업#'+member_id.to_s,'!정회원 등업#'+member_id.to_s,'!탈퇴시키기#'+member_id.to_s,'!졸업회원 등업#'+member_id.to_s,@@home_presets[2]+'으로 돌아가기','휴즈넷 봇 홈으로 돌아가기']
+                        buttons: ['!준회원 등업#'+member_id.to_s,'!정회원 등업#'+member_id.to_s,'!탈퇴시키기#'+member_id.to_s,'!졸업회원 등업#'+member_id.to_s,@@home_presets[3]+'으로 돌아가기','휴즈넷 봇 홈으로 돌아가기']
                     }
                 }
             elsif params[:content] =~ /^!준회원 등업#/
@@ -225,32 +225,41 @@ class KakaoChatController < ApplicationController
     end
     
     def image_upload
-        if params[:content] == @@home_presets[2]
+        if params[:content] == @@home_presets[1]
             image_upload_state_message
         elsif params[:type] == "photo" && @login_data.state.split("#")[1]
             @login_data.update(state: @login_data.state + "#"+ params[:content])
             image_upload_state_message
-        elsif params[:content] == "사진 업로드 종료" && @login_data.state.split("#")[1]
+        elsif params[:content] == "사진 업로드 완료하기" && @login_data.state.split("#")[1]
             # 게시글 작성
-            @login_data.update(state: "home")
-            home_state_message
             title = @login_data.state.split("#")[1]
             before_img_urls = @login_data.state.split("#")[2..-1]
-            if !before_img_urls.empty?
-                img_urls = []
-                article = Board.where(route: 'gallery').take.articles.create(content: "",title: title,member_id: @login_data.member.id, member_name: @login_data.member.username)
-                before_img_urls.each do |url|
-                    sended_msg = Cloudinary::Uploader.upload(url,{use_filename: true,folder: article.id.to_s})
-                    img_urls.push(sended_msg['url'])
-                    image_upload_write_model(sended_msg,article.id)
+            if @login_data.state.split("#").length > 2
+                Thread.new do
+                    img_urls = []
+                    article = Board.where(route: 'gallery').take.articles.create(content: "",title: title,member_id: @login_data.member.id, member_name: @login_data.member.username)
+                    before_img_urls.each do |url|
+                        sended_msg = Cloudinary::Uploader.upload(url,{use_filename: true,folder: article.id.to_s})
+                        img_urls.push(sended_msg['url'])
+                        image_upload_write_model(sended_msg,article.id)
+                    end
+                    content = "<img src='" + img_urls.join("'/></br><img src='") + "'/>"
+                    article.update(content: content)
                 end
-                content = "<img src='" + img_urls.join("'/></br><img src='") + "'/>"
-                article.update(content: content)
+                @login_data.update(state: "home")
+                home_state_message
+                @data[:message][:text] = "업로드 요청을 서버에 보냈습니다!"
+            else
+                image_upload_state_message
+                @data[:message][:text] = "★사진을 첨부해야 합니다★\n" + @data[:message][:text]
             end
-        else
+        elsif @login_data.state.split("#").length == 1
             # 제목 입력
             @login_data.update(state: @login_data.state + "#"+ params[:content])
             image_upload_state_message
+        else
+            @data[:message][:text] = "버그 발생! 휴즈넷 봇 홈으로 돌아갑니다"
+            @data[:keyboard] = {type:"buttons",buttons:["휴즈넷 봇 홈으로 돌아가기"]}
         end
     end
     
@@ -309,11 +318,11 @@ class KakaoChatController < ApplicationController
             url = @login_data.state.split("#")
             @data = {
                 message: {
-                    text: "[[업로드 예정 사진]]\n제목:"+url[1] + "\n URL:" + url[2..-1].join("\nURL: ")
+                    text: "사진을 업로드하려면 + 버튼을 누르고 원하는 사진을 전송하시면 게시글에 넣을 사진을 추가하실 수 있습니다.\n모두 추가한 후에는 하단의 '사진_업로드_완료하기'버튼을 눌러주세요!\n\n[[업로드 예정 사진]]\n제목:"+url[1] + "\n URL:" + url[2..-1].join("\nURL: ")
                 },
                 keyboard: {
                     type: 'buttons',
-                    buttons: ["사진 업로드 종료"]
+                    buttons: ["사진 업로드 완료하기", "휴즈넷 봇 홈으로 돌아가기"]
                 }
             }
         end
@@ -363,7 +372,7 @@ class KakaoChatController < ApplicationController
             message: {text: "현재 #{non_members.length}명의 회원이 가입 대기중입니다."},
             keyboard: {
                 type: 'buttons',
-                buttons: non_members.map{|x| '|회원|'+x.id.to_s+'#'+x.username} + [@@home_presets[2]+'으로 돌아가기']
+                buttons: non_members.map{|x| '|회원|'+x.id.to_s+'#'+x.username} + [@@home_presets[3]+'으로 돌아가기']
             }
         }
     end
