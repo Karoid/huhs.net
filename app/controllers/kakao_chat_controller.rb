@@ -119,7 +119,7 @@ class KakaoChatController < ApplicationController
             image_upload_state_message
         when @@home_presets[2]
             #오프라인 출석하기
-            @login_data.update(state:"check_attendence")
+            #@login_data.update(state:"check_attendence")
             check_attendence_state_message
         when @@home_presets[3]
             #관리자 설정
@@ -327,6 +327,16 @@ class KakaoChatController < ApplicationController
             format: sended_msg['format'],
             url: sended_msg['url'],
             resource_type: sended_msg['resource_type'])
+    end
+    
+    def check_attendence_state_message
+        @data = {
+                message: {text: "준비중입니다"},
+                keyboard: {
+                    type: 'buttons',
+                    buttons: ['휴즈넷 봇 홈으로 돌아가기']
+                }
+            }
     end
     
     def admin_state_message
