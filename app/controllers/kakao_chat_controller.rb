@@ -91,7 +91,7 @@ class KakaoChatController < ApplicationController
     
     def login_success
         @login_data.update(state:"home") if params[:content] == "휴즈넷 봇 홈으로 돌아가기"
-
+        
         case @login_data.state
         when "home"
             home
@@ -119,7 +119,7 @@ class KakaoChatController < ApplicationController
             image_upload_state_message
         when @@home_presets[2]
             #오프라인 출석하기
-            #@login_data.update(state:"check_attendence")
+            @login_data.update(state:"check_attendence")
             check_attendence_state_message
         when @@home_presets[3]
             #관리자 설정
@@ -174,6 +174,7 @@ class KakaoChatController < ApplicationController
             admin_role_upgrade_message
         elsif params[:content] == @@admin_presets[2]
             # 출석 체크
+            
             @data = {
                 message: {text: "준비중입니다"},
                 keyboard: {
@@ -181,14 +182,14 @@ class KakaoChatController < ApplicationController
                     buttons: [@@home_presets[3]+'으로 돌아가기']
                 }
             }
-        elsif params[:content] =~ Regexp.new(@@home_presets[3])
+        elsif params[:content] =~ Regexp.new("^"+@@home_presets[3])
             admin_state_message
         else
-            if params[:content] =~ /\[\[.*\]\]/
+            if params[:content] =~ /^\[\[.*\]\]/
                 # 공지 등록하기
-                title = params[:content].match(/\[\[.*\]\]/)[0][2..-3]
-                content = params[:content].split(/\[\[.*\]\]/).join().gsub("\n","</br>")
-                Board.where(route: 'notice').take.articles.create(content: content,title: title,member_id: @login_data.member.id, member_name: @login_data.member.username)
+                title = params[:content].match(/^\[\[.*\]\]/)[0][2..-3]
+                content = params[:content].split(/^\[\[.*\]\]/).join().gsub("\n","</br>")
+                Board.where(route: 'notice').take.articles.create(content: content,title: title,member_id: @login_data.member.id, member_name: @login_data.member.senior_number.to_s + "기 " + @login_data.member.username)
                 admin_state_message
                 @data[:message][:text] = "등록이 완료되었습니다!\n 관리자 홈으로 돌아갑니다."
             elsif params[:content] =~ /^\|회원\|\d#/
@@ -260,6 +261,39 @@ class KakaoChatController < ApplicationController
         else
             @data[:message][:text] = "버그 발생! 휴즈넷 봇 홈으로 돌아갑니다"
             @data[:keyboard] = {type:"buttons",buttons:["휴즈넷 봇 홈으로 돌아가기"]}
+        end
+    end
+    
+    def check_attendence
+        if params[:content] =~ /^\d{4}$/
+            @current_user = @login_data.member
+            @my_record_list = AttendenceList.where(code: params[:content]).take
+            if @my_record_list
+              # code exist
+              if @my_record_list.start < Time.now && @my_record_list.end >= Time.now
+                #code is not expired
+                @my_data = {attendence_list_id: @my_record_list.id, user_id: @current_user.id, user_name: @current_user.username}
+                if Attendence.where(@my_data).length > 0
+                    check_attendence_state_message
+                    @data[:message][:text] +="\n\n 이미 출석이 완료되었습니다\n"
+                else
+                    Attendence.create(@my_data)
+                    check_attendence_state_message
+                    @data[:message][:text] ="출석 성공!\n이벤트 이름: #{@my_record_list.name}"
+                end
+              else
+                #code is expired
+                check_attendence_state_message
+                @data[:message][:text] +="\n\n출석 실패!\n기한이 만료되었습니다\n"
+              end
+            else
+              #code dosen't exist
+              check_attendence_state_message
+              @data[:message][:text] +="\n\n출석 실패!\n잘못 입력하셨습니다\n"
+            end
+
+        else
+            @data[:message][:text] = "4자리 '숫자'를 입력하셔야 합니다\n홈으로 돌아가려면 '휴즈넷 봇 홈으로 돌아가기'라고 입력해주세요!"
         end
     end
     
@@ -339,13 +373,23 @@ class KakaoChatController < ApplicationController
     end
     
     def check_attendence_state_message
-        @data = {
-                message: {text: "준비중입니다"},
+        if @login_data.member.role > 0
+            @data = {
+                message: {text: "4자리 숫자를 입력해주세요!\n홈으로 돌아가려면 '휴즈넷 봇 홈으로 돌아가기'라고 입력해주세요!"},
                 keyboard: {
-                    type: 'buttons',
-                    buttons: ['휴즈넷 봇 홈으로 돌아가기']
+                    type: 'text',
                 }
             }
+        else
+            @login_data.update(state:"home")
+            @data = {
+                message: {text: "권한이 없습니다. 홈으로 돌아갑니다"},
+                keyboard: {
+                    type: 'buttons',
+                    buttons: @@home_presets
+                }
+            }
+        end
     end
     
     def admin_state_message
@@ -377,6 +421,10 @@ class KakaoChatController < ApplicationController
         }
     end
     
+    def admin_check_attendence_state_message(page=0)
+        
+    end
+    
     def admin_authenticate
         unless @login_data.member.admin || @login_data.member.staff
             @login_data.update(state:"home")
@@ -384,4 +432,5 @@ class KakaoChatController < ApplicationController
             @data[:message][:text] = "당신은 관리자가 아닙니다.\n 홈으로 돌아갑니다"
         end
     end
+    
 end
