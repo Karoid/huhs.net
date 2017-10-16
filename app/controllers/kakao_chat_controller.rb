@@ -283,24 +283,25 @@ class KakaoChatController < ApplicationController
                     id = @login_data.state.split("#")[3]
                     
                     if params[:content] == '완료'
-                        this_attendence = AttendenceList.find(id)
-                        admin_check_attendence_read_state_message(this_attendence)
-                        @data[:message][:text] = "[[" + this_attendence.name + " 출석자 명단]]\n" +
-                        Attendence.where(attendence_list_id: id).map{|x| x.user_name + "\n"}.sort().join()
+                        
                         @login_data.update(state: 'admin#check_attendence')
                         admin_check_attendence_state_message
                     else
-                        @data[:message][:text] += "\n출석 체크할 이름을 입력해주세요!\n다 입력했으면 '완료'라고 입력해주세요!"
-                        @data[:keyboard][:type] = "text"
+                        this_attendence = AttendenceList.find(id)
+                        admin_check_attendence_read_state_message(this_attendence)
                         huhs_net_member = Member.where(username: params[:content])
                         if huhs_net_member.length == 1
-                            user_id = huhs_net_member.id
+                            user_id = huhs_net_member.take.id
                         else
                             user_id = nil
                         end
                         
-                        AttendenceList.create({attendence_list_id: id, user_id: user_id, user_name: params[:content]})
+                        Attendence.create({attendence_list_id: id, user_id: user_id, user_name: params[:content]})
                         
+                        @data[:message][:text] = "[[" + this_attendence.name + " 출석자 명단]]\n" +
+                        Attendence.where(attendence_list_id: id).map{|x| x.user_name + "\n"}.sort().join()
+                        @data[:message][:text] += "\n출석 체크할 이름을 입력해주세요!\n다 입력했으면 '완료'라고 입력해주세요!"
+                        @data[:keyboard][:type] = "text"
                     end
                     
                 else
