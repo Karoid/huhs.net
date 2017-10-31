@@ -1,4 +1,12 @@
-<h3 style="margin:20px;">"<span id="create_name" style="font-weight:bold"><%=URI.unescape(URI.unescape(wiki_page_new_path))%></span>" 에 해당하는 페이지가 없습니다. <a id="create_page" href="<%=URI.unescape(URI.unescape(wiki_page_new_path)).gsub!('+', ' ')%>">페이지를 생성 하시겠습니까?</a></h3>
+<%page_name =  CGI::unescape(URI.unescape(URI.unescape(wiki_page_new_path)).gsub!('+', ' ').gsub('/wiki/new/',''))%>
+
+<h3 style="margin:20px;">"<span id="create_name" style="font-weight:bold"><%=URI.unescape(URI.unescape(wiki_page_new_path))%></span>" 에 해당하는 페이지가 없습니다. <a id="create_page" href="<%=page_name%>">페이지를 생성 하시겠습니까?</a></h3>
+
+<%@pages = @pages.where("title LIKE ?", "%#{page_name}%").order('updated_at DESC')%>
+<%if @pages.length == 1%><script>window.location = '<%=wiki_page_path(@pages[0])%>'</script><%end%>
+<h3 style="display:inline-block">유사한 문서</h3>
+  <%=render partial: 'base_wiki_pages/wiki_page_list'%>
+
 <a href="javascript:history.back()">돌아가기</a>
 
 <script>

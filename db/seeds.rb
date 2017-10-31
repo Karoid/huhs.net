@@ -48,7 +48,7 @@ def writegallery(doc,article_id)
   end
 end
 #Major
-Major.create(department: "미등록", name:"미등록", id: 0);
+Major.create(department: "미등록", name:"미등록");
 Major.create(department: "공과대학", name:"건축학부");
 Major.create(department: "공과대학", name:"자원환경공학과");
 Major.create(department: "공과대학", name:"유기나노공학과");
@@ -188,20 +188,22 @@ title: '2015년 11월 27일 개정안',member_id: 1, member_name:"임원")
   @attach = File.open("old_migration_data/docs/attach.xml") { |f| Nokogiri::XML(f) }
   @attach = @attach.search('//xe_files')
     @boardxml1.each do |doc|
-      #공지사항:238,자유게시판: 5793, 회원게시판: 160, 임원회의록: 166
-      case doc.at('module_srl').text
-      when '238'
-        model = Board.where(route:'notice').take.articles
-        writeolddata(model,doc)
-      when '5793'
-        model = Board.where(route:'free').take.articles
-        writeolddata(model,doc)
-      when '160'
-        model = Board.where(route:'member').take.articles
-        writeolddata(model,doc)
-      when '161'
-        model = Board.where(route:'gallery').take.articles
-        article_id = writeolddata(model,doc)
-        writegallery(doc, article_id)
+      Thread.new do
+        #공지사항:238,자유게시판: 5793, 회원게시판: 160, 임원회의록: 166
+        case doc.at('module_srl').text
+        when '238'
+          model = Board.where(route:'notice').take.articles
+          writeolddata(model,doc)
+        when '5793'
+          model = Board.where(route:'free').take.articles
+          writeolddata(model,doc)
+        when '160'
+          model = Board.where(route:'member').take.articles
+          writeolddata(model,doc)
+        when '161'
+          model = Board.where(route:'gallery').take.articles
+          article_id = writeolddata(model,doc)
+          writegallery(doc, article_id)
+        end
       end
     end

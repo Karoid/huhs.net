@@ -40,8 +40,9 @@ false;
 }
 /* 모바일 무한 스크롤 */
 var page = parseInt($("nav div em").html())
-
+var loading_state = false
 $(document).scroll(function() {
+  //console.log('scroll'+$(document).scrollTop(),'article'+($("#article").height() - $(window).height()+89), loading_state)
   if (Math.round($(document).scrollTop()) >= $("#article").height() - $(window).height()+89 && loading_state == false) {
   loading_state = true
   loading = $('<div id="loading" class="load" style="display: none;"><span><img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif" alt="cargando..."/></span></div>');
