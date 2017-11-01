@@ -1,7 +1,7 @@
 <script src="js/moris/morris.min.js" charset="utf-8"></script>
 <script src="js/moris/raphael-min.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/moment/moment.min.js"></script>
-<script src="js/datepicker/daterangepicker.js" charset="utf-8"></script>
+
 <link rel="stylesheet" href="/css/board.css">
 		<div id="page">
 			<div id="main_title">
@@ -10,13 +10,14 @@
 			<hr>
 			<div id="wrapper">
 				<div id="profile_left">
-					<div id="photo" onclick="location.href='/image_crop/new'" style="cursor:pointer">
+					<div id="photo" onclick="location.href='/image_crop/new'" style="cursor:pointer" class="glyphicon glyphicon-edit">
 						<img src="<%=current_member.image_url%>" id="image" alt="">
 					</div>
 					<div id="explain">
 						<div id="name"><%=current_member.username%></div>
 						<hr>
 						<div id="detail_wrapper">
+						<i class="glyphicon glyphicon-pencil-square" aria-hidden="true"></i>
 							<div class="detail">학과: <%=current_member.major.name%></div>
 							<div class="detail">학번: <%=(1980 + current_member.senior_number)%100%></div>
 							<div class="detail">기수: <%=current_member.senior_number%></div>
@@ -25,6 +26,7 @@
 							<div class="detail">연락처: <%=current_member.tel%></div>
 							<center>
 								<a href="/members/edit"><input type="button" id="edit" value="프로필 수정"></a>
+								<a href="/accept_api"><input type="button" id="edit" value="카카오톡 봇 설정"></a>
 							</center>
 						</div>
 					</div>
@@ -121,7 +123,15 @@
 		border: 2px solid #ffffff;
 		border-radius: 5px;
 	}
-
+	#photo:before{
+		position: absolute;
+	     right: 1vw;
+	     top: 1.2vw;
+	     font-size: 1.5vw;
+	}
+	#photo:hover{
+		color:white;
+	}
 	#page #profile_left #explain {
 		width: 100%;
 		margin-top: 10px;
@@ -166,8 +176,7 @@
 		width: 52vw;
 	}
 	#container {
-		height: 380px;
-		margin: 30px 45px 50px;
+		margin: 30px 45px 0px;
 	}
 	#container #container_title {
 		background-color: rgb(220, 248, 248);
@@ -237,7 +246,7 @@
 		#page #profile_left{
 			width:100%;
 			margin:0;
-			height:700px;
+			height:750px;
 			clear:both;
 		}
 		#page #profile_right_part{
@@ -578,8 +587,16 @@
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         //alert("Callback has fired: [" + start.format('MMMM D, YYYY') + " to " + end.format('MMMM D, YYYY') + ", label = " + label + "]");
       }
-
-      var optionSet1 = {
+if (typeof moment == "undefined") {
+  $.getScript("/js/moment/moment.min.js",function(){
+    main()
+  });
+  console.log("FIXED!")
+}else{
+	main()
+}
+function main(){
+	var optionSet1 = {
         startDate: moment().subtract(6, 'month').startOf('month'),
         endDate: moment(),
         dateLimit: {
@@ -614,28 +631,40 @@
         }
       };
       $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
-      $('#reportrange').daterangepicker(optionSet1, cb);
-      $('#reportrange').on('show.daterangepicker', function() {
-        console.log("show event fired");
-      });
-      $('#reportrange').on('hide.daterangepicker', function() {
-        console.log("hide event fired");
-      });
-      $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
-        console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
-      });
-      $('#reportrange').on('cancel.daterangepicker', function(ev, picker) {
-        console.log("cancel event fired");
-      });
-      $('#options1').click(function() {
-        $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
-      });
-      $('#options2').click(function() {
-        $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
-      });
-      $('#destroy').click(function() {
-        $('#reportrange').data('daterangepicker').remove();
-      });
+
+      if(typeof daterangepicker == 'undefined'){
+      	$.getScript("/js/datepicker/daterangepicker.js",function(){
+	       daterangepicker_main(optionSet1,cb)
+	     });
+	 console.log("FIXED!")
+      }else{
+      	daterangepicker_main(optionSet1,cb)
+      }
 			cb(optionSet1.startDate, optionSet1.endDate, "")
-    });
+    }
+});
+function daterangepicker_main(optionSet1,cb){
+	$('#reportrange').daterangepicker(optionSet1, cb);
+	$('#reportrange').on('show.daterangepicker', function() {
+	  console.log("show event fired");
+	});
+	$('#reportrange').on('hide.daterangepicker', function() {
+	  console.log("hide event fired");
+	});
+	$('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+	  console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
+	});
+	$('#reportrange').on('cancel.daterangepicker', function(ev, picker) {
+	  console.log("cancel event fired");
+	});
+	$('#options1').click(function() {
+	  $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
+	});
+	$('#options2').click(function() {
+	  $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
+	});
+	$('#destroy').click(function() {
+	  $('#reportrange').data('daterangepicker').remove();
+	});
+}
   </script>

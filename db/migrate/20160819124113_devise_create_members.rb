@@ -6,7 +6,7 @@ class DeviseCreateMembers < ActiveRecord::Migration
       t.string  :username,           null: false, default: ""
       t.integer :senior_number,      null: false, default: 1
       t.string  :tel,                null: false, default: "미입력"
-      t.integer :major_id,           null: false, default: 0
+      t.integer :major_id,           null: false, default: 1
       t.string  :image_url,          null: false, default: "/images/default_img.png"
       t.string  :encrypted_password, null: false, default: ""
       t.boolean :admin,              null: false, default: false

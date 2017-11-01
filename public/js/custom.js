@@ -370,10 +370,13 @@ if (typeof NProgress != 'undefined') {
 */
 //Pagenation
 $(function () {
-  var params = window.location.href.split("?")[1]
-  if (params) {
-    if (!!params.match(/page=/g).length) {
-      $("#board").animate({ scrollTop: $("#article").height() }, 0);
+  try{
+    var params = window.location.href.split("?")[1]
+    if (params) {
+      if (!!params.match(/page=/g).length) {
+        $("#board").animate({ scrollTop: $("#article").height() }, 0);
+      }
     }
-  }
+  }catch(err){}
+  
 });

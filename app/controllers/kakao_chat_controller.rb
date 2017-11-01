@@ -368,8 +368,8 @@ class KakaoChatController < ApplicationController
                     @data[:message][:text] +="\n\n 이미 출석이 완료되었습니다\n"
                 else
                     Attendence.create(@my_data)
-                    check_attendence_state_message
-                    @data[:message][:text] ="출석 성공!\n이벤트 이름: #{@my_record_list.name}"
+                    home_state_message
+                    @data[:message][:text] ="출석 성공!\n이벤트 이름: #{@my_record_list.name}\n 홈으로 돌아갑니다."
                 end
               else
                 #code is expired

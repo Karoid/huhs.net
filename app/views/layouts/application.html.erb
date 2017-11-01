@@ -62,7 +62,7 @@
             <div id="profile_left" style="background:url(<%=cloudinary_quality(current_member.image_url,"w_100,h_100")%>);background-size: auto 100%;"></div>
             <div id="profile_right">
               <a href="/profile"><%= current_member.senior_number %>기 <%= current_member.username %></a>
-              <div><%= link_to "로그아웃", '/members/sign_out', method: :get, data: { confirm: "Are you sure?" } %></div>
+              <div id="profile_btn"><a href="/profile">수정 </a><%= link_to "로그아웃", '/members/sign_out', method: :get, data: { confirm: "Are you sure?" } %></div>
             </div>
           </div>
         </div>
