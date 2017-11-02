@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 20171010065613) do
     t.string   "username",               default: "",                        null: false
     t.integer  "senior_number",          default: 1,                         null: false
     t.string   "tel",                    default: "미입력",                     null: false
-    t.integer  "major_id",               default: 0,                         null: false
+    t.integer  "major_id",               default: 1,                         null: false
     t.string   "image_url",              default: "/images/default_img.png", null: false
     t.string   "encrypted_password",     default: "",                        null: false
     t.boolean  "admin",                  default: false,                     null: false

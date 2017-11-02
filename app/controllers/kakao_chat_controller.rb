@@ -195,7 +195,7 @@ class KakaoChatController < ApplicationController
                 @data[:message][:text] += "\n\n양식이 틀렸습니다"
             end
         when 'admin#role_upgrade'
-            if params[:content] =~ /^\|회원\|\d#/
+            if params[:content] =~ /^\|회원\|\d+#/
                 #회원 등업
                 member_id = params[:content].split(/\||#/)[2].to_i
                 member_data = Member.select(:id,:email,:username,:senior_number,:tel).find(member_id).attributes.map{|k,v| k+":"+v.to_s+"\n"}.join()
@@ -231,7 +231,7 @@ class KakaoChatController < ApplicationController
                 @data[:message][:text] = "새로운 행사명을 입력해주세요!\n 돌아가려면 '관리자 홈'이라고 입력하세요"
                 @data[:keyboard][:type] = "text"
                 @login_data.update(state: "admin#check_attendence#create")
-            elsif params[:content] =~ /\d*\..*/
+            elsif params[:content] =~ /\d+\..*/
                 this_attendence = AttendenceList.select(:id,:name,:code,:user_name).find(params[:content].split(".")[0])
                 admin_check_attendence_read_state_message(this_attendence)
             elsif params[:content] =~ /출석자 명단 보기#/
@@ -368,6 +368,7 @@ class KakaoChatController < ApplicationController
                     @data[:message][:text] +="\n\n 이미 출석이 완료되었습니다\n"
                 else
                     Attendence.create(@my_data)
+                    @login_data.update(state:"home")
                     home_state_message
                     @data[:message][:text] ="출석 성공!\n이벤트 이름: #{@my_record_list.name}\n 홈으로 돌아갑니다."
                 end
@@ -422,7 +423,7 @@ class KakaoChatController < ApplicationController
             keyboard: {
                 type: 'buttons',
                 buttons: first_button + 
-                WikiPage.select(:title).limit(9).offset(9*page).map{|x| "|제목|"+x.title} + [(page+1).to_s+ '▶','◎ 휴즈넷 봇 홈으로 돌아가기 ◎']
+                WikiPage.select(:title,:updated_at).order('updated_at DESC').limit(9).offset(9*page).map{|x| "|제목|"+x.title} + [(page+1).to_s+ '▶','◎ 휴즈넷 봇 홈으로 돌아가기 ◎']
             }
         }
     end
