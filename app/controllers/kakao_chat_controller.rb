@@ -1,6 +1,6 @@
 class KakaoChatController < ApplicationController
-    @@home_presets = ["휴즈 위키 홈","이미지 업로드","오프라인 출석 체크", "관리자 홈"]
-    @@admin_presets = ["공지 작성하기", "회원 등업" ,"오프라인 출석 체크"]
+    @@home_presets = ["휴즈 위키 홈","이미지 업로드","오프라인 출석 체크", "🔐*관리자 홈"]
+    @@admin_presets = ["🔐공지 작성하기", "🔐회원 등업" ,"🔐오프라인 출석 체크"]
     
     def keyboard
         render :json => {
@@ -80,13 +80,19 @@ class KakaoChatController < ApplicationController
     private
     
     def before_active_message
-        @data[:message][:text] = "휴즈넷에 로그인 하여 기기 #{params[:user_key]}를 허용해주세요"
+        @data[:message][:text] = "휴즈넷에 본인 이메일로 로그인 하여 기기 #{params[:user_key]}를 허용해주세요"
         @data[:keyboard][:type] = "buttons"
-        @data[:keyboard][:buttons] = ["인증 확인하기"]
+        @data[:keyboard][:buttons] = ["✔ 인증 확인하기","✘ 인증 요청 해제하기"]
         @data[:message][:message_button] = {
             label: "휴즈넷 접속",
             url: "http://huhs.net/accept_api"
         }
+        
+        if params[:content] == "✘ 인증 요청 해제하기"
+            @login_data.destroy
+            @data[:message][:text] = "해제했습니다. 다시 본인의 이메일을 입력하세요"
+            @data[:keyboard][:type] = "text"
+        end
     end
     
     def login_success
@@ -121,7 +127,7 @@ class KakaoChatController < ApplicationController
             #오프라인 출석하기
             @login_data.update(state:"check_attendence")
             check_attendence_state_message
-        when @@home_presets[3]
+        when Regexp.new(@@home_presets[3]+"$")
             #관리자 설정
             @login_data.update(state:"admin")
             admin_state_message
@@ -148,7 +154,7 @@ class KakaoChatController < ApplicationController
             if search_result.length > 1
                 wiki_state_message
                 @data[:message][:text] = params[:content]+" 에 대한 검색 결과입니다"
-                @data[:keyboard][:buttons] = search_result.select(:title).map{|x| "|제목|"+x.title} + ["위키 검색하기 ⌕",@@home_presets[0]+'으로 돌아가기','휴즈넷 봇 홈으로 돌아가기']
+                @data[:keyboard][:buttons] = search_result.select(:title).map{|x| "|제목|"+x.title} + ["위키 검색하기 ⌕",@@home_presets[0]+'으로 돌아가기','◎ 휴즈넷 봇 홈으로 돌아가기 ◎"]']
             elsif search_result.length == 1
                 wiki_state_message(0,search_result.take.title)
                 @data[:message][:text] = search_result.take.content
@@ -162,7 +168,7 @@ class KakaoChatController < ApplicationController
     
     def admin
         
-        @login_data.update(state:"admin") if params[:content] =~ Regexp.new('^'+@@home_presets[3])
+        @login_data.update(state:"admin") if params[:content] =~ Regexp.new(@@home_presets[3])
         case @login_data.state
         when 'admin'
             if params[:content] == @@admin_presets[0]
@@ -177,7 +183,7 @@ class KakaoChatController < ApplicationController
                 # 출석 체크
                 @login_data.update(state: 'admin#check_attendence')
                 admin_check_attendence_state_message
-            elsif params[:content] =~ Regexp.new("^"+@@home_presets[3])
+            elsif params[:content] =~ Regexp.new(@@home_presets[3])
                 @login_data.update(state: 'admin')
                 admin_state_message
             end
@@ -203,7 +209,7 @@ class KakaoChatController < ApplicationController
                 message: {text: member_data},
                     keyboard: {
                         type: 'buttons',
-                        buttons: ['!준회원 등업#'+member_id.to_s,'!정회원 등업#'+member_id.to_s,'!탈퇴시키기#'+member_id.to_s,'!졸업회원 등업#'+member_id.to_s,@@home_presets[3]+'으로 돌아가기','휴즈넷 봇 홈으로 돌아가기']
+                        buttons: ['!준회원 등업#'+member_id.to_s,'!정회원 등업#'+member_id.to_s,'!탈퇴시키기#'+member_id.to_s,'!졸업회원 등업#'+member_id.to_s,@@home_presets[3]+'으로 돌아가기','◎ 휴즈넷 봇 홈으로 돌아가기 ◎"]']
                     }
                 }
             elsif params[:content] =~ /^!준회원 등업#/
@@ -239,7 +245,7 @@ class KakaoChatController < ApplicationController
                 this_attendence = AttendenceList.find(id)
                 admin_check_attendence_read_state_message(this_attendence)
                 @data[:message][:text] = "[[" + this_attendence.name + " 출석자 명단]]\n" +
-                Attendence.where(attendence_list_id: id).map{|x| x.user_name + "\n"}.sort().join()
+                Attendence.where(attendence_list_id: id).map{|x| x.user_name + "\n"}.join()
             elsif params[:content] =~ /^출결 10초간 활성화 하기#/
                 this_attendence = AttendenceList.find(params[:content].split("#")[1])
                 admin_check_attendence_read_state_message(this_attendence)
@@ -250,7 +256,7 @@ class KakaoChatController < ApplicationController
                 this_attendence = AttendenceList.find(id)
                 admin_check_attendence_read_state_message(this_attendence)
                 @data[:message][:text] = "[[" + this_attendence.name + " 출석자 명단]]\n" +
-                Attendence.where(attendence_list_id: id).map{|x| x.user_name + "\n"}.sort().join()
+                Attendence.where(attendence_list_id: id).map{|x| x.user_name + "\n"}.join()
                 
                 @data[:message][:text] += "\n출석 체크할 이름을 입력해주세요!\n다 입력했으면 '완료'라고 입력해주세요!"
                 @data[:keyboard][:type] = "text"
@@ -299,7 +305,7 @@ class KakaoChatController < ApplicationController
                         Attendence.create({attendence_list_id: id, user_id: user_id, user_name: params[:content]})
                         
                         @data[:message][:text] = "[[" + this_attendence.name + " 출석자 명단]]\n" +
-                        Attendence.where(attendence_list_id: id).map{|x| x.user_name + "\n"}.sort().join()
+                        Attendence.where(attendence_list_id: id).map{|x| x.user_name + "\n"}.join()
                         @data[:message][:text] += "\n출석 체크할 이름을 입력해주세요!\n다 입력했으면 '완료'라고 입력해주세요!"
                         @data[:keyboard][:type] = "text"
                     end
@@ -383,8 +389,11 @@ class KakaoChatController < ApplicationController
               @data[:message][:text] +="\n\n출석 실패!\n잘못 입력하셨습니다\n"
             end
 
+        elsif params[:content] == "완료"
+            home_state_message
+            @login_data.update(state:"home")
         else
-            @data[:message][:text] = "4자리 '숫자'를 입력하셔야 합니다\n홈으로 돌아가려면 '휴즈넷 봇 홈으로 돌아가기'라고 입력해주세요!"
+            @data[:message][:text] = "4자리 '숫자'를 입력하셔야 합니다\n홈으로 돌아가려면 '완료'라고 입력해주세요!"
         end
     end
     
@@ -466,7 +475,7 @@ class KakaoChatController < ApplicationController
     def check_attendence_state_message
         if @login_data.member.role > 0
             @data = {
-                message: {text: "4자리 숫자를 입력해주세요!\n홈으로 돌아가려면 '휴즈넷 봇 홈으로 돌아가기'라고 입력해주세요!"},
+                message: {text: "4자리 숫자를 입력해주세요!\n홈으로 돌아가려면 '완료'라고 입력해주세요!"},
                 keyboard: {
                     type: 'text',
                 }
@@ -502,7 +511,7 @@ class KakaoChatController < ApplicationController
     
     def admin_notice_state_message
         @data = {
-                    message: {text: "[[공지 등록하는 법]]\n이 글과 같이 [[제목]]을 작성한 후에 줄바꿈을 하고 내용을 적어주시면 됩니다.\n홈으로 돌아가려면 '#{@@home_presets[3]}'이라고 쳐주세요!"},
+                    message: {text: "[[공지 등록하는 법]]\n이 글과 같이 [[제목]]을 작성한 후에 줄바꿈을 하고 내용을 적어주시면 됩니다.\n홈으로 돌아가려면 '관리자 홈'이라고 쳐주세요!"},
                     keyboard: {
                         type: 'text'
                     }
@@ -528,7 +537,7 @@ class KakaoChatController < ApplicationController
                 message: {text: "오프라인 출석체크 행사 목록입니다"},
                 keyboard: {
                     type: 'buttons',
-                    buttons: first_button + AttendenceList.select(:name,:id).limit(9).offset(9*page).map{|x| x.id.to_s+"."+x.name} + [(page+1).to_s+ '▶',@@home_presets[3]+'으로 돌아가기']
+                    buttons: first_button + AttendenceList.select(:name,:id,:created_at).order(created_at: :desc).limit(9).offset(9*page).map{|x| x.id.to_s+"."+x.name} + [(page+1).to_s+ '▶',@@home_presets[3]+'으로 돌아가기']
                 }
             }
     end
