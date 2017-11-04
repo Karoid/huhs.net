@@ -1,5 +1,5 @@
 class KakaoChatController < ApplicationController
-    @@home_presets = ["휴즈 위키 홈","이미지 업로드","오프라인 출석 체크", "🔐*관리자 홈"]
+    @@home_presets = ["📚휴즈 위키 홈","📷이미지 업로드","✔오프라인 출석 체크", "🔐*관리자 홈"]
     @@admin_presets = ["🔐공지 작성하기", "🔐회원 등업" ,"🔐오프라인 출석 체크"]
     
     def keyboard
@@ -119,7 +119,7 @@ class KakaoChatController < ApplicationController
             #휴즈 위키 읽기
             @login_data.update(state:"wiki")
             wiki_state_message
-        when Regexp.new("^"+@@home_presets[1])
+        when @@home_presets[1]
             #이미지 업로드하기
             @login_data.update(state:"image_upload")
             image_upload_state_message
@@ -127,7 +127,7 @@ class KakaoChatController < ApplicationController
             #오프라인 출석하기
             @login_data.update(state:"check_attendence")
             check_attendence_state_message
-        when Regexp.new(@@home_presets[3]+"$")
+        when @@home_presets[3]
             #관리자 설정
             @login_data.update(state:"admin")
             admin_state_message
@@ -195,7 +195,7 @@ class KakaoChatController < ApplicationController
                 Board.where(route: 'notice').take.articles.create(content: content,title: title,member_id: @login_data.member.id, member_name: @login_data.member.senior_number.to_s + "기 " + @login_data.member.username)
                 admin_state_message
                 @login_data.update(state: 'admin')
-                @data[:message][:text] = "등록이 완료되었습니다!\n 관리자 홈으로 돌아갑니다."
+                @data[:message][:text] = "등록이 완료되었습니다!\n #{@@home_presets[3]}으로 돌아갑니다."
             else
                 admin_notice_state_message
                 @data[:message][:text] += "\n\n양식이 틀렸습니다"
@@ -545,7 +545,7 @@ class KakaoChatController < ApplicationController
     def admin_check_attendence_read_state_message(attendence_list)
         @data[:message][:text] = "[[행사 내용]]\n" + attendence_list.attributes.map{|k,v| k+":"+v.to_s+"\n"}.join()
         @data[:keyboard][:type] = "buttons"
-        @data[:keyboard][:buttons] = [attendence_list.name+" 출석자 명단 보기#"+attendence_list.id.to_s, "출결 10초간 활성화 하기#"+attendence_list.id.to_s,"수동으로 출석 해주기#"+attendence_list.id.to_s, "관리자 홈으로 돌아가기","행사 삭제하기#"+attendence_list.id.to_s]
+        @data[:keyboard][:buttons] = [attendence_list.name+" 출석자 명단 보기#"+attendence_list.id.to_s, "출결 10초간 활성화 하기#"+attendence_list.id.to_s,"수동으로 출석 해주기#"+attendence_list.id.to_s, "#{@@home_presets[3]}으로 돌아가기","행사 삭제하기#"+attendence_list.id.to_s]
     end
     
     def admin_authenticate
