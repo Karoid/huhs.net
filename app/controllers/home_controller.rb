@@ -102,4 +102,11 @@ class HomeController < ApplicationController
     #2017/09/17 방탈출용 페이지
     render layout: false
   end
+
+  def room_count
+    count_model = Statistic.find_or_initialize_by(name: "room_count",member_id:1)
+    count_model.target_id = params[:count].to_i
+    count_model.save
+    render json: {}
+  end
 end

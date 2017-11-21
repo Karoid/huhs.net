@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   post 'admin/edit_data' => 'admin#edit_data'
 
   #방탈출을 위해 만들었던 페이지
-  get 'index1' => 'home#index1'
+  # get 'index1' => 'home#index1'
   
   # 카카오톡 챗봇을 위한 라우트
   get 'keyboard' => 'kakao_chat#keyboard'
@@ -50,6 +50,10 @@ Rails.application.routes.draw do
   delete 'friend' => 'kakao_chat#friend_out'
   delete 'chat_room/:user_key' => 'kakao_chat#chat_room_out'
   get 'accept_api' => 'kakao_chat#accept_api'
+
+  # 동방 모니터링을 위한 라우트
+  get 'room_count' => 'home#room_count'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
