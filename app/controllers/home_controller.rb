@@ -3,7 +3,7 @@ class HomeController < ApplicationController
   #make xml to object
   def index
   begin
-   @last_3_record = Board.where(route:"gallery").take.articles.reverse
+   @last_3_record = Board.where(route:"gallery").take.articles.order("created_at DESC").limit(3)
    @last_3_image = {}
    k = 0
    @last_3_record.each do |record|
