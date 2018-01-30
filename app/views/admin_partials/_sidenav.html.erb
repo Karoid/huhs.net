@@ -34,8 +34,11 @@
           <h3><%@role = ["외부인","준회원","정회원","졸업생"]%>
           <%=@role[current_member.role]%></h3>
           <ul class="nav side-menu">
-            <li><a><i class="fa fa-home"></i> 통계(미완성) <span class="fa fa-chevron-down"></span></a>
-              <ul class="nav child_menu" style="display: none">
+            <input type="radio" class="sidebar" id="stat" name="sidebar"/>
+            <li><a><label for="stat">
+              <i class="fa fa-home"></i> 통계(미완성) <span class="fa fa-chevron-down"></span>
+            </label></a>
+              <ul class="nav child_menu">
                 <li><a href="/admin/stat/member">회원통계</a>
                 </li>
                 <li><a href="#">Dashboard2</a>
@@ -44,8 +47,11 @@
                 </li>
               </ul>
             </li>
-            <li><a><i class="fa fa-edit"></i> 관리 <span class="fa fa-chevron-down"></span></a>
-              <ul class="nav child_menu" style="display: none">
+            <input type="radio" class="sidebar" id="admin" name="sidebar"/>
+            <li><a><label for="admin">
+              <i class="fa fa-edit"></i> 관리 <span class="fa fa-chevron-down"></span>
+            </label></a>
+              <ul class="nav child_menu">
                 <li><a href="#">첫 화면 관리</a>
                 </li>
                 <li><a href="/admin/category">카테고리/게시판 관리</a>
@@ -53,7 +59,8 @@
                 <li><a href="/admin/article">게시글 관리</a>
                 </li>
                 <li><a href="/admin/member">회원관리</a>
-                </li><!--
+                </li>
+                <!--
                 <li><a href="/assets/form.html">General Form</a>
                 </li>
                 <li><a href="/assets/form_advanced.html">Advanced Components</a>

@@ -15,4 +15,4 @@
 //= require js/chartjs/chart.min.js
 //= require js/pace/pace.min.js
 //= require js/nprogress.js
-//= require js/custom.js
+// require js/custom.js
