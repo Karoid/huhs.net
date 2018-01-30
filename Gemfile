@@ -71,7 +71,7 @@ gem 'serviceworker-rails'
 # gem 'capistrano-rails', group: :development
 group :production do
   #gem 'pg',      :group => :production
-  gem 'pg'
+  gem 'pg', '~> 0.20'
   #compress asset in heroku
   gem 'heroku-deflater'
 end
