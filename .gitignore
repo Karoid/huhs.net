@@ -18,6 +18,3 @@
 
 # Ignore file dir
 /public/files/*
-
-# Ignore Gemfile.lock
-Gemfile.lock
