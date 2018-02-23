@@ -6,8 +6,6 @@
 //= require squire-rte/build/squire
 //= require tui-editor/dist/tui-editor-Editor.min
 //= require tui-editor/dist/tui-editor-extScrollSync.min
-var el = $('#textarea')
-var editor = $('#tui-editor')
 
 function preview_style(){
   var is_desktop = $('.logo_detail').is(':visible')
@@ -19,6 +17,8 @@ function preview_style(){
 }
 
 function init(){
+  var el = $('#textarea')
+  var editor = $('#tui-editor')
   //initialize tuiEditor
     editor.tuiEditor({
       initialEditType: 'markdown',
@@ -31,6 +31,8 @@ function init(){
     el.hide()
 }
 $(document).ready(function() {
+  var el = $('#textarea')
+  var editor = $('#tui-editor')
   try {
     init()
   } catch (e) {
