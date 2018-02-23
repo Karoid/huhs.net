@@ -20,7 +20,7 @@ jQuery(function($) {
 	});
 
 	//scrollspy
-$(window).load(function(){
+$(window).on('load',function(){
 	$('[data-spy="scroll"]').each(function () {
 		var $spy = $(this).scrollspy('refresh')
 	})
@@ -31,7 +31,7 @@ $(window).load(function(){
 	});
 
 	//Isotope
-	$(window).load(function(){
+$(window).on('load',function(){
 		$portfolio = $('.portfolio-items');
 		$portfolio.isotope({
 			itemSelector : 'li',

@@ -258,6 +258,7 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    tui_editor-rails (1.0.2.0)
     turbolinks (5.1.0)
       turbolinks-source (~> 5.1)
     turbolinks-source (5.1.0)
@@ -309,6 +310,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   serviceworker-rails
   sqlite3
+  tui_editor-rails
   turbolinks
   tzinfo-data
   uglifier (>= 1.3.0)

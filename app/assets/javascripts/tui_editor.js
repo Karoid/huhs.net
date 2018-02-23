@@ -6,6 +6,8 @@
 //= require squire-rte/build/squire
 //= require tui-editor/dist/tui-editor-Editor.min
 //= require tui-editor/dist/tui-editor-extScrollSync.min
+var el = $('#textarea')
+var editor = $('#tui-editor')
 
 function preview_style(){
   var is_desktop = $('.logo_detail').is(':visible')
@@ -17,8 +19,6 @@ function preview_style(){
 }
 
 function init(){
-  var el = $('#textarea')
-  var editor = $('#tui-editor')
   //initialize tuiEditor
     editor.tuiEditor({
       initialEditType: 'markdown',
@@ -38,11 +38,11 @@ $(document).ready(function() {
   }
   $('.wiki_form').submit(function(event) {
     if($('#page_title').val().indexOf("#") >= 0){
-      el.text(editor.tuiEditor('getValue'))
+      return el.text(editor.tuiEditor('getValue'))
     }else{
       alert('제목에 분류를 표시하지 않았습니다!, #을 이용해 표시해주세요')
       $('#page_title').css('background', '#ff00003d');
-      event.preventDefault();
+      return false
     }
   });
 
