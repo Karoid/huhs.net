@@ -1,6 +1,6 @@
 <%page_name =  CGI::unescape(URI.unescape(URI.unescape(wiki_page_new_path)).gsub('+', ' ').gsub('/wiki/new/',''))%>
 
-<h3 style="margin:20px;">"<span id="create_name" style="font-weight:bold"><%=URI.unescape(URI.unescape(wiki_page_new_path))%></span>" 에 해당하는 페이지가 없습니다. <a id="create_page" href="<%=page_name%>">페이지를 생성 하시겠습니까?</a></h3>
+<h3 style="margin:20px;">"<span id="create_name" style="font-weight:bold"><%=page_name%></span>" 에 해당하는 페이지가 없습니다. <a id="create_page" href="/wiki/new/<%=page_name%>">페이지를 생성 하시겠습니까?</a></h3>
 
 <%@pages = @pages.where("title LIKE ?", "%#{page_name}%").order('updated_at DESC')%>
 <%if @pages.length == 1%><script>window.location = '<%=wiki_page_path(@pages[0])%>'</script><%end%>

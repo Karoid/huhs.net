@@ -1,6 +1,8 @@
 <%= wiki_page_style %>
+<%= javascript_include_tag "tui_editor", media: "all", "data-turbolinks-track" => "reload" %>
+<%= stylesheet_link_tag "tui_editor", media: "all", "data-turbolinks-track" => "reload" %>
 
-<h1><%=wt 'Creating a new wiki page' %></h1>
+<h1 style="text-align:center">새로운 위키 페이지 생성</h1>
 
 <%= wiki_page_form do |f| %>
   <%= f.hidden_field :previous_version_number, :value => f.object.last_version_number %>
@@ -11,7 +13,10 @@
   <%else%>
   	<%= hidden_field_tag :path , @page.path %>
   <%end%>
-  <p><%=wt 'Content:' %><br /><%= f.text_area :content, rows: 20 %></p>
+  <p><%=wt "Content: #{link_to('(Markdown 문법', 'https://gist.github.com/ihoneymon/652be052a0727ad59601', target: '_blank')}".html_safe %> 으로 작성 가능)
+    <br /><%= f.text_area :content, id:"textarea", rows: 20%>
+    <div id="tui-editor"></div>
+  </p>
   <%= f.hidden_field :comment, :value => 'First Revision'%>
   <input type="submit" value="<%=wt 'Create page' %>" class="submit" />
 <% end %>

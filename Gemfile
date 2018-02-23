@@ -58,6 +58,8 @@ end
 gem 'irwi', :git => 'git://github.com/alno/irwi.git'
 #markdown for writing
 gem 'redcarpet'
+# markdown WIZIWIG editor
+gem 'tui_editor-rails'
 # Service worker for speed, and webapp
 gem 'serviceworker-rails'
 
