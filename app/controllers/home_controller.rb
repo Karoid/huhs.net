@@ -78,10 +78,10 @@ class HomeController < ApplicationController
   end
   #파일 업로드
   def upload_image
-    sended_msg = Cloudinary::Uploader.upload(params[:file],{use_filename: true,folder: params[:post_id]})
+    sended_msg = Cloudinary::Uploader.upload(params[:file],{:width => 800, :height => 1200, :crop => :limit, use_filename: true,folder: params[:post_id]})
     upload_write2model(sended_msg)
 
-     render json: {:link => sended_msg['url']}
+     render json: {:link => sended_msg['url'], image_id: sended_msg['public_id']}
   end
   def upload_file
     sended_msg = Cloudinary::Uploader.upload(params[:file],{resource_type: 'raw',use_filename: true,folder: params[:post_id]})
@@ -89,6 +89,16 @@ class HomeController < ApplicationController
 
     render json: {:link => sended_msg['url']}
   end
+  def upload_destroy
+    #이미지 삭제
+    Uploadfile.where(public_id: params[:public_id]).destroy_all
+    Thread.new do
+        Cloudinary::Uploader.destroy(params[:public_id], options = {})
+    end
+
+    render json: {message: "destroyed"}, status: :ok
+  end
+
   def upload_write2model(sended_msg)
     Uploadfile.create(
      article_id: params[:post_id],

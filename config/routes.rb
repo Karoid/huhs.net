@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   #file management
   post 'upload_image' => 'home#upload_image'
   post 'upload_file' => 'home#upload_file'
+  post 'upload_destroy' => 'home#upload_destroy'
   #board routes
   get 'board/:senior_number' => 'board#sameage', :constraints => { :senior_number =>  /[0-9]+(\%7C[0-9]+)*/}
   get 'board/:senior_number'+'/:id' => 'board#sameage', :constraints => { :id => /[0-9]+(\%7C[0-9]+)*/, :senior_number =>  /[0-9]+(\%7C[0-9]+)*/}
@@ -42,7 +43,7 @@ Rails.application.routes.draw do
 
   #방탈출을 위해 만들었던 페이지
   # get 'index1' => 'home#index1'
-  
+
   # 카카오톡 챗봇을 위한 라우트
   get 'keyboard' => 'kakao_chat#keyboard'
   post 'message' => 'kakao_chat#get_message'
