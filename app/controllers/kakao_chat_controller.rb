@@ -327,7 +327,7 @@ class KakaoChatController < ApplicationController
         elsif params[:type] == "photo" && @login_data.state.split("#")[1]
             @login_data.update(state: @login_data.state + "#"+ params[:content])
             image_upload_state_message
-        elsif params[:content] == "사진 업로드 완료하기" && @login_data.state.split("#")[1]
+        elsif params[:content] == "완료" && @login_data.state.split("#")[1]
             # 게시글 작성
             title = @login_data.state.split("#")[1]
             before_img_urls = @login_data.state.split("#")[2..-1]
@@ -354,9 +354,12 @@ class KakaoChatController < ApplicationController
             # 제목 입력
             @login_data.update(state: @login_data.state + "#"+ params[:content])
             image_upload_state_message
+        elsif params[:content] == "취소" && @login_data.state.split("#")[1]
+            home_state_message
+            @login_data.update(state:"home")
         else
-            @data[:message][:text] = "버그 발생! 휴즈넷 봇 홈으로 돌아갑니다"
-            @data[:keyboard] = {type:"buttons",buttons:["◎ 휴즈넷 봇 홈으로 돌아가기 ◎"]}
+            image_upload_state_message
+            @data[:message][:text] += "\n\n의미없는 문자를 받았습니다 이미지를 업로드하세요"
         end
     end
     
@@ -441,7 +444,7 @@ class KakaoChatController < ApplicationController
         if params[:content] == @@home_presets[1]
             @data = {
                 message: {
-                    text: "사진을 업로드하려면 우선 게시글 제목을 알려주세요!"
+                    text: "[[사진첩 제목 입력]]\n사진을 업로드하려면 우선 게시글 제목을 알려주세요!"
                 },
                 
                 keyboard: {
@@ -452,11 +455,10 @@ class KakaoChatController < ApplicationController
             url = @login_data.state.split("#")
             @data = {
                 message: {
-                    text: "사진을 업로드하려면 + 버튼을 누르고 원하는 사진을 전송하시면 게시글에 넣을 사진을 추가하실 수 있습니다.\n모두 추가한 후에는 하단의 '사진_업로드_완료하기'버튼을 눌러주세요!\n\n[[업로드 예정 사진]]\n제목:"+url[1] + "\n URL:" + url[2..-1].join("\nURL: ")
+                    text: "[[사진 업로드 방법]]\n + 버튼 > 원하는 사진 선택 > 사진 전송\n모두 추가한 후에는 '완료'혹은 '취소'를 입력해 마무리합니다\n\n[[업로드 예정 사진]]\n제목:"+url[1] + "\n URL:" + url[2..-1].join("\nURL: ")
                 },
                 keyboard: {
-                    type: 'buttons',
-                    buttons: ["사진 업로드 완료하기", "◎ 휴즈넷 봇 홈으로 돌아가기 ◎"]
+                    type: 'text'
                 }
             }
         end
