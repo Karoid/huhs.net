@@ -3,6 +3,7 @@ class KakaoChat::KakaoChatController < ApplicationController
     load File.expand_path('../home.rb',__FILE__)
 
     def keyboard
+      ERROR
         render :json => {
             :type => "buttons",
             :buttons => ["◎ 휴즈넷 봇 홈으로 돌아가기 ◎"]
@@ -106,7 +107,7 @@ class KakaoChat::KakaoChatController < ApplicationController
         when Regexp.new("^image_upload")
             image_upload
         when "check_attendence"
-            check_attendence
+            check_attendence_kakao
         when Regexp.new("^admin")
             admin
         end

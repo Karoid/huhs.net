@@ -73,12 +73,13 @@ end
 
 def image_upload_profile
     if params[:type] == "photo"
-        @login_data.update(state: @login_data.state + "#https://res.cloudinary.com/demo/image/fetch/w_300,h_300,c_fill/"+ params[:content])
+        @login_data.update(state: @login_data.state + "#"+ params[:content])
         image_upload_profile_state_message
     elsif params[:content] == "예" && @login_data.state.split("#")[2]
         # 프로필 업로드
         Thread.new do
-            sended_msg = Cloudinary::Uploader.upload(@login_data.state.split("#")[3],{use_filename: true,unique_filename: false,overwrite:true,folder: "member/#{@login_data.member.id}"})
+            sended_msg = Cloudinary::Uploader.upload(@login_data.state.split("#")[3],
+            {:width => 600, :height => 600, :gravity=>"face", :crop => :fill,use_filename: true,unique_filename: false,overwrite:true,folder: "member/#{@login_data.member.id}"})
             image_upload_write_model(sended_msg,0)
             @login_data.member.update(image_url: sended_msg['url'])
         end
@@ -116,7 +117,7 @@ def image_upload_photo_state_message
             message: {
                 text: "[[사진첩 제목 입력]]\n사진을 업로드하려면 우선 게시글 제목을 알려주세요!"
             },
-    
+
             keyboard: {
                 type: 'text'
             }
@@ -140,7 +141,7 @@ def image_upload_profile_state_message
             message: {
                 text: "이 사진으로 하시겠습니까?",
                 photo: {
-                    url: url[2],
+                    url: "https://res.cloudinary.com/demo/image/fetch/w_300,h_300,c_fill,g_face/"+url[2],
                     width: 300,
                     height: 300
                 }

@@ -2,7 +2,7 @@ require_relative 'variables'
 # @@home_presets = ["📚휴즈 위키 홈","📷이미지 업로드","✔오프라인 출석 체크", "🔐*관리자 홈"]
 # @@admin_presets = ["🔐공지 작성하기", "🔐회원 등업" ,"🔐오프라인 출석 체크"]
 
-def check_attendence
+def check_attendence_kakao
     if params[:content] =~ /^\d{4}$/
         @current_user = @login_data.member
         @my_record_list = AttendenceList.where(code: params[:content]).take
