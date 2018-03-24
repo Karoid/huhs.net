@@ -3,7 +3,6 @@ class KakaoChat::KakaoChatController < ApplicationController
     load File.expand_path('../home.rb',__FILE__)
 
     def keyboard
-      ERROR
         render :json => {
             :type => "buttons",
             :buttons => ["◎ 휴즈넷 봇 홈으로 돌아가기 ◎"]
