@@ -78,8 +78,8 @@ def image_upload_profile
     elsif params[:content] == "예" && @login_data.state.split("#")[2]
         # 프로필 업로드
         Thread.new do
-            sended_msg = Cloudinary::Uploader.upload(@login_data.state.split("#")[3],
-            {:width => 600, :height => 600, :gravity=>"face", :crop => :fill,use_filename: true,unique_filename: false,overwrite:true,folder: "member/#{@login_data.member.id}"})
+            sended_msg = Cloudinary::Uploader.upload(@login_data.state.split("#")[2],
+            {:width => 600, :height => 600, :gravity=>"face", :crop => :fill,public_id: "blob",unique_filename: false,overwrite:true,folder: "member/#{@login_data.member.id}"})
             image_upload_write_model(sended_msg,0)
             @login_data.member.update(image_url: sended_msg['url'])
         end
