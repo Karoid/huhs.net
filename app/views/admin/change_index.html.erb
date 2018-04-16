@@ -36,7 +36,7 @@ window.location.reload()
           <div class="clearfix"></div>
         </div>
         <div class="info"></div>
-        <img id="img" src="<%=Uploadfile.where(public_id:'index/slider-bg')[0].url%>" alt="배경이미지 없음" width="200px;">
+        <img id="img" src="<%=Uploadfile.where(public_id:'index/slider-bg')[0].url if Uploadfile.where(public_id:'index/slider-bg')[0]%>" alt="배경이미지 없음" width="200px;">
         <input class="file_sel" type="file" accept="image/*"> <button name="button" id="submit_img">제출</button>
       </div>
     </div>
