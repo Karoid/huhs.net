@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   #get 'admin/stat/member' => 'admin#show_member'
   post 'admin/stat/:name' => 'admin#getStatistic'
   post 'admin/stat_member' => 'admin#getStatisticOfMember'
+  get 'admin/change_index' => 'admin#change_index'
   get 'admin/category' => 'admin#show_category'
   get 'admin/article' => 'admin#show_article'
   get 'admin/member' => 'admin#show_member'
@@ -40,6 +41,7 @@ Rails.application.routes.draw do
   post 'admin/inactive_data' => 'admin#active_inactive_data', :bool => false, tuple: "active"
   post 'admin/active_staff' => 'admin#active_inactive_data', :bool => true, tuple: "staff"
   post 'admin/edit_data' => 'admin#edit_data'
+  post 'admin/edit_index_image' => 'admin#edit_index_image'
 
   #방탈출을 위해 만들었던 페이지
   # get 'index1' => 'home#index1'

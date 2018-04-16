@@ -1,0 +1,109 @@
+<script>
+document.addEventListener("turbolinks:load", function() {
+window.location.reload()
+})
+</script>
+<!-- page content -->
+<div class="">
+  <div class="page-title">
+    <div class="title_left">
+      <h3>첫 화면 관리하기</h3>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="row">
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel" style="height:300px;">
+        <div class="x_title">
+          <h2>첫 화면 배경사진 업로드하기</h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Settings 1</a>
+                </li>
+                <li><a href="#">Settings 2</a>
+                </li>
+              </ul>
+            </li>
+            <li><a class="close-link"><i class="fa fa-close"></i></a>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="info"></div>
+        <img id="img" src="<%=Uploadfile.where(public_id:'index/slider-bg')[0].url%>" alt="배경이미지 없음" width="200px;">
+        <input class="file_sel" type="file" accept="image/*"> <button name="button" id="submit_img">제출</button>
+      </div>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel" style="height:120px;">
+        <div class="x_title">
+          <h2>가위바위보 리셋하기</h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Settings 1</a>
+                </li>
+                <li><a href="#">Settings 2</a>
+                </li>
+              </ul>
+            </li>
+            <li><a class="close-link"><i class="fa fa-close"></i></a>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <button type="button" name="button" id="reset_rcp">가위바위보 리셋하기</button>
+        <br>가위바위보 게임을 리셋하려면 위 버튼을 눌러주세요!
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+document.getElementById("submit_img").addEventListener("click",function(){
+  $('.info').text("업로드 중!")
+  $('#img').removeAttr('src').attr('src', '/images/loading_icon.gif');
+  var formData = new FormData();
+  formData.append('file', $(".file_sel")[0].files[0]);
+  // Use `jQuery.ajax` method
+  $.ajax('/admin/edit_index_image', {
+    method: "POST",
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function (data) {
+      $('.info').text("업로드 완료")
+      var time = new Date().getTime(); // 이미지 새로고침을 위한 랜덤 값
+      $('#img').removeAttr('src').attr('src', data.url);
+      alert("업로드 완료!")
+    },
+    error: function () {
+      console.log('Upload error');
+    }
+  });
+})
+
+  $('#reset_rcp').click(function(event) {
+    if (confirm("Are you sure?")) {
+      /* Act on the event */
+      $.ajax({
+        url: '/admin/delete_data',
+        type: 'post',
+        dataType: 'json',
+        data: {db: 'point', data:[<%Point.all.each do |x|%> <%=x.id%>, <%end%>]},
+        success: function(){
+          alert("성공하였습니다")
+        }
+      })
+    }
+  });
+</script>
+<!-- /page content -->

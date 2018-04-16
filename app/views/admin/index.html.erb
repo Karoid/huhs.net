@@ -55,25 +55,8 @@ window.location.reload()
         <h3>2017년 1월 28일</h3>
         <span>휴즈인들에게 rails로 만들고 나서 첫번째 공개입니다. 나름 디자인부터 해킹까지 방어하기 위해 많은 시간을 쏟았지만 그에 비해 결과물이 좋게 비추일지 의문입니다</span>
         <br>정승호, 현주희, 권동주 참여<br>
-        <button type="button" name="button" id="reset_rcp">가위바위보 리셋하기</button>
       </div>
     </div>
   </div>
 </div>
-<script type="text/javascript">
-  $('#reset_rcp').click(function(event) {
-    if (confirm("Are you sure?")) {
-      /* Act on the event */
-      $.ajax({
-        url: '/admin/delete_data',
-        type: 'post',
-        dataType: 'json',
-        data: {db: 'point', data:[<%Point.all.each do |x|%> <%=x.id%>, <%end%>]},
-        success: function(){
-          alert("성공하였습니다")
-        }
-      })
-    }
-  });
-</script>
 <!-- /page content -->

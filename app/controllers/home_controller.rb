@@ -67,7 +67,7 @@ class HomeController < ApplicationController
   end
   def edit_profile_image
     params[:post_id] = 0
-    sended_msg = Cloudinary::Uploader.upload(params[:file],{use_filename: true,unique_filename: false,overwrite:true,folder: "member/#{current_member.id}"})
+    sended_msg = Cloudinary::Uploader.upload(params[:file],{:width => 800, :height => 1200, :crop => :limit, use_filename: true,unique_filename: false,overwrite:true,folder: "member/#{current_member.id}"})
     upload_write2model(sended_msg)
     current_member.image_url = sended_msg['url']
     current_member.save
