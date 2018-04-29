@@ -8,7 +8,7 @@ class Statistic < ActiveRecord::Base
   end
 
   def self.view_count(model,id)
-    view = Statistic.find_or_initialize_by(name:"read_article", target_model: model, target_id: id).limit(1)
+    view = Statistic.find_or_initialize_by(name:"read_article", target_model: model, target_id: id)
     return view.member_id || 0
   end
 
