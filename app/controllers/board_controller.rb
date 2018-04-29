@@ -56,7 +56,7 @@ class BoardController < ApplicationController
           params[:id] = @article.last.id
         end
         if current_member
-          Statistic.create(name:"read_article", member_id: current_member.id, target_model: Article, target_id: params[:id])
+          Statistic.view_count_up(Article,params[:id])
         end
         @thisArticle = @article.find(params[:id])
         render template: "board/showArticle"
@@ -69,7 +69,7 @@ class BoardController < ApplicationController
     end
     def showArticle
       showBoard
-      current_member ? Statistic.create(name:"read_article", member_id: current_member.id, target_model: Article, target_id: params[:id]) : nil
+      current_member ? Statistic.view_count_up(Article,params[:id]) : nil
       @thisArticle = @article.find(params[:id])
     end
 
@@ -96,7 +96,7 @@ class BoardController < ApplicationController
       object.each do |value|
         hash = {}
         hash = value.attributes
-        hash[:view] = Statistic.where(name: "read_article", target_id: value.id).length
+        hash[:view] = Statistic.view_count(Article,value.id)
         @article_page_json.push(hash)
       end
       return @article_page_json

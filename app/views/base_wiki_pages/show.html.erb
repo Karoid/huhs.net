@@ -1,4 +1,3 @@
-<%Statistic.create(name:"read_article", member_id: current_member.id, target_model: WikiPage, target_id: @page.id)%>
 <div class="container box button-list">
   <% #게시글 내용, shared/_article_content.erb 참고 %>
   <%post = @page%>
@@ -11,7 +10,7 @@
     <%= wiki_page_actions %>
     <% end %>
     <div style="float:right; margin-top:15px">
-      조회수: <%=Statistic.where(name:"read_article",target_id: @page.id, target_model: WikiPage).count%>  /
+      조회수: <%=Statistic.view_count(WikiPage,@page.id)%>  /
       <span class='hidden-xs' style="display:inline-block!important"><%=post.created_at.strftime("%Y.")%></span>
       <%=post.created_at.strftime("%m.%d")%>
     </div>

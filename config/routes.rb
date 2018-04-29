@@ -55,7 +55,7 @@ Rails.application.routes.draw do
   get 'accept_api' => 'kakao_chat/kakao_chat#accept_api'
 
   # 동방 모니터링을 위한 라우트
-  get 'room_count' => 'home#room_count'
+  get 'change_db' => 'home#change_db'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

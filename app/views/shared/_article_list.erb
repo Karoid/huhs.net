@@ -22,7 +22,7 @@
       <td class="td_title"><a href="/board/<%=article.board.category.route%>/<%=article.board.route%>/<%=article.id%>"><%=article.title%></a></td>
       <td class="td_name"><%=article.member_name%></td>
       <td class="td_date"><span class='hidden-xs'><%=article.created_at.strftime("%Y.")%></span><%=article.created_at.strftime("%m.%d")%></td>
-      <td class="td_page_view"><%=Statistic.where(name: "read_article",target_model:Article, target_id: article.id).count%></td>
+      <td class="td_page_view"><%=Statistic.view_count(Article,article.id)%></td>
     </tr>
     <%end%>
   </tbody>
