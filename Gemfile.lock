@@ -9,14 +9,6 @@ GIT
       diff-lcs (>= 1.1.2)
       rails_autolink (>= 1.0)
 
-GIT
-  remote: https://github.com/flavorjones/loofah.git
-  revision: 37af4ee08f9e9531e24287c2783a79d331fc9243
-  specs:
-    loofah (2.2.0.20180212085853)
-      crass (~> 1.0.2)
-      nokogiri (>= 1.5.9)
-
 PATH
   remote: ../check_attendence
   specs:
@@ -147,6 +139,9 @@ GEM
       activerecord
       kaminari-core (= 1.1.1)
     kaminari-core (1.1.1)
+    loofah (2.2.2)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.5.9)
     mail (2.7.0)
       mini_mime (>= 0.1.1)
     meta_request (0.6.0)
@@ -189,8 +184,8 @@ GEM
       activesupport (>= 4.2.0, < 5.0)
       nokogiri (~> 1.6)
       rails-deprecated_sanitizer (>= 1.0.1)
-    rails-html-sanitizer (1.0.3)
-      loofah (~> 2.0)
+    rails-html-sanitizer (1.0.4)
+      loofah (~> 2.2, >= 2.2.2)
     rails_autolink (1.1.6)
       rails (> 3.1)
     rails_db (1.6.0)
@@ -297,7 +292,7 @@ DEPENDENCIES
   irwi!
   jbuilder (~> 2.0)
   jquery-rails
-  loofah!
+  loofah
   meta_request
   nokogiri
   pg (~> 0.20)

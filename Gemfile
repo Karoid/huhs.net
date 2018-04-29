@@ -30,7 +30,7 @@ gem 'acts_as_commentable_with_threading'
 #Parsing an HTML / XML Document
 gem 'nokogiri'
 #XSS Attack defence
-gem 'loofah', :git => 'https://github.com/flavorjones/loofah.git'
+gem 'loofah'
 #free remote storage service
 gem 'cloudinary'
 #edit db in browser /rails/db
