@@ -6,7 +6,7 @@ class WikiPagesController < ApplicationController
     return not_allowed unless show_allowed?
 
     @pages = Irwi.config.paginator.paginate(page_class.select(:id,:title,:path, :updated_at, :updator_id).order('updated_at DESC'), page: params[:page], per_page: 5)
-
+    Statistic.view_count_up(WikiPage,@page.id)
     if params[:json]
        respond_to do |format|
          format.json { render json: make_object_to_json(@pages) }
@@ -14,7 +14,7 @@ class WikiPagesController < ApplicationController
      else
       render_template(@page.new_record? ? 'no' : 'show')
      end
-    
+
   end
 
   def all
@@ -41,7 +41,7 @@ class WikiPagesController < ApplicationController
       rescue
       end
     end
-    
+
   end
 
   def show_allowed?
@@ -71,7 +71,7 @@ class WikiPagesController < ApplicationController
       object.each do |value|
         hash = {}
         hash = value.attributes
-        hash[:view] = Statistic.where(name: "read_article",target_model:WikiPage, target_id: value.id).length
+        hash[:view] = Statistic.view_count(WikiPage,value.id)
         hash[:member_name] = Irwi.config.user_class.find(value.updator_id).username
         @article_page_json.push(hash)
       end
@@ -81,7 +81,7 @@ end
 
 class Irwi::Formatters::RedCarpet
   def format(text)
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, space_after_headers: true, tables: true,footnotes: true, strikethrough: true, space_after_headers: false)
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true,footnotes: true, strikethrough: true, space_after_headers: false)
     markdown.render(text)
   end
 end

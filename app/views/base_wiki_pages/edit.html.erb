@@ -1,4 +1,5 @@
 <%= wiki_page_style %>
+<%= javascript_include_tag "tui_editor_base", media: "all", "data-turbolinks-track" => "reload" %>
 <%= javascript_include_tag "tui_editor", media: "all", "data-turbolinks-track" => "reload" %>
 <%= stylesheet_link_tag "tui_editor", media: "all", "data-turbolinks-track" => "reload" %>
 <h1 style="text-align:center">위키 수정하기</h1>
@@ -37,7 +38,6 @@
   <%#<p><%#=wt 'Content:' %><br /><%#= f.text_area(:content, :value => f.object.content.gsub("\n", '&#x000A;').gsub("\r",'')).html_safe %#></p>%>
   <p><%=wt '어떻게 수정했나요?(선택사항):' %><br /><%= f.text_field :comment %></p>
   <input type="submit" name="save" value="<%=wt 'Save page' %>" class="submit" />
-  <input type="submit" name="preview" value="<%=wt 'Preview' %>" class="submit" />
   <input type="submit" name="cancel" value="<%=wt 'Cancel' %>" class="submit" />
 <% end %>
 

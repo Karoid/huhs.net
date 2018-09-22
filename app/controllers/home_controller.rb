@@ -67,7 +67,7 @@ class HomeController < ApplicationController
   end
   def edit_profile_image
     params[:post_id] = 0
-    sended_msg = Cloudinary::Uploader.upload(params[:file],{use_filename: true,unique_filename: false,overwrite:true,folder: "member/#{current_member.id}"})
+    sended_msg = Cloudinary::Uploader.upload(params[:file],{:width => 800, :height => 1200, :crop => :limit, use_filename: true,unique_filename: false,overwrite:true,folder: "member/#{current_member.id}"})
     upload_write2model(sended_msg)
     current_member.image_url = sended_msg['url']
     current_member.save
@@ -78,10 +78,10 @@ class HomeController < ApplicationController
   end
   #파일 업로드
   def upload_image
-    sended_msg = Cloudinary::Uploader.upload(params[:file],{use_filename: true,folder: params[:post_id]})
+    sended_msg = Cloudinary::Uploader.upload(params[:file],{:width => 800, :height => 1200, :crop => :limit, use_filename: true,folder: params[:post_id]})
     upload_write2model(sended_msg)
 
-     render json: {:link => sended_msg['url']}
+     render json: {:link => sended_msg['url'], image_id: sended_msg['public_id']}
   end
   def upload_file
     sended_msg = Cloudinary::Uploader.upload(params[:file],{resource_type: 'raw',use_filename: true,folder: params[:post_id]})
@@ -89,6 +89,16 @@ class HomeController < ApplicationController
 
     render json: {:link => sended_msg['url']}
   end
+  def upload_destroy
+    #이미지 삭제
+    Uploadfile.where(public_id: params[:public_id]).destroy_all
+    Thread.new do
+        Cloudinary::Uploader.destroy(params[:public_id], options = {})
+    end
+
+    render json: {message: "destroyed"}, status: :ok
+  end
+
   def upload_write2model(sended_msg)
     Uploadfile.create(
      article_id: params[:post_id],
@@ -103,10 +113,17 @@ class HomeController < ApplicationController
     render layout: false
   end
 
-  def room_count
-    count_model = Statistic.find_or_initialize_by(name: "room_count",member_id:1)
-    count_model.target_id = params[:count].to_i
-    count_model.save
-    render json: {}
+  def change_db
+    article_count = Statistic.where({name: "read_article", target_model: "Article"}).group(:target_id).count
+    wiki_count = Statistic.where({name: "read_article", target_model: "WikiPage"}).group(:target_id).count
+    Statistic.where({name: "read_article", target_model: "Article"}).delete_all
+    Statistic.where({name: "read_article", target_model: "WikiPage"}).delete_all
+    article_count.each do |key, value|
+      Statistic.create(name:"read_article", member_id: value, target_model: Article, target_id: key)
+    end
+    wiki_count.each do |key, value|
+      Statistic.create(name:"read_article", member_id: value, target_model: WikiPage, target_id: key)
+    end
+    redirect_to :back
   end
 end

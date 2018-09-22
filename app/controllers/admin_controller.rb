@@ -3,6 +3,9 @@ class AdminController < ApplicationController
   def index
     authorize! :read, Category.where(route: "admin").take
   end
+  def change_index
+
+  end
   def show_category
     @category = Category.all
     @board = Board.all
@@ -87,5 +90,20 @@ class AdminController < ApplicationController
       format.json { render json: result }
     end
     authorize! :read, Category.where(route: "admin").take
+  end
+
+  def edit_index_image
+    sended_msg = Cloudinary::Uploader.upload(params[:file],{:width => 1200, :height => 1000, :crop => :limit, public_id: 'slider-bg',unique_filename: false,overwrite:true,folder: "index"})
+    if upload = Uploadfile.where(public_id: 'index/slider-bg')[0]
+      upload.update(url: sended_msg['url'])
+    else
+      Uploadfile.create(
+        article_id: 0,
+        public_id: sended_msg['public_id'],
+        format: sended_msg['format'],
+        url: sended_msg['url'],
+        resource_type: sended_msg['resource_type'])
+    end
+    render json: {url: sended_msg['url']}
   end
 end

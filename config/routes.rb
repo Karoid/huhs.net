@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   #file management
   post 'upload_image' => 'home#upload_image'
   post 'upload_file' => 'home#upload_file'
+  post 'upload_destroy' => 'home#upload_destroy'
   #board routes
   get 'board/:senior_number' => 'board#sameage', :constraints => { :senior_number =>  /[0-9]+(\%7C[0-9]+)*/}
   get 'board/:senior_number'+'/:id' => 'board#sameage', :constraints => { :id => /[0-9]+(\%7C[0-9]+)*/, :senior_number =>  /[0-9]+(\%7C[0-9]+)*/}
@@ -31,6 +32,7 @@ Rails.application.routes.draw do
   #get 'admin/stat/member' => 'admin#show_member'
   post 'admin/stat/:name' => 'admin#getStatistic'
   post 'admin/stat_member' => 'admin#getStatisticOfMember'
+  get 'admin/change_index' => 'admin#change_index'
   get 'admin/category' => 'admin#show_category'
   get 'admin/article' => 'admin#show_article'
   get 'admin/member' => 'admin#show_member'
@@ -39,20 +41,21 @@ Rails.application.routes.draw do
   post 'admin/inactive_data' => 'admin#active_inactive_data', :bool => false, tuple: "active"
   post 'admin/active_staff' => 'admin#active_inactive_data', :bool => true, tuple: "staff"
   post 'admin/edit_data' => 'admin#edit_data'
+  post 'admin/edit_index_image' => 'admin#edit_index_image'
 
   #방탈출을 위해 만들었던 페이지
   # get 'index1' => 'home#index1'
-  
+
   # 카카오톡 챗봇을 위한 라우트
-  get 'keyboard' => 'kakao_chat#keyboard'
-  post 'message' => 'kakao_chat#get_message'
-  post 'friend' => 'kakao_chat#friend_add'
-  delete 'friend' => 'kakao_chat#friend_out'
-  delete 'chat_room/:user_key' => 'kakao_chat#chat_room_out'
-  get 'accept_api' => 'kakao_chat#accept_api'
+  get 'keyboard' => 'kakao_chat/kakao_chat#keyboard'
+  post 'message' => 'kakao_chat/kakao_chat#get_message'
+  post 'friend' => 'kakao_chat/kakao_chat#friend_add'
+  delete 'friend' => 'kakao_chat/kakao_chat#friend_out'
+  delete 'chat_room/:user_key' => 'kakao_chat/kakao_chat#chat_room_out'
+  get 'accept_api' => 'kakao_chat/kakao_chat#accept_api'
 
   # 동방 모니터링을 위한 라우트
-  get 'room_count' => 'home#room_count'
+  get 'change_db' => 'home#change_db'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

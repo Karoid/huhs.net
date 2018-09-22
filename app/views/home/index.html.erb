@@ -7,7 +7,8 @@
  <div class="frame oneperframe" id="oneperframe">
    <ul class="clearfix">
      <li style="background:#edfafd;">
-        <div class="carousel-inner" id="main-slider">
+        <div class="carousel-inner" id="main-slider"
+         style="background-image:linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ) ,url(<%=Uploadfile.where(public_id:'index/slider-bg')[0].url if Uploadfile.where(public_id:'index/slider-bg')[0]%>);">
            <div class="item active">
              <hr style="float: right; margin-bottom: 18px;">
                <div class="container">
@@ -103,7 +104,7 @@
                      <li class="portfolio-item <%=k%>">
                          <div class="item-inner">
                              <div class="portfolio-image">
-                                 <img src="<%=cloudinary_quality(url,"c_limit,h_200,w_300")%>" alt="<%=key%>">
+                                 <img src="<%=cloudinary_quality(url,"c_fill,h_200,w_300")%>" alt="<%=key%>">
                                  <div class="overlay">
                                      <a class="preview btn btn-danger" title="<%=key%>" href="<%=url%>"><i class="icon-eye-open"></i></a>
                                  </div>

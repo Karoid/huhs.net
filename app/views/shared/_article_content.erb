@@ -20,7 +20,7 @@
   </form>
   <% end %>
   <div style="float:right; margin-top:15px">
-    조회수: <%=Statistic.where(name: "read_article", target_id: params[:id]).length%>  /
+    조회수: <%=Statistic.view_count(Article,params[:id])%>  /
     <span class='hidden-xs' style="display:inline-block!important"><%=post.created_at.strftime("%Y.")%></span>
     <%=post.created_at.strftime("%m.%d")%>
   </div>

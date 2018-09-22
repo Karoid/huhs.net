@@ -9,6 +9,7 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
+Rails.application.config.assets.precompile += %w( tui_editor_base.js)
 Rails.application.config.assets.precompile += %w( tui_editor.js)
 Rails.application.config.assets.precompile += %w( footermanifest.js)
 Rails.application.config.assets.precompile += %w( tui_editor.scss )

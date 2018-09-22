@@ -48,9 +48,9 @@ def writegallery(doc,article_id)
   end
 end
 if Member.where(admin:true).length == 0
-  
+
 #Major
-Major.create(department: "미등록", name:"미등록");
+Major.create(id:0, department: "미등록", name:"미등록");
 Major.create(department: "공과대학", name:"건축학부");
 Major.create(department: "공과대학", name:"자원환경공학과");
 Major.create(department: "공과대학", name:"유기나노공학과");
@@ -245,4 +245,3 @@ change_article.each do |x|
   str.gsub!("http://huhs.nethttps://res.cloudinary.com/","https://res.cloudinary.com/")
   x.update(content: str)
 end
- 

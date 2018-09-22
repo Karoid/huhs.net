@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5.1'
+gem 'rails', '4.2.10'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -30,7 +30,7 @@ gem 'acts_as_commentable_with_threading'
 #Parsing an HTML / XML Document
 gem 'nokogiri'
 #XSS Attack defence
-gem 'loofah', :git => 'https://github.com/flavorjones/loofah.git'
+gem 'loofah'
 #free remote storage service
 gem 'cloudinary'
 #edit db in browser /rails/db
