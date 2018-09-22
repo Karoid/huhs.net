@@ -4,7 +4,7 @@
 //= require codemirror/lib/codemirror
 //= require highlightjs/highlight.pack
 //= require squire-rte/build/squire
-//= require tui-editor/dist/tui-editor-Editor.min
+//= require tui-editor/tui-editor-Editor
 //= require tui-editor/dist/tui-editor-extScrollSync.min
 var el = $('#textarea')
 var editor = $('#tui-editor')
