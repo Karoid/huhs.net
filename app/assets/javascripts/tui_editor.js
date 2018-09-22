@@ -1,4 +1,4 @@
-//= require tui-editor/tui-editor-Editor
+//= require tui-editor/dist/tui-editor-Editor.min
 //= require tui-editor/dist/tui-editor-extScrollSync.min
 
 function preview_style(){

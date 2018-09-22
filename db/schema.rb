@@ -24,16 +24,8 @@ ActiveRecord::Schema.define(version: 20171010065613) do
     t.datetime "updated_at",                 null: false
   end
 
-  create_table "attendence_lists", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.string   "user_name"
-    t.integer  "code"
-    t.string   "name",       null: false
-    t.datetime "start",      null: false
-    t.datetime "end",        null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+# Could not dump table "attendence_lists" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "attendences", force: :cascade do |t|
     t.integer  "attendence_list_id"
@@ -101,7 +93,7 @@ ActiveRecord::Schema.define(version: 20171010065613) do
     t.string   "username",               default: "",                        null: false
     t.integer  "senior_number",          default: 1,                         null: false
     t.string   "tel",                    default: "미입력",                     null: false
-    t.integer  "major_id",               default: 1,                         null: false
+    t.integer  "major_id",               default: 0,                         null: false
     t.string   "image_url",              default: "/images/default_img.png", null: false
     t.string   "encrypted_password",     default: "",                        null: false
     t.boolean  "admin",                  default: false,                     null: false

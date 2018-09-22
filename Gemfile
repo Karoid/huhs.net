@@ -59,12 +59,16 @@ gem 'irwi', :git => 'git://github.com/alno/irwi.git'
 #markdown for writing
 gem 'redcarpet'
 # markdown WIZIWIG editor
-gem 'tui_editor-rails'
+if File.exist?("../tui_editor-rails")
+  gem "tui_editor-rails", :path => "../tui_editor-rails"
+else
+  gem 'tui_editor-rails', :git => "https://github.com/Karoid/tui_editor-rails.git"
+end
 # Service worker for speed, and webapp
 gem 'serviceworker-rails'
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '>= 3.1.12'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
