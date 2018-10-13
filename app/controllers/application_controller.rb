@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     begin
       Statistic.create(name:"sign_in",member_id: current_member.id)
+      flash[:notice] = '휴즈넷 출석 완료!'
     rescue;end
     super
   end
