@@ -9,8 +9,9 @@ GIT
       diff-lcs (>= 1.1.2)
       rails_autolink (>= 1.0)
 
-PATH
-  remote: ../check_attendence
+GIT
+  remote: https://github.com/Karoid/check_attendence.git
+  revision: 6ca82fa2afda98b54f1c702e2922f2f5084f0e02
   specs:
     check_attendence (0.1.0)
       rails (> 4.2.5.1)
@@ -24,7 +25,12 @@ PATH
 PATH
   remote: ../rock_scissors_paper
   specs:
-    rock_scissors_paper (0.1.5)
+    rock_scissors_paper (0.1.4)
+
+PATH
+  remote: ../tui_editor-rails
+  specs:
+    tui_editor-rails (1.2.6.0)
 
 GEM
   remote: https://rubygems.org/
@@ -276,6 +282,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_commentable_with_threading
+  bcrypt (>= 3.1.12)
   better_errors
   byebug
   cancancan
@@ -300,7 +307,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   serviceworker-rails
   sqlite3
-  tui_editor-rails
+  tui_editor-rails!
   turbolinks
   tzinfo-data
   uglifier (>= 1.3.0)

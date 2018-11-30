@@ -16,15 +16,39 @@ $(document).ready(function() {
   var image = []
 
   function init(){
+    initial_value = $('#textarea').text()
+    if(initial_value.length == 0){
+      initial_value = '### 기본정보\n' +
+        '생년월일: YYYY.MM.DD  \n' +
+        '주전공: 홍길동학부  \n' +
+        '복수전공/부전공: 홍길동학과  \n' +
+        '학적: 대전 홍길동고  \n' +
+        '학번: 00학번  \n' +
+        '혈액형: ABO  \n' +
+        '\n' +
+        '### 활동내역\n' +
+        'YYYY년 0학기 입부  \n' +
+        'YYYY년 0학기 회장\n' +
+        '\n' +
+        '### 성격/특징\n' +
+        '그는 분신술의 귀재이다.  \n' +
+        '\n' +
+        '### 별명\n' +
+        '홍길동'
+    }
+
     //initialize tuiEditor
     editor.tuiEditor({
       initialEditType: 'markdown',
-      initialValue: $('#textarea').text(),
+      initialValue: initial_value,
       viewer: false,
       previewStyle: preview_style(),
       height: 700,
       events: {
-        load: catchExit
+        load: catchExit,
+        keyup: function(){
+          $('#count').html(editor.tuiEditor('getValue').length+'자 작성')
+        }
       },
       hooks: {
         addImageBlobHook: uploadImage
@@ -131,6 +155,11 @@ $(document).ready(function() {
       $(window).off("beforeunload");
 
       el.text(editor.tuiEditor('getValue'))
+
+      if(el.text().length < 150){
+        alert('내용이 150자 이상이여야 합니다')
+        return false
+      }
     }else{
       alert('제목에 분류를 표시하지 않았습니다!, #을 이용해 표시해주세요')
       $('#page_title').css('background', '#ff00003d');

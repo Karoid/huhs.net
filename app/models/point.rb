@@ -46,5 +46,10 @@ class WikiPageVersion
     else
       Point.create(user_id: self.updator_id, point: 5500)
     end
+
+    if self.number == 1 && self.content.length > 100
+      point.point += 1500
+      point.save
+    end
   end
 end
