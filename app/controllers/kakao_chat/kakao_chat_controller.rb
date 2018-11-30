@@ -75,6 +75,8 @@ class KakaoChat::KakaoChatController < ApplicationController
                 :message => 'success'
             }
         end
+
+        render 'kakao_chat/accept_api'
     end
 
     private
