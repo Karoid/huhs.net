@@ -16,6 +16,12 @@ GIT
     check_attendence (0.1.0)
       rails (> 4.2.5.1)
 
+GIT
+  remote: https://github.com/Karoid/tui_editor-rails.git
+  revision: 835d096e6fd6af33eef0599ff15097b6374b7ae0
+  specs:
+    tui_editor-rails (1.2.6.0)
+
 PATH
   remote: ../enrollment
   specs:
@@ -26,11 +32,6 @@ PATH
   remote: ../rock_scissors_paper
   specs:
     rock_scissors_paper (0.1.4)
-
-PATH
-  remote: ../tui_editor-rails
-  specs:
-    tui_editor-rails (1.2.6.0)
 
 GEM
   remote: https://rubygems.org/
@@ -318,4 +319,4 @@ DEPENDENCIES
   will_paginate (~> 3.1.0)
 
 BUNDLED WITH
-   1.16.1
+   1.17.1
