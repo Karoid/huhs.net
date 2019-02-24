@@ -19,4 +19,4 @@
 # Ignore file dir
 /public/files/*
 
-.idea/*
+/.idea/*

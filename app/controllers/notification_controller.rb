@@ -11,7 +11,7 @@ class NotificationController < ApplicationController
     notif_data = NotificationToken.create(endpoint: params[:subscription][:endpoint],
                               p256dh_key: params[:subscription][:keys][:p256dh],
                               auth_key: params[:subscription][:keys][:auth],
-                              member_id: current_member&.id)
+                              member_id: current_member.id)
     notif_data.send_message(get_message())
     render body: nil
   end
@@ -20,7 +20,7 @@ class NotificationController < ApplicationController
     notif_data = NotificationToken.where(endpoint: params[:subscription][:endpoint],
                                           p256dh_key: params[:subscription][:keys][:p256dh],
                                           auth_key: params[:subscription][:keys][:auth],
-                                          member_id: current_member&.id).destroy_all
+                                          member_id: current_member.id).destroy_all
     render body: nil
   end
 
