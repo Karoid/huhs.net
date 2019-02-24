@@ -2,17 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18698e7b-57a1-45f5-b339-d92ccbe0fb21" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/views/notification/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/huhs.net.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/huhs.net.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/javascripts/serviceworker-companion.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascripts/serviceworker-companion.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/home_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/home_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/member.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/member.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/schema.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/schema.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/seeds.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/seeds.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/javascripts/serviceworker.js.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascripts/serviceworker.js.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/board_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/board_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/notification_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/notification_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/notification_token.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/notification_token.rb" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.bundle/" />
     <ignored path="$PROJECT_DIR$/components/" />
@@ -63,13 +57,13 @@
         <counts>
           <entry key="Gemfile" value="2" />
           <entry key="articles" value="1" />
-          <entry key="erb" value="15" />
+          <entry key="erb" value="16" />
           <entry key="generators" value="1" />
-          <entry key="gitignore" value="1" />
+          <entry key="gitignore" value="2" />
           <entry key="js" value="6" />
           <entry key="lock" value="1" />
           <entry key="rakeTasks" value="1" />
-          <entry key="rb" value="21" />
+          <entry key="rb" value="29" />
           <entry key="rdoc" value="1" />
           <entry key="sql" value="1" />
           <entry key="statistics" value="2" />
@@ -81,10 +75,10 @@
         <counts>
           <entry key="Database Element" value="3" />
           <entry key="JavaScript" value="6" />
-          <entry key="PLAIN_TEXT" value="4" />
+          <entry key="PLAIN_TEXT" value="5" />
           <entry key="RDOC" value="1" />
-          <entry key="RHTML" value="15" />
-          <entry key="Ruby" value="23" />
+          <entry key="RHTML" value="16" />
+          <entry key="Ruby" value="31" />
           <entry key="Scratch" value="1" />
           <entry key="XML" value="1" />
           <entry key="YAML" value="2" />
@@ -93,16 +87,18 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Gemfile" value="41" />
-          <entry key="erb" value="747" />
+          <entry key="erb" value="936" />
+          <entry key="gitignore" value="1" />
           <entry key="js" value="283" />
-          <entry key="rb" value="726" />
+          <entry key="rb" value="1208" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JavaScript" value="283" />
-          <entry key="RHTML" value="747" />
-          <entry key="Ruby" value="767" />
+          <entry key="PLAIN_TEXT" value="1" />
+          <entry key="RHTML" value="936" />
+          <entry key="Ruby" value="1249" />
         </counts>
       </usages-collector>
     </session>
@@ -112,29 +108,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/application.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/notification_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
-              <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+            <state relative-caret-position="414">
+              <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/controllers/notification_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="23">
+              <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/routes.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="59" column="23" selection-start-line="59" selection-start-column="23" selection-end-line="59" selection-end-column="23" />
+            <state relative-caret-position="161">
+              <caret line="7" column="35" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -142,17 +135,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/notification_token.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/notification/index.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="60" column="13" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
+            <state relative-caret-position="207">
+              <caret line="9" column="37" lean-forward="true" selection-start-line="9" selection-start-column="37" selection-end-line="9" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -172,7 +156,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/app/assets/javascripts/tui-editor/tui-editor-Editor.js" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/tui_editor.js" />
         <option value="$PROJECT_DIR$/app/views/base_wiki_pages/new.html.erb" />
         <option value="$PROJECT_DIR$/app/views/base_wiki_pages/edit.html.erb" />
@@ -182,14 +165,16 @@
         <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
         <option value="$PROJECT_DIR$/app/controllers/application_controller.rb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/application.js" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/serviceworker.js.erb" />
         <option value="$PROJECT_DIR$/db/seeds.rb" />
         <option value="$PROJECT_DIR$/app/models/member.rb" />
-        <option value="$PROJECT_DIR$/app/models/notification_token.rb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/serviceworker-companion.js" />
-        <option value="$PROJECT_DIR$/app/controllers/notification_controller.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/views/notification/index.html.erb" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/serviceworker.js.erb" />
+        <option value="$PROJECT_DIR$/app/models/notification_token.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/board_controller.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/notification_controller.rb" />
       </list>
     </option>
   </component>
@@ -207,8 +192,8 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="231" />
-    <option name="y" value="-23" />
+    <option name="x" value="328" />
+    <option name="y" value="-8" />
     <option name="width" value="1400" />
     <option name="height" value="1000" />
   </component>
@@ -234,14 +219,7 @@
               <item name="huhs.net" type="b2602c69:ProjectViewProjectNode" />
               <item name="huhs.net" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="huhs.net" type="b2602c69:ProjectViewProjectNode" />
-              <item name="huhs.net" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="javascripts" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="huhs.net" type="b2602c69:ProjectViewProjectNode" />
@@ -388,12 +366,12 @@
       <workItem from="1550895846957" duration="1552000" />
       <workItem from="1550976973757" duration="3216000" />
       <workItem from="1550980224030" duration="740000" />
-      <workItem from="1551005784122" duration="4078000" />
+      <workItem from="1551005784122" duration="8689000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25818000" />
+    <option name="totallyTimeSpent" value="30429000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -406,8 +384,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1874" height="1096" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2850055" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2850055" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -419,7 +398,7 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32946146" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.2745512" />
+      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.3157339" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3291536" />
@@ -563,13 +542,6 @@
     <entry file="file://$PROJECT_DIR$/.idea/.rakeTasks">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/manifest.json.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="322">
@@ -592,13 +564,6 @@
     <entry file="file://$PROJECT_DIR$/app/views/home/index1.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-475" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2530">
-          <caret line="110" selection-start-line="110" selection-end-line="110" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/db/migrate/20190223040259_create_notification_tokens.rb">
@@ -642,34 +607,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/application.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/notification_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/serviceworker-companion.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="4" selection-start-column="4" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/serviceworker.js.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="482">
-          <caret line="100" column="64" selection-start-line="100" selection-start-column="64" selection-end-line="100" selection-end-column="64" />
         </state>
       </provider>
     </entry>
@@ -680,17 +621,73 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/webpush-0.3.6/lib/webpush.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="30" column="80" selection-start-line="30" selection-start-column="80" selection-end-line="30" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/serviceworker.js.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="75" column="33" selection-start-line="75" selection-start-column="33" selection-end-line="75" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/acts_as_commentable_with_threading-2.0.1/lib/generators/acts_as_commentable_upgrade_migration/comment.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/notification_token.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="18" />
+        <state relative-caret-position="207">
+          <caret line="9" column="37" lean-forward="true" selection-start-line="9" selection-start-column="37" selection-end-line="9" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/routes.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="59" column="23" selection-start-line="59" selection-start-column="23" selection-end-line="59" selection-end-column="23" />
+        <state relative-caret-position="161">
+          <caret line="7" column="35" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2530">
+          <caret line="110" selection-start-line="110" selection-end-line="110" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/board_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1679">
+          <caret line="73" column="7" lean-forward="true" selection-start-line="73" selection-start-column="7" selection-end-line="73" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/application.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/notification_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
         </state>
       </provider>
     </entry>

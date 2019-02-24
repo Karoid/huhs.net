@@ -1,4 +1,5 @@
 class NotificationController < ApplicationController
+  before_action :authenticate_member!
   # https://github.com/shedaltd/rails-webpush-demo/blob/master/webpush/Gemfile
   # https://github.com/shedaltd/rails-webpush-demo/blob/master/webpush/config/routes.rb
   # https://github.com/shedaltd/rails-webpush-demo/blob/master/webpush/app/views/content/index.html.erb
@@ -12,7 +13,7 @@ class NotificationController < ApplicationController
                               p256dh_key: params[:subscription][:keys][:p256dh],
                               auth_key: params[:subscription][:keys][:auth],
                               member_id: current_member.id)
-    notif_data.send_message(get_message())
+    notif_data.send_message('/notification',get_message())
     render body: nil
   end
 

@@ -67,8 +67,8 @@ function onFetch(event) {
 }
 
 function onPush(event) {
-  var title = (event.data && event.data.text().split("-")[0]) || "Message from Commercial view";
-  var body; body = event.data.text().split("-")[1];
+  var title = (event.data && JSON.parse(event.data.text()).message) || "Message from Commercial view";
+  var body; body = JSON.parse(event.data.text()).body || '';
   var tag = "huhs-net-tag";
   var icon = '/icon/favicon-1.png';
 
@@ -76,14 +76,17 @@ function onPush(event) {
     self.registration.showNotification(title, {
       body: body,
       icon: icon,
-      tag: tag
+      tag: tag,
+      data: {
+        url: JSON.parse(event.data.text()).url
+      }
     })
   );
 }
 
 function onNotificationClick(event) {
   event.notification.close()
-  var url = "/"
+  var url = event.notification.data.url || "/"
   event.waitUntil( clients.matchAll({type: 'window'}).then( function(windowClients) {
       for (var i = 0; i < windowClients.length; i++) {
         var client = windowClients[i];
