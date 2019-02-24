@@ -66,6 +66,8 @@ else
 end
 # Service worker for speed, and webapp
 gem 'serviceworker-rails'
+#for webpush
+gem 'webpush'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '>= 3.1.12'

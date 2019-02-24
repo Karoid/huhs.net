@@ -108,22 +108,5 @@ class HomeController < ApplicationController
      resource_type: sended_msg['resource_type'])
   end
 
-  def index1
-    #2017/09/17 방탈출용 페이지
-    render layout: false
-  end
 
-  def change_db
-    article_count = Statistic.where({name: "read_article", target_model: "Article"}).group(:target_id).count
-    wiki_count = Statistic.where({name: "read_article", target_model: "WikiPage"}).group(:target_id).count
-    Statistic.where({name: "read_article", target_model: "Article"}).delete_all
-    Statistic.where({name: "read_article", target_model: "WikiPage"}).delete_all
-    article_count.each do |key, value|
-      Statistic.create(name:"read_article", member_id: value, target_model: Article, target_id: key)
-    end
-    wiki_count.each do |key, value|
-      Statistic.create(name:"read_article", member_id: value, target_model: WikiPage, target_id: key)
-    end
-    redirect_to :back
-  end
 end

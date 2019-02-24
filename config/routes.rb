@@ -54,8 +54,10 @@ Rails.application.routes.draw do
   delete 'chat_room/:user_key' => 'kakao_chat/kakao_chat#chat_room_out'
   get 'accept_api' => 'kakao_chat/kakao_chat#accept_api'
 
-  # 동방 모니터링을 위한 라우트
-  get 'change_db' => 'home#change_db'
+  # 웹푸쉬를 위한 라우트
+  get 'notification' => 'notification#index'
+  post 'notification/register' => 'notification#register'
+  post 'notification/unregister' => 'notification#unregister'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

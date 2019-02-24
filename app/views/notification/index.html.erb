@@ -1,0 +1,92 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="page-header">
+        <h1>
+          Rails WebPush <small> - Demo</small>
+        </h1>
+      </div>
+      <% if request.ssl? or Rails.env == 'development'%>
+      <button type="button" class="btn btn-default" id="register_sw" onclick="showRegisterMessage()">
+        푸쉬 등록하기
+      </button>
+      <button type="button" class="btn btn-default" id="unregister_sw" onclick="removeRegister()">
+        푸쉬 삭제하기
+      </button>
+        <span class="warning"></span>
+      <% else %>
+        <a href="https://huhsnet-stable.herokuapp.com/">알림을 등록하려면 우선 HTTPS 사이트로 접속해야 합니다</a>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initialiseUI() {
+    // Set the initial subscription value
+    swRegistration.pushManager.getSubscription()
+      .then(function(subscription) {
+        isSubscribed = !(subscription === null);
+
+        if (isSubscribed) {
+          console.log('User IS subscribed.');
+          $('#register_sw').attr('disabled','disabled').text('이미 알림 등록됨')
+          $('#unregister_sw').removeAttr('disabled').text('푸쉬 삭제하기')
+        } else {
+          console.log('User is NOT subscribed.');
+          $('#register_sw').removeAttr('disabled').text('푸쉬 등록하기')
+          $('#unregister_sw').attr('disabled','disabled').text('아직 알림 등록 안됨')
+        }
+      });
+  }
+
+  function showRegisterMessage(){
+    getKeys()
+  }
+  var vapidPublicKey = new Uint8Array(<%=Base64.urlsafe_decode64(ENV["vapid_public"]).bytes%>);
+
+  function removeRegister(){
+    swRegistration.pushManager.getSubscription()
+      .then(function(subscription) {
+        isSubscribed = !(subscription === null);
+
+        if (isSubscribed) {
+          //User IS subscribed.
+          subscription.unsubscribe();
+          $.post('/notification/unregister', {
+            subscription: subscription.toJSON()
+          }).then(function(){
+            initialiseUI();
+          });
+        } else {
+          //'User is NOT subscribed.'
+        }
+      });
+  }
+
+  function getKeys(){
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+      navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
+        return serviceWorkerRegistration.pushManager
+          .subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: window.vapidPublicKey
+          });
+      }).then(function (subscription) {
+        registerNotice(subscription.toJSON());
+      })
+    }else{
+      $('.warning').text('푸쉬 알림을 보낼 수 없는 브라우저 입니다')
+    }
+  }
+  function registerNotice(subscription){
+    $.post('/notification/register', {
+      subscription: subscription
+    });
+    initialiseUI()
+  }
+  $(document).on('turbolinks:load',function(){
+    initialiseUI()
+  })
+</script>
