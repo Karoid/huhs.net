@@ -41,7 +41,7 @@ gem 'rails_db'
 if File.exist?("../rock_scissors_paper")
   gem "rock_scissors_paper", :path => "../rock_scissors_paper"
 else
-  gem "rock_scissors_paper", :git => 'https://github.com/Karoid/rock_scissors_paper', :branch => 'rails-5-upgrade'
+  gem "rock_scissors_paper", :git => 'https://github.com/Karoid/rock_scissors_paper'
 end
 
 if File.exist?("../check_attendence")
@@ -65,6 +65,8 @@ else
 end
 # Service worker for speed, and webapp
 gem 'serviceworker-rails'
+#for webpush
+gem 'webpush'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '>= 3.1.12'

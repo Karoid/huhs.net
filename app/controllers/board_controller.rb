@@ -78,6 +78,11 @@ class BoardController < ApplicationController
       if @article.board.show_comment
         @comment = Comment.build_from( @article, current_member.id, params[:content] )
         @comment.save
+        if @article.member_id != current_member.id
+          NotificationToken.where(member_id: @article.member_id).each do |token|
+            token.send_message("/board/#{@article.board.category.route}/#{@article.board.route}/#{@article.id}", '내 글에 댓글이 달렸어요', params[:content][0..100])
+          end
+        end
       end
       redirect_back(fallback_location: root_path)
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2017_10_10_065613) do
+ActiveRecord::Schema.define(version: 2019_02_23_040259) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -117,6 +117,15 @@ ActiveRecord::Schema.define(version: 2017_10_10_065613) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_members_on_email", unique: true
     t.index ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true
+  end
+
+  create_table "notification_tokens", force: :cascade do |t|
+    t.string "endpoint"
+    t.string "p256dh_key"
+    t.string "auth_key"
+    t.integer "member_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "points", force: :cascade do |t|
