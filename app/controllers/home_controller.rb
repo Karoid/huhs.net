@@ -124,6 +124,6 @@ class HomeController < ApplicationController
     wiki_count.each do |key, value|
       Statistic.create(name:"read_article", member_id: value, target_model: WikiPage, target_id: key)
     end
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
 end

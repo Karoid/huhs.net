@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     if current_member
       begin
-        redirect_to :back, :alert => exception.message
+        redirect_back(fallback_location: root_path, :alert => exception.message)
       rescue
         redirect_to "/"
       end

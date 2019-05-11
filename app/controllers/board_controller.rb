@@ -79,14 +79,14 @@ class BoardController < ApplicationController
         @comment = Comment.build_from( @article, current_member.id, params[:content] )
         @comment.save
       end
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
 
     def delete_comment
       @comment = Comment.find(params[:id])
       authorize! :delete, @comment
       @comment.destroy
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
 
     private

@@ -2,13 +2,13 @@ class Statistic < ActiveRecord::Base
   belongs_to :member
 
   def self.view_count_up(model,id)
-    view = Statistic.find_or_initialize_by(name:"read_article", target_model: model, target_id: id)
+    view = Statistic.find_or_initialize_by(name:"read_article", target_model: model.name, target_id: id)
     count = view.member_id || 0
     view.update(member_id: count + 1)
   end
 
   def self.view_count(model,id)
-    view = Statistic.find_or_initialize_by(name:"read_article", target_model: model, target_id: id)
+    view = Statistic.find_or_initialize_by(name:"read_article", target_model: model.name, target_id: id)
     return view.member_id || 0
   end
 
