@@ -108,19 +108,4 @@ class HomeController < ApplicationController
      resource_type: sended_msg['resource_type'])
   end
 
-  def restore_images
-    [325, 329, 344, 345, 346, 347, 348,350,351,355,357,358,359, 360,361,362,363,364,397,398,399,400,401,402,403,404, 405,408, 410,414,415].each do |article_id|
-      data = Cloudinary::Search.expression("folder=#{article_id}").execute
-      if data["total_count"] >0
-        html = '정승호에 의해 복구된 사진입니다<br>'
-        data["resources"].each do |image_data|
-          html += "<img src='#{image_data["secure_url"]}'/></br>"
-        end
-        # 이지훈의 id는 360
-        Article.create(id: article_id, title: "#{data["resources"][0]["created_at"][0...10]}에 이지훈이 올린 사진", content: html, board_id: 10, member_id: 360,member_name: "이지훈", active: true, created_at: data["resources"][0]["created_at"])
-      end
-    end
-    redirect_to root_url
-  end
-
 end
