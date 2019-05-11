@@ -43,8 +43,8 @@ Rails.application.routes.draw do
   post 'admin/edit_data' => 'admin#edit_data'
   post 'admin/edit_index_image' => 'admin#edit_index_image'
 
-  #방탈출을 위해 만들었던 페이지
-  # get 'index1' => 'home#index1'
+  #이지훈이 날려먹은 이미지 복구하기
+  get 'restore', to: 'home#restore_images'
 
   # 카카오톡 챗봇을 위한 라우트
   get 'keyboard' => 'kakao_chat/kakao_chat#keyboard'
