@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 gem 'rails', '=5.2.3'
 gem 'bootsnap', require: false
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sassc-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -78,7 +78,7 @@ gem 'bcrypt', '>= 3.1.12'
 # gem 'capistrano-rails', group: :development
 group :production do
   #gem 'pg',      :group => :production
-  gem 'pg', '~> 0.20'
+  gem 'pg'
   #compress asset in heroku
   gem 'heroku-deflater'
 end
@@ -89,7 +89,7 @@ end
 
 group :development do
   # Use sqlite3 as the database for Active Record
-  gem 'sqlite3', '< 1.4'
+  gem 'sqlite3', git: "https://github.com/larskanis/sqlite3-ruby", branch: "add-gemspec"
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
   #Supporting gem for Rails Panel (Google Chrome extension for Rails development).
