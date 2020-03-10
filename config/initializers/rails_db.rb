@@ -19,7 +19,7 @@ if Object.const_defined?('RailsDb')
     config.http_basic_authentication_user_name = 'huhs'
 
     # # Enable http basic authentication
-    config.http_basic_authentication_password = 'kk1111'
+    config.http_basic_authentication_password = ENV["rails_db_password"] || "kk1111"
 
     # # Enable http basic authentication
     # config.verify_access_proc = proc { |controller| true }

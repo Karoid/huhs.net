@@ -50,7 +50,7 @@ class AdminController < ApplicationController
   def edit_data
     record = params[:db].camelize.constantize
     record = params[:data][:id] != "" ? record.find(params[:data][:id].to_i) : record.new
-    params[:data].each_key {|key|
+    params[:data].keys.each {|key|
       params[:data][key] = params[:data][key] == "" ? nil : params[:data][key]
       if key.split(".").length == 1 && key != "id"
         record[key] = params[:data][key]

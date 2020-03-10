@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hello, HUHS!</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://db.onlinewebfonts.com/c/e50f08c648d677fc2b0f52ac98afb797?family=Ayuthaya" rel="stylesheet" type="text/css"/>
+  <link href="https://fonts.googleapis.com/css?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      background-color: #1D1D1D;
+      /*padding: 5px;*/
+      overflow: hidden; /*스크롤 아예 방지*/
+    }
+
+    @import url(https://db.onlinewebfonts.com/c/e50f08c648d677fc2b0f52ac98afb797?family=Ayuthaya);
+
+    @font-face {
+      font-family: "Ayuthaya";
+      src: url("//db.onlinewebfonts.com/t/e50f08c648d677fc2b0f52ac98afb797.eot");
+      src: url("//db.onlinewebfonts.com/t/e50f08c648d677fc2b0f52ac98afb797.eot?#iefix") format("embedded-opentype"),
+      url("//db.onlinewebfonts.com/t/e50f08c648d677fc2b0f52ac98afb797.woff2") format("woff2"),
+      url("//db.onlinewebfonts.com/t/e50f08c648d677fc2b0f52ac98afb797.woff") format("woff"),
+      url("//db.onlinewebfonts.com/t/e50f08c648d677fc2b0f52ac98afb797.ttf") format("truetype"),
+      url("//db.onlinewebfonts.com/t/e50f08c648d677fc2b0f52ac98afb797.svg#Ayuthaya") format("svg");
+    }
+
+    .white_alpha {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255,255,255,0.5);
+      display: none;
+    }
+
+
+    .typing {
+      display: inline-block;
+      animation-name: typeani;
+      animation-duration: 0.02s;
+      animation-iteration-count: infinite;
+    }
+    @keyframes typeani {
+      0%{border-right: 1px solid #333;}
+      50%{border-right: 1px solid white;}
+      100%{border-right: 1px solid #333;}
+    }
+
+    .background_info {
+      position: absolute;
+      width: 56.24vh;
+      height: 100vh;
+    }
+
+    /* 모바일 */
+    @media all and (max-width: 768px) {
+      .code {
+        font-family: 'Roboto';
+        font-size: 12px;
+        padding: 5px;
+        src: url('webfont.eot'); /* IE9+ Compat Modes */
+        src: url('webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        url('webfont.woff2') format('woff2'), /* Super modern browsers */
+        url('webfont.woff') format('woff'), /* Modern browsers */
+        url('webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+        url('webfont.svg#FontName') format('svg'); /* Legacy iOS */
+        color: white;
+      }
+
+      .alert {
+        position: absolute;
+        width: 90vw;
+        height: 47.3vw;
+        top: 50%;
+        margin-top: -23.65vw;
+        left: 50%;
+        margin-left: -45vw;
+      }
+
+      .progressbar{
+        border-radius:5px;
+        position:relative;
+        top: 50%;
+        margin-top: 10.6vw;
+        left: 10.5vw;
+        width: 78vw;
+        height: 5.2vw;
+        background-color: rgb(212, 212, 212);
+        overflow:hidden;
+        -webkit-box-shadow: inset 5px 5px 8px rgba(255,255,255,1);
+        -moz-box-shadow: inset 5px 5px 8px rgba(255,255,255,1);
+        box-shadow: inset 5px 5px 8px rgba(255,255,255,1);
+      }
+      .progress{
+        border-radius:5px;
+        position:absolute;
+        left: -79vw;
+        width: 79vw;
+        height: 5.2vw;
+        background:rgb(93,93,93) repeat-x 0px 0px;
+        -webkit-box-shadow: inset 5px 5px 8px rgba(255,255,255,1);
+        -moz-box-shadow: inset 5px 5px 8px rgba(255,255,255,1);
+        box-shadow: inset 5px 5px 8px rgba(255,255,255,1);
+      }
+
+      .info_page {
+        display: none;
+        opacity: 0;
+        position: relative;
+        width: 56.24vh;
+        height: 96vh;
+        left: 50%;
+        margin-left: -28.12vh;
+        top: 0vh;
+      }
+
+      .info_title {
+        opacity: 0;
+        position: absolute;
+        color: white;
+        font-family: "Ayuthaya";
+
+        width: 30vh;
+        top: 17.5vh;
+        left: 5vh;
+        /*top: 15vh;
+        left: 4.5vh;*/
+      }
+
+      .info_description {
+        opacity: 0;
+        position: absolute;
+        color: black;
+        font-family: 'Nanum Pen Script', cursive;
+        font-size: large;
+
+        width: 47.24vh;
+        top: 83vh;
+        left: 4.5vh;
+      }
+
+      .img_up {
+        opacity: 0;
+        position: absolute;
+        width: 35.4vh;
+        height: 22.68vh;
+        top: 32.8vh;
+        left: 50%;
+        margin-left: 10.8vh; /*-17.7vh*/
+      }
+
+      .img_down {
+        opacity: 0;
+        position: absolute;
+        width: 35.4vh;
+        height: 22.68vh;
+        top: 57.2vh;
+        left: 50%;
+        margin-left: 10.8vh; /*-17.7vh*/
+      }
+    }
+
+    /* PC버전 */
+    @media not all and (max-width: 768px) {
+      .code {
+        font-family: 'Roboto';
+        font-size: small;
+        padding: 5px;
+        src: url('webfont.eot'); /* IE9+ Compat Modes */
+        src: url('webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        url('webfont.woff2') format('woff2'), /* Super modern browsers */
+        url('webfont.woff') format('woff'), /* Modern browsers */
+        url('webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+        url('webfont.svg#FontName') format('svg'); /* Legacy iOS */
+        color: white;
+      }
+
+      .alert {
+        position: absolute;
+        width: 90vh;
+        height: 47.3vh;
+        top: 50%;
+        margin-top: -23.65vh;
+        left: 50%;
+        margin-left: -45vh;
+      }
+
+      .progressbar{
+        border-radius:5px;
+        position:relative;
+        top: 50%;
+        margin-top: 10.6vh;
+        left: 50%;
+        margin-left: -39vh;
+        width: 78vh;
+        height: 5.2vh;
+        background-color: rgb(212, 212, 212);
+        overflow:hidden;
+        -webkit-box-shadow: inset 5px 5px 8px rgba(255,255,255,1);
+        -moz-box-shadow: inset 5px 5px 8px rgba(255,255,255,1);
+        box-shadow: inset 5px 5px 8px rgba(255,255,255,1);
+      }
+      .progress{
+        border-radius:5px;
+        position:absolute;
+        left: -79vh;
+        width: 79vh;
+        height: 5.2vh;
+        background:rgb(93,93,93) repeat-x 0px 0px;
+        -webkit-box-shadow: inset 5px 5px 8px rgba(255,255,255,1);
+        -moz-box-shadow: inset 5px 5px 8px rgba(255,255,255,1);
+        box-shadow: inset 5px 5px 8px rgba(255,255,255,1);
+      }
+
+      .info_page {
+        display: none;
+        opacity: 0;
+        position: relative;
+        width: 56.24vh;
+        height: 100vh;
+        left: 50%;
+        margin-left: -28.12vh;
+        top: 0vh;
+      }
+
+      .info_title {
+        opacity: 0;
+        position: absolute;
+        color: white;
+        font-family: "Ayuthaya";
+
+        width: 30vh;
+        top: 18.5vh;
+        left: 5vh;
+        /*top: 15vh;
+        left: 4.5vh;*/
+      }
+
+      .info_description {
+        opacity: 0;
+        position: absolute;
+        color: black;
+        font-family: 'Nanum Pen Script', cursive;
+        font-size: large;
+
+        width: 47.24vh;
+        top: 83vh;
+        left: 4.5vh;
+      }
+
+      .img_up {
+        opacity: 0;
+        position: absolute;
+        width: 35.4vh;
+        height: 22.68vh;
+        top: 32.8vh;
+        left: 50%;
+        margin-left: 10.8vh; /*-17.7vh*/
+      }
+
+      .img_down {
+        opacity: 0;
+        position: absolute;
+        width: 35.4vh;
+        height: 22.68vh;
+        top: 57.2vh;
+        left: 50%;
+        margin-left: 10.8vh; /*-17.7vh*/
+      }
+    }
+
+    .join_page {
+      display: none;
+      opacity: 0;
+      position: relative;
+      width: 56.24vh;
+      height: 100vh;
+      left: 50%;
+      margin-left: -28.12vh;
+      top: 0vh;
+    }
+
+    .huhs_logo {
+      position: absolute;
+      width: 56.24vh;
+      height: 56.24vh;
+
+      top: 10vh;
+      left: 0vh;
+      /*left: 50%;
+      margin-left: -28.12vh;*/
+    }
+
+    .join_p {
+      position: absolute;
+      color: white;
+      font-family: 'Nanum Pen Script', cursive;
+      font-size: xx-large;
+      text-align: center;
+
+      top: 62vh;
+      width: 50.24vh;
+      /*left: 50%;*/
+      left: 3vh;
+    }
+
+    .join_madeby {
+      position: absolute;
+      color: white;
+      font-family: 'Nanum Pen Script', cursive;
+      font-size: large;
+      text-align: center;
+
+      top: 80vh;
+      width: 50vh;
+      left: 3.12vh;
+    }
+  </style>
+  <style>
+    @font-face {
+      font-family: 'Wingdings-Regular';
+      src: url('/fonts/hello-huhs/Wingdings-Regular.svg#Wingdings-Regular') format('svg'),
+      url('/fonts/hello-huhs/Wingdings-Regular.ttf') format('truetype'),
+      url('/fonts/hello-huhs/Wingdings-Regular.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Wingdings';
+      src: url('/fonts/hello-huhs/Wingdings.eot');
+      src: url('/fonts/hello-huhs/Wingdings.eot?#iefix') format('embedded-opentype'),
+      url('/fonts/hello-huhs/Wingdings.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <script type='text/javascript' src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+</head>
+<body>
+<div class="white_alpha">
+  <image src="/images/hello-huhs/alert_nobar.png" class="alert"></image>
+  <div class="progressbar shadow"><div class="progress embossed" id="progress"></div></div>
+</div>
+
+<p class='code'>
+  <font color="#5A5A5A" class='black0'></font>
+  <font color="#898989" class='gray0'></font>
+  <font color="#FFFFFF" class='white0'></font>
+  <font color="#5A5A5A" class='black1'></font>
+  <font color="#898989" class='gray1'></font>
+  <font color="#FFFFFF" class='white1'></font>
+  <font color="#898989" class='gray2'></font>
+  <font color="#FFFFFF" class='white2'></font>
+  <font color="#898989" class='gray3'></font>
+  <font color="#FFFFFF" class='white3'></font>
+  <font color="#898989" class='gray4'></font>
+  <font color="#FFFFFF" class='white4'></font>
+  <font color="#898989" class='gray5'></font>
+  <font color="#FFFFFF" class='white5'></font>
+  <font color="#898989" class='gray6'></font>
+  <font color="#FFFFFF" class='white6'></font>
+  <font color="#898989" class='gray7'></font>
+  <font color="#FFFFFF" class='white7'></font>
+  <font color="#898989" class='gray8'></font>
+
+  <font color="#5A5A5A" class='black2'></font>
+  <font color="#898989" class='gray9'></font>
+  <font color="#FFFFFF" class='white8'></font>
+  <font color="#898989" class='gray10'></font>
+  <font color="#FFFFFF" class='white9'></font>
+  <font color="#5A5A5A" class='black3'></font>
+  <font color="#898989" class='gray11'></font>
+
+  <font color="#FFFFFF" class='white10'></font>
+  <font color="#898989" class='gray12'></font>
+  <font color="#FFFFFF" class='white11'></font>
+  <font color="#898989" class='gray13'></font>
+  <font color="#FFFFFF" class='white12'></font>
+  <font color="#898989" class='gray14'></font>
+  <font color="#FFFFFF" class='white13'></font>
+  <font color="#898989" class='gray15'></font>
+  <font color="#FFFFFF" class='white14'></font>
+  <font color="#898989" class='gray16'></font>
+  <font color="#FFFFFF" class='white15'></font>
+  <font color="#898989" class='gray17'></font>
+</p>
+
+<div class="info_page">
+  <img src="/images/hello-huhs/background.png" class="background_info"></img>
+  <h1 class="info_title"></h1>
+  <p class="info_description"></p>
+  <img class="img_up"></img>
+  <img class="img_down"></img>
+</div>
+
+<div class="join_page">
+  <a href="https://docs.google.com/forms/d/1BPMrfq9cMAVE75TJzKDFO4ltdMsmjEwl3muK51vwkW4/edit" target="_blank">
+    <img class="huhs_logo" src="/images/hello-huhs/huhslogo2.png"/>
+  </a>
+  <p class="join_p">우리와 함께 하고 싶다면<br>휴즈 로고를 누르세요!</p>
+  <p class="join_madeby">Made by 부회장 우수몽, 홍보부장 이유민<br>Special Thanks To 정승호</p>
+</div>
+
+<script>
+  //code 내의 특수문자 처리
+  //% == <br>
+  //| == &nbsp;&nbsp;&nbsp;&nbsp; (탭 처리)
+  //~ == &nbsp;
+  //@ == <font color="#5A5A5A">
+  //$ == <font color="#898989">
+  //^ == <font color="#FFFFFF">
+  //! == </font>
+  //ㅅ == <font size="20pt">&nbsp;</font>
+
+  var code = `
+@#include <hanyang.h>%
+#include <huhs_since_1982.h>%
+%
+string $title = ^“hanging university hard & software”;%
+@public void $print_title() {%
+|printf(“^ㅁ~~~~~~~~~~ㅁ~~~~~ㅁ~~~~~~~~~~~~~ㅁ~~~~~ㅁ~~~~~~~~~~ㅁ~~~~~~~~ㅁㅁㅁㅁ|~$”);%
+|printf(“^ㅁ~~~~~~~~~~ㅁ~~~~~ㅁ~~~~~~~~~~~~~ㅁ~~~~~ㅁ~~~~~~~~~~ㅁ~~~~~ㅁ||||~~~$”);%
+|printf(“^ㅁ~~~~~~~~~~ㅁ~~~~~ㅁ~~~~~~~~~~~~~ㅁ~~~~~ㅁ~~~~~~~~~~ㅁ~~~~~ㅁ||||~~~$”);%
+|printf(“^ㅁㅁ~ㅁㅁㅁ~~~~~ㅁ~~~~~~~~~~~~~ㅁ~~~~~ㅁㅁ~ㅁㅁㅁ~~~~~~~~ㅁㅁㅁ||$”);%
+|printf(“^ㅁ~~~~~~~~~~ㅁ~~~~~ㅁ~~~~~~~~~~~~~ㅁ~~~~~ㅁ~~~~~~~~~~ㅁ~~~~~~~~~~~~~~~~~~~ㅁ|~$”);%
+|printf(“^ㅁ~~~~~~~~~~ㅁ~~~~~ㅁ~~~~~~~~~~~~~ㅁ~~~~~ㅁ~~~~~~~~~~ㅁ~~~~~~~~~~~~~~~~~~~ㅁ|~$”);%
+|printf(“^ㅁ~~~~~~~~~~ㅁ~~~~~~~~ㅁㅁㅁㅁ~~~~~~~~~ㅁ~~~~~~~~~~ㅁ~~~~~~ㅁㅁㅁㅁ|~~~~$”);%
+}%
+%
+@public void $start() {%
+|print_title();%
+^|study(various_studys); //다양한 프로그래밍 스터디%
+|friend(party_people); ~~~//매 계절별 MT와 소풍 등%
+$|if(huhs) {%
+^||you = club |~//실력%
+||can++; ||~~~//제한%
+||get.come |~~//없음%
+||whatever |~~//관심%
+||you = join |~//있는%
+||want++; ||//당신%
+@|}%
+}%
+%
+public void $contact(string case) {%
+|if(^case == “회장”$)%||printf(^“010-5591-6121”$);%
+|else if(^case==“부회장”$)%||printf(^“010-2285-1094”$);%
+|else if(^case==“페이스북”$)%||printf(^“www.facebook.com/huhs.hanyang”$);%
+}
+`;
+
+  var current_id;
+  const black = [".black0",".black1",".black2",".black3"];
+  const gray = [".gray0",".gray1",".gray2",".gray3",".gray4",".gray5",".gray6",".gray7",".gray8",
+    ".gray9",".gray10",".gray11",".gray12",".gray13",".gray14",".gray15",".gray16",".gray17"];
+  const white = [".white0",".white1",".white2",".white3",".white4",".white5",".white6",".white7",
+    ".white8",".white9",".white10",".white11",".white12",".white13",".white14",".white15"];
+  var switcher = [0,0,0];
+
+  var page = -1;
+  const title = ['신환회','MT','스터디','집회','동방파티','창립제']
+  const description = ['신입생 여려분들을 격하게 환영해주는 휴즈 행사','동아리하면 빠질 수 없는 친목의 장','컴퓨터 관련 다양한 주제를 깊이 있게 배울 수 있는\n 자율적인 컴퓨터 학습 시스템.','IT, 컴퓨터 분야에 대한 옴니버스식 세미나','학교 축제기간 동아리방에서 즐기는\n 휴즈만의 축제','39년 역사와 전통을 자랑하는 휴즈의 선배님들과\n 함께하는 휴즈 창립 축하행사']
+  const image1 = ['p_welcome01.jpg','p_MT01.jpg','p_study01.jpg','p_seminar01.jpg','p_party01.jpg','p_foundation01.jpg'];
+  const image2 = ['p_welcome02.jpg','p_MT02.jpg','p_study02.jpg','p_seminar02.jpg','p_party02.jpg','p_foundation02.jpg'];
+
+  var typingBool = false;
+  var typingIndex = 0;
+
+  var p = 0;
+  var pct = 0;
+  var prg = document.getElementById("progress");
+
+  typingTxt = code.split(""); //한 글자씩 자른다.
+  if(typingBool == false) {//타이핑이 진행되지 않았으면
+    typingBool = true;
+
+    var tyInt = setInterval(typing, 20); //반복동작
+  }
+
+  function typing() {
+    if(typingIndex < typingTxt.length) { //글자수만큼 1글자씩 붙이는 걸 반복한다.
+      if(typingTxt[typingIndex] == '@') {//Black
+        current_id = black[switcher[0]];
+        switcher[0]++;
+        typingIndex++;
+      } else if(typingTxt[typingIndex] == '$') {//Gray
+        current_id = gray[switcher[1]];
+        switcher[1]++;
+        typingIndex++;
+      } else if(typingTxt[typingIndex] == '^') {//White
+        current_id = white[switcher[2]];
+        switcher[2]++;
+        typingIndex++;
+      } else {
+        if(typingTxt[typingIndex] == '%') {
+          $(current_id).append('<br>');
+        } else if(typingTxt[typingIndex] == '|') {
+          $(current_id).append('&nbsp;&nbsp;&nbsp;&nbsp;');
+        } else if(typingTxt[typingIndex] == '~') {
+          $(current_id).append('&nbsp;');
+        } else if(typingTxt[typingIndex] == 'ㅁ') {
+          $(current_id).append('<font face="Wingdings">n</font>');
+        } else {
+          $(current_id).append(typingTxt[typingIndex]);
+        }
+        typingIndex++;
+      }
+    } else {
+      clearInterval(tyInt); //모든 글자를 붙였으면 반복 종료.
+      $(window).width(function() {
+        if($(window).width() > 768) { //PC버전: vh단위
+          setTimeout(showLoading_pc, 600);
+        } else { //모바일버전: vw단위
+          setTimeout(showLoading_mobile, 600);
+        }
+      });
+    }
+  }
+
+  function showLoading_pc() {
+    $(".white_alpha").css("display","inline");
+    animateCSS('.alert', 'fadeIn')
+    animateCSS('.progressbar', 'fadeIn', function() {
+      var loadingAni = setInterval(loading, 50);
+
+      function loading() {
+        if(prg) {
+          p++;
+          if(p <= 79)
+          {
+            prg.style.backgroundPosition = p + "vh 0px";
+            pct++;
+            if(pct >= 0)
+            {pct = -79;}
+            prg.style.left = pct + "vh";
+          } else {
+            clearInterval(loadingAni);
+
+            animateCSS('.progressbar', 'bounceOutDown', function() {
+              $(".progressbar").css("display", "none");
+              $(".white_alpha").css("display", "none");
+
+              animateCSS('.code', 'fadeOutDown', function() {
+                $(".code").css("display", "none");
+
+                $("html body").animate({ backgroundColor: "#195E9E" }, 1000);
+                pageSetting();
+                $(".info_page").css("opacity", 1);
+                $(".info_page").css("display", "inline");
+                animateCSS('.info_page', 'bounceInDown', function() {
+                  play();
+                });
+              });
+            })
+            animateCSS('.alert', 'bounceOutDown', function() {
+              $(".alert").css("display", "none");
+            })
+          }
+        }
+      }
+    })
+  }
+
+  function showLoading_mobile() {
+    $(".white_alpha").css("display","inline");
+    animateCSS('.alert', 'fadeIn')
+    animateCSS('.progressbar', 'fadeIn', function() {
+      var loadingAni = setInterval(loading, 50);
+
+      function loading() {
+        if(prg) {
+          p++;
+          if(p <= 79)
+          {
+            prg.style.backgroundPosition = p + "vw 0px";
+            pct++;
+            if(pct >= 0)
+            {pct = -79;}
+            prg.style.left = pct + "vw";
+          } else {
+            clearInterval(loadingAni);
+
+            animateCSS('.progressbar', 'bounceOutDown', function() {
+              $(".progressbar").css("display", "none");
+              $(".white_alpha").css("display", "none");
+
+              animateCSS('.code', 'fadeOutDown', function() {
+                $(".code").css("display", "none");
+
+                $("html body").animate({ backgroundColor: "#195E9E" }, 1000);
+                pageSetting();
+                $(".info_page").css("opacity", 1);
+                $(".info_page").css("display", "inline");
+                animateCSS('.info_page', 'bounceInDown', function() {
+                  play();
+                });
+              });
+            })
+            animateCSS('.alert', 'bounceOutDown', function() {
+              $(".alert").css("display", "none");
+            })
+          }
+        }
+      }
+    })
+  }
+
+  function play() {
+    if(page == 5) {
+      animateCSS('.info_title', 'fadeIn', function() {
+        $(".info_title").css("opacity", 1);
+        animateCSS('.img_up', 'fadeIn', function() {
+          $(".img_up").css("opacity", 1);
+          animateCSS('.img_down', 'fadeIn', function() {
+            $(".img_down").css("opacity", 1);
+            animateCSS('.info_description', 'fadeIn', function() {
+              $(".info_description").css("opacity", 1);
+
+              setTimeout(function() {
+                animateCSS('.info_page', 'fadeOut', function() {
+                  $(".info_page").css("opacity", 0);
+                  $(".info_page").css("display", "none");
+
+                  $(".join_page").css("display", "inline");
+                  animateCSS('.join_page', 'fadeIn', function() {
+                    $(".join_page").css("opacity", 1);
+                  });
+                })
+              }, 600);
+            });
+          });
+        });
+      });
+
+      return;
+    } else {
+      animateCSS('.info_title', 'fadeIn', function() {
+        $(".info_title").css("opacity", 1);
+        animateCSS('.img_up', 'fadeIn', function() {
+          $(".img_up").css("opacity", 1);
+          animateCSS('.img_down', 'fadeIn', function() {
+            $(".img_down").css("opacity", 1);
+            animateCSS('.info_description', 'fadeIn', function() {
+              $(".info_description").css("opacity", 1);
+
+              setTimeout(function() {
+                animateCSS('.info_title', 'zoomOut');
+                animateCSS('.info_description', 'zoomOut');
+                animateCSS('.img_up', 'zoomOut');
+                animateCSS('.img_down', 'zoomOut', function() {
+                  pageSetting();
+                  $(".info_title").css("opacity", 0);
+                  $(".info_description").css("opacity", 0);
+                  $(".img_up").css("opacity", 0);
+                  $(".img_down").css("opacity", 0);
+
+                  play();
+                });
+              }, 600);
+            });
+          });
+        });
+      });
+    }
+  }
+
+  function pageSetting() {
+    page++;
+    $(".info_title").text(title[page]);
+    $(".info_description").text(description[page]);
+    $(".img_up").attr("src","/images/hello-huhs/"+image1[page]);
+    $(".img_down").attr("src","/images/hello-huhs/"+image2[page]);
+  }
+
+  function animateCSS(element, animationName, callback) {
+    const node = document.querySelector(element)
+    node.classList.add('animated', animationName)
+
+    function handleAnimationEnd() {
+      node.classList.remove('animated', animationName)
+      node.removeEventListener('animationend', handleAnimationEnd)
+
+      if (typeof callback === 'function') callback()
+    }
+
+    node.addEventListener('animationend', handleAnimationEnd)
+  }
+</script>
+</body>
+</html>

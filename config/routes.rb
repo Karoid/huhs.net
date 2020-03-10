@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   post 'profile_statistic' => 'home#profile_statistic'
   post 'edit_profile_image' => 'home#edit_profile_image'
   get 'image_crop/:url' => 'home#image_crop'
+  get 'hello-huhs' => 'home#hello_huhs'
   #file management
   post 'upload_image' => 'home#upload_image'
   post 'upload_file' => 'home#upload_file'

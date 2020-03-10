@@ -40,6 +40,11 @@ class HomeController < ApplicationController
       params[:sended] = article.board.name + " 작성"
     end
   end
+
+  def hello_huhs
+    render layout: false
+  end
+
   def your_profile
     perpage = 5
     if params[:usage] == "comment"
